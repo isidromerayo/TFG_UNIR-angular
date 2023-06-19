@@ -94,7 +94,8 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"
+              "src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/js/main.js"
             ]
           }
         }
