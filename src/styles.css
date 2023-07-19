@@ -20,6 +20,17 @@
     font-size: 24px;
 }
 
+.pagina-datos {
+    margin-top: 2em;
+}
+
+.signup-form {
+    padding: 1em 2em;
+}
+
+.signup-form-button {
+    padding-top: 1em;
+}
 .navbar .get-a-quote,
 .navbar .get-a-quote:focus {
   background: #000;
