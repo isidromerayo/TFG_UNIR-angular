@@ -9,6 +9,9 @@ import { SliderComponent } from './components/slider/slider.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { NoEncontradoComponent } from './components/no-encontrado/no-encontrado.component';
+import { CategoriasComponent } from './components/categorias/categorias.component';
+import { CarritoComponent } from './components/carrito/carrito.component';
+import { AccesoComponent } from './components/acceso/acceso.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { NoEncontradoComponent } from './components/no-encontrado/no-encontrado.
     SliderComponent,
     HomeComponent,
     RegistroComponent,
-    NoEncontradoComponent
+    NoEncontradoComponent,
+    CategoriasComponent,
+    CarritoComponent,
+    AccesoComponent
   ],
   imports: [
     BrowserModule,
