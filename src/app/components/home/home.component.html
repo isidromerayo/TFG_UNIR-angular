@@ -11,7 +11,7 @@
                     <h4 class="title">{{curso.titulo}}</h4>
                     <p class="description">{{ curso.descripcion}}</p>
                     <p class="description">valoración: <b>{{ curso.valoracionMedia }}/5</b> / actualizado: {{ curso.fechaActualizacion }}</p>
-                    <a href="#" class="readmore stretched-link"><span>Detalle</span><i
+                    <a [routerLink]="['/curso', curso.id]" class="readmore stretched-link"><span>Detalle</span><i
                             class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
@@ -46,14 +46,14 @@
 
         <div class="row gy-4 cursos-actualizaciones">
             <div>
-                <h1>Ultimas actualizaciones</h1>
+                <h1>Últimas actualizaciones</h1>
             </div>
             <div class="col-lg-4 col-md-6 service-item d-flex" *ngFor="let actualizacion of actualizaciones">
                 <div>
                     <p class="description">actualizado: <b>{{ actualizacion.fechaActualizacion }}</b></p>
                     <h4 class="title">{{actualizacion.titulo}} </h4>
                     <p class="description">{{  actualizacion.descripcion }}</p>
-                    <a href="#" class="readmore stretched-link"><span>Detalle</span><i
+                    <a [routerLink]="['/curso', actualizacion.id]" class="readmore stretched-link"><span>Detalle</span><i
                             class="bi bi-arrow-right"></i></a>
                 </div>
             </div>

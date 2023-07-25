@@ -14,6 +14,7 @@ import { CategoriasComponent } from './components/categorias/categorias.componen
 import { CarritoComponent } from './components/carrito/carrito.component';
 import { AccesoComponent } from './components/acceso/acceso.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
+import { CursoComponent } from './components/curso/curso.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CategoriaComponent } from './components/categoria/categoria.component';
     CategoriasComponent,
     CarritoComponent,
     AccesoComponent,
-    CategoriaComponent
+    CategoriaComponent,
+    CursoComponent,
   ],
   imports: [
     BrowserModule,

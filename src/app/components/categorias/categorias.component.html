@@ -6,7 +6,7 @@
             </div>
             <div>
                 {{ categoria.descripcion }}
-                <a href="#" class="readmore stretched-link"><span>ver cursos</span><i
+                <a [routerLink]="['/categoria', categoria.id]" class="readmore stretched-link"><span>ver cursos</span><i
                     class="bi bi-arrow-right"></i></a>
             </div>
         </section>
