@@ -20,8 +20,23 @@
     font-size: 24px;
 }
 
+.listado-categorias {
+    border-top: 1px #b52e31 dotted;
+    padding: 2em !important;
+}
+
+.detalle-curso {
+    padding: 2em !important;
+}
+
+.info-instructor {
+    border: 1px #b52e31 dotted;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+}
 .pagina-datos {
-    margin-top: 2em;
+    margin-top: 10em;
+    margin-bottom: 2em;
 }
 
 .signup-form {
