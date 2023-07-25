@@ -12,19 +12,19 @@ export class HomeService {
 
   constructor(private http: HttpClient) { }
 
-  getCursosDestacadosPortada(): Observable<any> {
+  getCursosDestacadosPortada():Observable<any> {
     return this.http.get<any>(this.url_api + '/cursos/search/selectMorePoints').pipe(map(res => res._embedded.cursos))
   }
 
-  getOpinionesCursosPortada() {
+  getOpinionesCursosPortada():Observable<any> {
     return this.http.get<any>(this.url_api + '/valoraciones?size=3').pipe(map(res => res._embedded.valoraciones))
   }
 
-  getCursosUltimasPortada() {
+  getCursosUltimasPortada():Observable<any> {
     return this.http.get<any>(this.url_api + '/cursos/search/selectLastUpdates').pipe(map(res => res._embedded.cursos))
   }
 
-  getCategoriasPortada() {
+  getCategoriasPortada():Observable<any> {
     return this.http.get<any>(this.url_api + '/categorias?sort=nombre&size=' + this.limite_portada).pipe(map(res => res._embedded.categorias))
   }
 }

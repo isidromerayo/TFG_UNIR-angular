@@ -13,7 +13,6 @@ export class HeaderComponent {
   constructor(public servicio: HomeService) {
     servicio.getCategoriasPortada().subscribe({
       next: (respuesta): void =>  {
-          console.log(respuesta)
           this.categorias = respuesta
       },
     })

@@ -13,6 +13,7 @@ import { NoEncontradoComponent } from './components/no-encontrado/no-encontrado.
 import { CategoriasComponent } from './components/categorias/categorias.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
 import { AccesoComponent } from './components/acceso/acceso.component';
+import { CategoriaComponent } from './components/categoria/categoria.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AccesoComponent } from './components/acceso/acceso.component';
     NoEncontradoComponent,
     CategoriasComponent,
     CarritoComponent,
-    AccesoComponent
+    AccesoComponent,
+    CategoriaComponent
   ],
   imports: [
     BrowserModule,

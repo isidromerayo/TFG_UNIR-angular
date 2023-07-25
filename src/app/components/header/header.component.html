@@ -15,9 +15,9 @@
           <li class="dropdown"><a [routerLink]="['/categorias']" routerLinkActive="active"><span>Categorias</span><i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li *ngFor="let categoria of categorias">
-                <a href="#">{{ categoria.nombre }}</a>
+                <a [routerLink]="['/categoria']">{{ categoria.nombre }}</a>
               </li>
-              <li><a href="#">...</a></li>
+              <li><a [routerLink]="['/categorias']" routerLinkActive="active">...</a></li>
               <!-- <li><a href="#">Cat 1</a></li>
               <li><a href="#">Cat 2</a></li>
               <li><a href="#">Cat 3</a></li>

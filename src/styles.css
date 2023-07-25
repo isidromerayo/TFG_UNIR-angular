@@ -20,6 +20,11 @@
     font-size: 24px;
 }
 
+.listado-categorias {
+    border-top: 1px #b52e31 dotted;
+    padding: 2em !important;
+}
+
 .pagina-datos {
     margin-top: 10em;
     margin-bottom: 2em;
