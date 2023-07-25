@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HomeService } from 'src/app/services/home.service';
 
 @Component({
   selector: 'app-header',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  
+  categorias:any[] = [];
 
+  constructor(public servicio: HomeService) {
+    servicio.getCategoriasPortada().subscribe({
+      next: (respuesta): void =>  {
+          console.log(respuesta)
+          this.categorias = respuesta
+      },
+    })
+  }
 }
