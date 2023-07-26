@@ -25,9 +25,10 @@
     padding: 2em !important;
 }
 
-.detalle-curso {
-    padding: 2em !important;
+.detalle-curso, .portada-cards {
+    padding: 2.5em !important;
 }
+
 
 .info-instructor {
     border: 1px #b52e31 dotted;
