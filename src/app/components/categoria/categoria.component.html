@@ -1,5 +1,5 @@
 <div class="container pagina-datos">
-    <h1>Categoria {{categoria.nombre}}, sus cursos...</h1>
+    <h1>Categoria <span style="font-weight: bold; color: cadetblue;">{{categoria.nombre}}</span>, sus cursos...</h1>
     <div *ngIf="categoria_cursos.length > 0; else sinResultado">
     <section class="listado-categorias" *ngFor="let curso of categoria_cursos">
         <div>
@@ -9,7 +9,7 @@
             Valoración media: {{ curso.valoracionMedia }} / precio: {{ curso.precio }}
         </div>
         <div>
-            <a [routerLink]="['/curso', curso.id]" class="readmore stretched-link"><span>detalle del curso</span><i
+            <a [routerLink]="['/curso', curso.id]" class=""><span>detalle del curso</span><i
                     class="bi bi-arrow-right"></i></a>
         </div>
     </section>
