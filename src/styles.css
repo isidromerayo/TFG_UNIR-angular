@@ -40,6 +40,18 @@
     margin-bottom: 2em;
 }
 
+.error-form {
+    color: red;
+    font-weight: bold;
+}
+.info-form {
+    padding-top: 1em;
+    font-style: italic;
+}
+
+.borrar-form {
+    margin-left: 1em;
+}
 .signup-form {
     padding: 1em 2em;
 }
