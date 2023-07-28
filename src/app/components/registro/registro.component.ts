@@ -11,6 +11,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class RegistroComponent {
 
   usuario: Usuario = {} as Usuario;
+  submitted: boolean = false;
+  message_process: string = "";
 
   constructor(public servicio: UsuarioService) {
   }
@@ -27,15 +29,16 @@ export class RegistroComponent {
       alert('formulario no válido')
       return
     }
+    this.submitted = true;
 
     console.log(this.usuario)
     this.servicio.crear(this.usuario).subscribe({
       next: (respuesta: any): void => {
-        alert("registro de usuario con éxito")
+        this.message_process = "Registro de usuario con éxito"
         formulario.form.reset();
       }, error: (err: any) => {
-        console.dir(err)
-        alert("ERROR registro de usuario " + err.error.message)
+        console.dir(err.error.message)
+        this.message_process = "ERROR registro de usuario " + err.error.message
       }
     })
   }

@@ -28,7 +28,15 @@
 .detalle-curso, .portada-cards {
     padding: 2.5em !important;
 }
-
+.sent-message {
+    border: 1px cornflowerblue dotted;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 0.25em 0.5em;
+    background-color: cornflowerblue;
+    border-radius: 0.25em;
+}
 
 .info-instructor {
     border: 1px #b52e31 dotted;
