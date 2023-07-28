@@ -13,7 +13,7 @@ export class CategoriaService {
   constructor(private http: HttpClient) { }
 
   getAllCategorias():Observable<any> {
-    return this.http.get<any>(this.url_api + '/categorias?sort=nombre').pipe(map(res => res._embedded.categorias))
+    return this.http.get<any>(`${this.url_api}/categorias?sort=nombre`).pipe(map(res => res._embedded.categorias))
   }
   getCategoriaId(id:number):Observable<any> {
     return this.http.get<any>(this.url_api + '/categorias/'+id);

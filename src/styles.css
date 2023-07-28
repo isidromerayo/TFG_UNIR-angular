@@ -32,6 +32,12 @@
     padding: 1em 2em;
     margin: 0.5em;
 }
+.mensaje-add-carrito {
+    border: 1px green dotted;
+    color: aliceblue;
+    background-color: green;
+    padding: 0.5em;
+}
 .sent-message {
     border: 1px cornflowerblue dotted;
     color: white;
