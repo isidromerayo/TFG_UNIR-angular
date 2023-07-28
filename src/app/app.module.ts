@@ -15,6 +15,9 @@ import { CarritoComponent } from './components/carrito/carrito.component';
 import { AccesoComponent } from './components/acceso/acceso.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
 import { CursoComponent } from './components/curso/curso.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BusquedaComponent } from './components/busqueda/busqueda.component';
+import { ValoracionComponent } from './components/valoracion/valoracion.component';
 
 @NgModule({
   declarations: [
@@ -30,11 +33,14 @@ import { CursoComponent } from './components/curso/curso.component';
     AccesoComponent,
     CategoriaComponent,
     CursoComponent,
+    BusquedaComponent,
+    ValoracionComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

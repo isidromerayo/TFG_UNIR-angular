@@ -1,53 +1,48 @@
     <div class="container pagina-datos">
 
+        <div class="col-lg-8" *ngIf="submitted">
+            <div class="sent-message">{{message_process}}</div>
+        </div>    
         <div class="col-lg-8">
-            <form action="" class="signup-form">
+            <form name="registro" #f="ngForm" (ngSubmit)="crearUsuario(f)" class="signup-form">
                 <h1 class="title">Registro de usuario</h1>
                 <div class="row">
-
                     <div class="col-md-6 form-group">
-                        <label for="" class="label">Nombre</label>
-                        <input type="text" class="form-control" placeholder="indique su nombre"
-                            aria-label="indique su nombre" />
-
-                    </div>
-
-                    <div class="col-md-8 form-group">
-                        <label for="" class="label">Apellidos</label>
-                        <input type="text" class="form-control" placeholder="indique sus apellidos"
-                            aria-label="indique sus apellidos">
-
+                        <label for="nombre" class="label">Nombre (*)</label>
+                        <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre" placeholder="indique su nombre"
+                            aria-label="indique su nombre" required />
+                            <span *ngIf="nombre.errors?.['required'] && nombre?.touched" class="error-form">el nombre es obligatorio</span>
                     </div>
                     <div class="col-md-8 form-group">
-                        <label for="" class="label">Correo electrónico</label>
-                        <input type="text" class="form-control" placeholder="indique su correo electrónico"
-                            aria-label="indique su correo electrónico" />
+                        <label for="apellidos" class="label">Apellidos (*)</label>
+                        <input type="text" class="form-control" name="apellidos" #apellidos="ngModel" [(ngModel)]="usuario.apellidos" placeholder="indique sus apellidos"
+                            aria-label="indique sus apellidos" required>
+                            <span *ngIf="apellidos.errors?.['required'] && apellidos?.touched" class="error-form">los apellidos son obligatorio</span>
                     </div>
-
-
+                    <div class="col-md-8 form-group">
+                        <label for="email" class="label">Correo electrónico (*)</label>
+                        <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="usuario.email" placeholder="indique su correo electrónico"
+                            aria-label="indique su correo electrónico" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" />
+                            <span *ngIf="email.errors?.['required'] && email?.touched" class="error-form">el email es obligatorio</span>
+                            <span *ngIf="email.errors?.['pattern'] && email?.touched" class="error-form">el email no tiene formato válido</span>
+                    </div>
                     <div class="col-md-6 form-group">
-                        <label for="" class="label">Contraseña</label>
-                        <input type="text" class="form-control" placeholder="indique su contraseña"
-                            aria-label="indique su contraseña" />
+                        <label for="pass" class="label">Contraseña (*)</label>
+                        <input type="password" class="form-control" name="pass" #pass="ngModel" [(ngModel)]="usuario.password" placeholder="indique su contraseña"
+                            aria-label="indique su contraseña" required minlength="4"/>
+                            <span *ngIf="pass.errors?.['required'] && pass?.touched" class="error-form">la contraseña es obligatoria</span>
+                            <span *ngIf="pass.errors?.['minlength'] && pass?.touched" class="error-form">la contraseña debe tenera al menos 4 caracteres</span>
 
                     </div>
-
-                    <div class="col-md-6 form-group">
-                        <label for="" class="label">Confirme Contraseña</label>
-                        <input type="text" class="form-control" placeholder="indique su contraseña"
-                            aria-label="indique su contraseña" />
-
+                    <div class="col-md-8 form-group info-form">   
+                        (*) campos obligatorios
                     </div>
-
-                    <div class="text-center signup-form-button"><button type="submit" class="btn btn-primary">Registrar</button></div>
+                    <div class="text-center signup-form-button">
+                        <button type="submit" class="btn btn-primary" [disabled]="f.invalid" aria-label="registrarse en el portal">Registrar</button>
+                        <button type="button" (click)="onReset(f)" class="btn btn-warning borrar-form">Borrar</button>
+                    </div>
+                    
                 </div>
-                <!--
-                  <div class="my-3">
-                    <div class="loading">Loading</div>
-                    <div class="error-message"></div>
-                    <div class="sent-message">Your message has been sent. Thank you!</div>
-                  </div>
-                    -->
             </form>
         </div>
     </div>

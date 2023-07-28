@@ -17,7 +17,7 @@ export class HomeService {
   }
 
   getOpinionesCursosPortada():Observable<any> {
-    return this.http.get<any>(this.url_api + '/valoraciones?size=3').pipe(map(res => res._embedded.valoraciones))
+    return this.http.get<any>(this.url_api + '/valoraciones/search/selectLastOpinions').pipe(map(res => res._embedded.valoraciones))
   }
 
   getCursosUltimasPortada():Observable<any> {
@@ -26,5 +26,9 @@ export class HomeService {
 
   getCategoriasPortada():Observable<any> {
     return this.http.get<any>(this.url_api + '/categorias?sort=nombre&size=' + this.limite_portada).pipe(map(res => res._embedded.categorias))
+  }
+  
+  getValoracionPorId(id:number):Observable<any> {
+    return this.http.get<any>(this.url_api + '/valoraciones/'+id).pipe(map(res => res))
   }
 }

@@ -1,0 +1,20 @@
+<div class="container pagina-datos">
+    <h1>Búsqueda de nuestros cursos: <span class="destacar-palabra">{{query_string}}</span></h1>
+        <div *ngIf="!cursos || cursos.length < 1" class="sin-resultados">
+            No hay resultados para el texto indicado, revise o refine la palabra de búsqueda...
+            <p>
+                <a [routerLink]="['/home']">volver al inicio</a>
+            </p>
+        </div>
+        <section class="listado-categorias" *ngFor="let curso of cursos; let i = index" >
+            <div>
+            <h2>{{ curso.titulo}}</h2>
+            </div>
+            <div>
+                {{ curso.descripcion }}
+                <a [routerLink]="['/curso', curso.id]" class=""><span>detalle del curso</span><i
+                    class="bi bi-arrow-right"></i></a>
+            </div>
+        </section>
+   
+</div>

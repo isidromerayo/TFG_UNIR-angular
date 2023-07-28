@@ -2,7 +2,7 @@
     <h1>{{ curso.titulo }}</h1>
     <section class="detalle-curso">
             <p>{{ curso.descripcion }}</p>
-            <p class="description">valoración: <b>{{ curso.valoracionMedia }}/5</b></p> 
+            <p class="description">Valoración: <b>{{ curso.valoracionMedia }}/5</b></p> 
             <p class="descripcion">Creado: {{ curso.fechaCreacion }}/ actualizado: {{ curso.fechaActualizacion }}</p>
             <p *ngIf="curso.instructor" class="info-instructor">Instructor: {{ curso.instructor.nombre }} {{ curso.instructor.apellidos }} <i>"{{ curso.instructor.descripcion}}"</i></p>
         
