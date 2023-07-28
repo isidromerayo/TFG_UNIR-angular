@@ -17,6 +17,7 @@ import { CategoriaComponent } from './components/categoria/categoria.component';
 import { CursoComponent } from './components/curso/curso.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
+import { ValoracionComponent } from './components/valoracion/valoracion.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { BusquedaComponent } from './components/busqueda/busqueda.component';
     CategoriaComponent,
     CursoComponent,
     BusquedaComponent,
+    ValoracionComponent,
   ],
   imports: [
     BrowserModule,

@@ -25,8 +25,12 @@
     padding: 2em !important;
 }
 
-.detalle-curso, .portada-cards {
+.detalle-curso, .portada-cards, .detalle_opinion {
     padding: 2.5em !important;
+}
+.sin-resultados {
+    padding: 1em 2em;
+    margin: 0.5em;
 }
 .sent-message {
     border: 1px cornflowerblue dotted;
@@ -37,7 +41,32 @@
     background-color: cornflowerblue;
     border-radius: 0.25em;
 }
+.datos-alumno {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #0d6efd;
+    padding-bottom: 0.5em;
+}
+.valoracion-puntos {
+    color: goldenrod;
+    font-weight: bold;
+}
+.fecha {
+    color: olivedrab;
+    font-weight: bold;
+    font-style: italic;
+}
 
+.info-comentario {
+    border: 0.1em #b52e31 solid;
+    font-style: italic;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    margin-bottom: 0.5em;
+}
+.info-valoracion {
+    margin-bottom: 0.5em;
+}
 .destacar-palabra {
     color: #778fe5;
     font-style: italic;

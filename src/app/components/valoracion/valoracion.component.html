@@ -1,0 +1,18 @@
+<div class="container pagina-datos">
+    <h1>Opinión</h1>
+    <section class="detalle_opinion">
+        <div *ngIf="alumno" class="datos-alumno">
+            {{ alumno.nombre }} {{ alumno.apellidos }}
+        </div>
+        <div *ngIf="valoracion" class="info-comentario">
+            {{ valoracion.comentario }}
+        </div>
+        <div class="info-valoracion">
+            Valoración <span class="valoracion-puntos">{{valoracion.puntuacion}}/5</span> / Fecha <span class="fecha">{{ valoracion.fecha}}</span>
+        </div>
+        <div *ngIf="curso" class="info-curso">
+            Curso de <a [routerLink]="['/curso', curso.id]" class=""><span class="">{{ curso.titulo }}</span></a> actualizado <span class="">{{ curso.fechaActualizacion}}</span> profesor/a <span *ngIf="curso.instructor">{{ curso.instructor.nombre + ' ' +  curso.instructor.apellidos  }}</span>
+        </div>
+    </section>
+</div>
+

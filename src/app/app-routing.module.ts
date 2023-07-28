@@ -9,6 +9,7 @@ import { AccesoComponent } from './components/acceso/acceso.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
 import { CursoComponent } from './components/curso/curso.component';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
+import { ValoracionComponent } from './components/valoracion/valoracion.component';
 
 const routes: Routes = [
   {path:'home', component: HomeComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path:'categorias', component: CategoriasComponent},
   {path:'categoria/:id', component: CategoriaComponent},
   {path:'curso/:id', component: CursoComponent},
+  {path:'valoracion/:id', component: ValoracionComponent},
   {path: 'buscar/:search', component: BusquedaComponent},
   {path:'carrito', component: CarritoComponent},
   {path:'acceso', component: AccesoComponent},

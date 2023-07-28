@@ -27,4 +27,8 @@ export class HomeService {
   getCategoriasPortada():Observable<any> {
     return this.http.get<any>(this.url_api + '/categorias?sort=nombre&size=' + this.limite_portada).pipe(map(res => res._embedded.categorias))
   }
+  
+  getValoracionPorId(id:number):Observable<any> {
+    return this.http.get<any>(this.url_api + '/valoraciones/'+id).pipe(map(res => res))
+  }
 }
