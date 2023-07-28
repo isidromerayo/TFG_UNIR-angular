@@ -14,24 +14,19 @@ export class HomeComponent {
     actualizaciones:any[] = [];
 
     constructor(public servicio: HomeService) {
-      /*
        servicio.getCursosDestacadosPortada().subscribe({next: (respuesta): void => {
         this.cursos = respuesta;
       }})
-      */
       servicio.getOpinionesCursosPortada().subscribe({next: (respuesta): void => {
         this.opiniones=respuesta
-        console.log(respuesta)
       }, error: (err) => {
         console.error("getOpinionesCursosPortada")
       }})
-      /*
       servicio.getCursosUltimasPortada().subscribe({
         next: (respuesta): void => { 
             this.actualizaciones = respuesta;
         },
         error: (err) => { console.error(err)  },
       })
-      */
     }
 }

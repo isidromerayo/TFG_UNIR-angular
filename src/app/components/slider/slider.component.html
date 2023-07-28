@@ -8,8 +8,8 @@
                     quisquam. eius quos reiciendis eum vel eum voluptatem eum maiores eaque id optio ullam occaecati
                     odio est
                     possimus vel reprehenderit</p>
-                <form action="#" class="form-search d-flex align-items-stretch mb-3">
-                    <input type="text" class="form-control" placeholder="nombre del curso"
+                <form #searchFomr="ngForm" (ngSubmit)="goSearch()" class="form-search d-flex align-items-stretch mb-3">
+                    <input type="text" class="form-control" [(ngModel)]="query_string" name="search" placeholder="nombre del curso"
                         aria-label="buscador de cursos" />
                     <button type="submit" class="btn btn-primary">Buscar</button>
                 </form>
