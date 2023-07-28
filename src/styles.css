@@ -38,6 +38,11 @@
     border-radius: 0.25em;
 }
 
+.destacar-palabra {
+    font-weight: bold; color: cadetblue;
+    font-style: italic;
+}
+
 .info-instructor {
     border: 1px #b52e31 dotted;
     padding: 0.5em 1em;

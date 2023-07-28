@@ -16,6 +16,7 @@ import { AccesoComponent } from './components/acceso/acceso.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
 import { CursoComponent } from './components/curso/curso.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BusquedaComponent } from './components/busqueda/busqueda.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AccesoComponent,
     CategoriaComponent,
     CursoComponent,
+    BusquedaComponent,
   ],
   imports: [
     BrowserModule,

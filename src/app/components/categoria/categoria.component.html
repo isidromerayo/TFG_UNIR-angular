@@ -1,5 +1,5 @@
 <div class="container pagina-datos">
-    <h1>Categoria <span style="font-weight: bold; color: cadetblue;">{{categoria.nombre}}</span>, sus cursos...</h1>
+    <h1>Categoria <span class="destacar-palabra">{{categoria.nombre}}</span>, sus cursos...</h1>
     <div *ngIf="categoria_cursos.length > 0; else sinResultado">
     <section class="listado-categorias" *ngFor="let curso of categoria_cursos">
         <div>
