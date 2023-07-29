@@ -31,6 +31,7 @@
 .sin-resultados {
     padding: 1em 2em;
     margin: 0.5em;
+    font-size: 1.2em;
 }
 .mensaje-add-carrito {
     border: 1px green dotted;
@@ -77,7 +78,9 @@
     color: #778fe5;
     font-style: italic;
 }
-
+.destacar-info {
+    font-weight: bolder;
+}
 .info-instructor {
     border: 1px #b52e31 dotted;
     padding: 0.5em 1em;
@@ -106,6 +109,15 @@
 
 .signup-form-button {
     padding-top: 1em;
+}
+
+.borrar-curso-carrito {
+    margin-left: 1em;
+}
+.total-carrito {
+    color: #000;
+    font-style: italic;
+    font-size: 1.2em;
 }
 .navbar .get-a-quote,
 .navbar .get-a-quote:focus {

@@ -14,4 +14,15 @@ export class CarritoComponent {
   constructor(public carrito: CarritoService, private _route: ActivatedRoute, private _router: Router){
   }
   
+  emptyCarritoCursos():boolean {
+    return this.carrito.isEmpty()
+  }
+  totalCosteCursos():number{
+    const result = this.carrito.totalCart()
+    return result;
+  }
+
+  eliminarCurso(curso_id:number):void {
+    this.carrito.deleteCurso(curso_id)
+  }
 }

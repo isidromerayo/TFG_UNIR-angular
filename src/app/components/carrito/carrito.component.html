@@ -1,10 +1,17 @@
 <div class="pagina-datos container">
     <h1>Carrito</h1>
     <section class="detalle-curso">
-        <div>
+        <div *ngIf="emptyCarritoCursos()" class="sin-resultados">
+            No hay productos en el carrito
+            </div>
+        <div *ngIf="!emptyCarritoCursos()">
+            <div>
             <ul *ngFor="let item of myCart$ | async">
-                <li>{{ item.titulo }} - {{ item.precio}}</li>
+                <li>{{ item.titulo }} - {{ item.precio}} <button class="btn btn-warning borrar-curso-carrito" (click)="eliminarCurso(item.id)">borrar</button></li>
             </ul>
+            </div>
+            <div class="total-carrito">Total: <span class="destacar-info">{{ totalCosteCursos() }}</span></div>    
         </div>
+        
     </section>
 </div>

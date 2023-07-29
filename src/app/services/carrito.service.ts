@@ -12,7 +12,7 @@ export class CarritoService {
 
   constructor() { }
 
-  addCurso(curso:any) {
+  addCurso(curso:any):void {
     if (this.myList.length == 0) {
       this.myList.push(curso)
       this.myCart.next(this.myList)
@@ -25,7 +25,18 @@ export class CarritoService {
         this.myCart.next(this.myList)
       }
     }
-    
-    
+  }
+  deleteCurso(id: number):void {
+    this.myList = this.myList.filter((curso) => {
+      return curso.id != id
+    })
+    this.myCart.next(this.myList)
+  }
+  totalCart():number {
+    const total = this.myList.reduce(function(acc,curso){ return acc + (curso.precio)},0)
+    return total;
+  }
+  isEmpty():boolean {
+    return (this.myList.length == 0)
   }
 }
