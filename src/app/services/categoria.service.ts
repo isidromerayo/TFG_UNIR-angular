@@ -16,11 +16,11 @@ export class CategoriaService {
     return this.http.get<any>(`${this.url_api}/categorias?sort=nombre`).pipe(map(res => res._embedded.categorias))
   }
   getCategoriaId(id:number):Observable<any> {
-    return this.http.get<any>(this.url_api + '/categorias/'+id);
+    return this.http.get<any>(`${this.url_api}/categorias/${id}`);
   }
 
   getCategoriaIdCursos(id:number):Observable<any> {
-    return this.http.get<any>(this.url_api + '/categorias/'+id+'/cursos').pipe(map(res => res._embedded.cursos));
+    return this.http.get<any>(`${this.url_api}/categorias/${id}/cursos`).pipe(map(res => res._embedded.cursos));
   }
 
 

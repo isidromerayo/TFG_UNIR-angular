@@ -13,6 +13,6 @@ export class UsuarioService {
   constructor(private http: HttpClient) { }
 
   crear(usuarioNew: Usuario):Observable<any> {
-    return this.http.post<Usuario>(this.url_api + '/usuarios',usuarioNew);
+    return this.http.post<Usuario>(`${this.url_api}/usuarios`,usuarioNew);
   }
 }
