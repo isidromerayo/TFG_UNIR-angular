@@ -1,10 +1,14 @@
 <div class="container pagina-datos">
     <h1>{{ curso.titulo }}</h1>
+    <div *ngIf="add_curso" class="mensaje-add-carrito">
+        Producto añadido al carrito
+    </div>
     <section class="detalle-curso">
             <p>{{ curso.descripcion }}</p>
             <p class="description">Valoración: <b>{{ curso.valoracionMedia }}/5</b></p> 
+            <p class="description">Precio {{curso.precio}} </p>
             <p class="descripcion">Creado: {{ curso.fechaCreacion }}/ actualizado: {{ curso.fechaActualizacion }}</p>
             <p *ngIf="curso.instructor" class="info-instructor">Instructor: {{ curso.instructor.nombre }} {{ curso.instructor.apellidos }} <i>"{{ curso.instructor.descripcion}}"</i></p>
-        
+            <p><button type="button" (click)="addCarritoCurso(curso)" class="btn btn-primary borrar-form">Comprar curso</button></p>
     </section>
 </div>
