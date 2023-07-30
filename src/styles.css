@@ -103,12 +103,25 @@
 .borrar-form {
     margin-left: 1em;
 }
+
 .signup-form {
     padding: 1em 2em;
 }
-
 .signup-form-button {
     padding-top: 1em;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    margin: 0 auto;
+}
+.btn-login {
+    width: 100%;
+}
+
+.form-signin > div {
+    padding: 0.5em 1em;
 }
 
 .borrar-curso-carrito {
