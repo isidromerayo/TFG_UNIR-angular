@@ -12,7 +12,7 @@
     <nav id="navbar" class="navbar">
       <ul>
         <li><a [routerLink]="['/home']" routerLinkActive="active">Home</a></li>
-        <li class="dropdown" *ngIf="isLogin()"><a [routerLink]="['/categorias']"
+        <li class="dropdown"><a [routerLink]="['/categorias']"
             routerLinkActive="active"><span>Categorias</span><i class="bi bi-chevron-down dropdown-indicator"></i></a>
           <ul>
             <li *ngFor="let categoria of categorias">
