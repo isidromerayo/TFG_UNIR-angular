@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CursoService } from 'src/app/services/curso.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CarritoService } from 'src/app/services/carrito.service';
+import Swal from 'sweetalert2';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-curso',
@@ -33,7 +35,7 @@ export class CursoComponent {
 
   addCarritoCurso(curso:any) {
     this.carrito.addCurso(curso)
-    this.add_curso=true;
+    Swal.fire('Carrito','Curso añadido correctamente');
   }
   
 }

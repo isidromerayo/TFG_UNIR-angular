@@ -136,6 +136,9 @@
 .iconos-menu {
     font-size: 1.1em !important;
 }
+.boton-comprar {
+    padding: 2em;
+}
 .navbar .get-a-quote,
 .navbar .get-a-quote:focus {
   background: #000;

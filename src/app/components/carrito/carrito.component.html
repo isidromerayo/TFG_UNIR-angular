@@ -3,15 +3,24 @@
     <section class="detalle-curso">
         <div *ngIf="emptyCarritoCursos()" class="sin-resultados">
             No hay productos en el carrito
-            </div>
+        </div>
         <div *ngIf="!emptyCarritoCursos()">
             <div>
-            <ul *ngFor="let item of myCart$ | async">
-                <li>{{ item.titulo }} - {{ item.precio}} <button class="btn btn-warning borrar-curso-carrito" (click)="eliminarCurso(item.id)">borrar</button></li>
-            </ul>
+                <h2>Cursos a comprar</h2>
+                <ul *ngFor="let item of myCart$ | async">
+                    <li>{{ item.titulo }} - {{ item.precio}} <button class="btn btn-warning borrar-curso-carrito"
+                            (click)="eliminarCurso(item.id)">borrar</button></li>
+                </ul>
             </div>
-            <div class="total-carrito">Total: <span class="destacar-info">{{ totalCosteCursos() }}</span></div>    
+            <div class="total-carrito">Total: <span class="destacar-info">{{ totalCosteCursos() }}</span></div>
+            <div class="boton-comprar">
+                <button class="btn btn-primary" (click)="iniciarCompra.fire()">comprar</button>
+                <swal #iniciarCompra title="¿Estas seguro de realizar la compra?" text="No se puede deshacer"
+                    icon="question" [showCancelButton]="true" [focusCancel]="true" (confirm)="comprar()">
+                </swal>
+
+            </div>
         </div>
-        
+
     </section>
 </div>

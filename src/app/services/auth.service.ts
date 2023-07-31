@@ -41,6 +41,9 @@ export class AuthService {
     localStorage.setItem('nombre_apellidos',auth.fullname);
     localStorage.setItem('token',auth.token);
   }
+  isLoginUser():boolean {
+    return (localStorage.getItem('isLoggedIn')=='true') ? true:false;
+  }
 
   logout(): void {
     localStorage.setItem('isLoggedIn','false');    
