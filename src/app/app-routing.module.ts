@@ -10,6 +10,9 @@ import { CategoriaComponent } from './components/categoria/categoria.component';
 import { CursoComponent } from './components/curso/curso.component';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { ValoracionComponent } from './components/valoracion/valoracion.component';
+import { MisCursosComponent } from './components/mis-cursos/mis-cursos.component';
+import { AutenticacionGuard } from './autenticacion.guard';
+import { MisDatosComponent } from './components/mis-datos/mis-datos.component';
 
 const routes: Routes = [
   {path:'home', component: HomeComponent},
@@ -21,6 +24,8 @@ const routes: Routes = [
   {path: 'buscar/:search', component: BusquedaComponent},
   {path:'carrito', component: CarritoComponent},
   {path:'acceso', component: AccesoComponent},
+  {path:'mis-datos', component: MisDatosComponent,canActivate:[AutenticacionGuard]},
+  {path:'mis-cursos', component: MisCursosComponent,canActivate:[AutenticacionGuard]},
   {path:'', redirectTo: '/home', pathMatch: 'full'},
   {path:'**', component: NoEncontradoComponent},
 ];

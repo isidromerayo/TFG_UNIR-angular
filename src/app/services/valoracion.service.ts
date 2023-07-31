@@ -11,14 +11,14 @@ export class ValoracionService {
   constructor(private http: HttpClient) { }
 
   getValoracionPorId(id:number):Observable<any> {
-    return this.http.get<any>(this.url_api + '/valoraciones/'+id).pipe(map(res => res))
+    return this.http.get<any>(`${this.url_api}/valoraciones/${id}`).pipe(map(res => res))
   }
 
   getValoracionPorIdCurso(id:number):Observable<any> {
-    return this.http.get<any>(this.url_api + '/valoraciones/'+id+'/curso').pipe(map(res => res))
+    return this.http.get<any>(`${this.url_api}/valoraciones/${id}/curso`).pipe(map(res => res))
   }
 
   getValoracionPorIdUsuario(id:number):Observable<any> {
-    return this.http.get<any>(this.url_api + '/valoraciones/'+id+'/estudiante').pipe(map(res => res))
+    return this.http.get<any>(`${this.url_api}/valoraciones/${id}/estudiante`).pipe(map(res => res))
   }
 }

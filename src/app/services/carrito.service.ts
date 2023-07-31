@@ -39,4 +39,9 @@ export class CarritoService {
   isEmpty():boolean {
     return (this.myList.length == 0)
   }
+  
+  clean():void {
+    this.myList = []
+    this.myCart.next(this.myList)
+  }
 }
