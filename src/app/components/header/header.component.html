@@ -1,31 +1,42 @@
 <header id="header" class="header d-flex align-items-center fixed-top color-angular-rojo">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-  
-      <a [routerLink]="['/home']" class="logo d-flex align-items-center">
-        <img src="assets/img/angular.svg" alt="Logo Angular" class="unir-logo" />
-        <img src="assets/img/Unir_2021_logo.svg" alt="Logo UNIR" class="unir-logo" />
-        <h1>TFG - FFJ: AEP</h1>
-      </a>
-  
-      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
-      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a [routerLink]="['/home']" routerLinkActive="active">Home</a></li>
-          <li class="dropdown"><a [routerLink]="['/categorias']" routerLinkActive="active"><span>Categorias</span><i class="bi bi-chevron-down dropdown-indicator"></i></a>
-            <ul>
-              <li *ngFor="let categoria of categorias">
-                <a [routerLink]="['/categoria', categoria.id]">{{ categoria.nombre }}</a>
-              </li>
-              <li><a [routerLink]="['/categorias']" routerLinkActive="active">...</a></li>
-            </ul>
-          </li>
-          <li><a [routerLink]="['/carrito']" routerLinkActive="active" title="carrito de la compra"><i class="bi bi-cart4" title="carito de la compra" aria-hidden="true"> carrito</i></a></li>
-          <li><a [routerLink]="['/registro']" routerLinkActive="active">Registro</a></li>
-          <li><a [routerLink]="['/acceso']" routerLinkActive="active" class="get-a-quote">Acceso</a></li>
-  
-        </ul>
-      </nav>
-  
-    </div>
-  </header>
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+    <a [routerLink]="['/home']" class="logo d-flex align-items-center">
+      <img src="assets/img/angular.svg" alt="Logo Angular" class="unir-logo" />
+      <img src="assets/img/Unir_2021_logo.svg" alt="Logo UNIR" class="unir-logo" />
+      <h1>TFG - FFJ: AEP</h1>
+    </a>
+
+    <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+    <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a [routerLink]="['/home']" routerLinkActive="active">Home</a></li>
+        <li class="dropdown" *ngIf="isLogin()"><a [routerLink]="['/categorias']"
+            routerLinkActive="active"><span>Categorias</span><i class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <ul>
+            <li *ngFor="let categoria of categorias">
+              <a [routerLink]="['/categoria', categoria.id]">{{ categoria.nombre }}</a>
+            </li>
+            <li><a [routerLink]="['/categorias']" routerLinkActive="active">...</a></li>
+          </ul>
+        </li>
+        <li><a [routerLink]="['/carrito']" routerLinkActive="active" title="carrito de la compra"><i class="bi bi-cart4"
+              title="carito de la compra" aria-hidden="true"> carrito</i></a></li>
+        <li><a [routerLink]="['/registro']" routerLinkActive="active">Registro</a></li>
+        <li *ngIf="!isLogin()"><a [routerLink]="['/acceso']" routerLinkActive="active" class="get-a-quote">Acceso</a>
+        </li>
+        <li class="dropdown" *ngIf="isLogin()"><a [routerLink]="['/mis-datos']"
+            routerLinkActive="active"><span><i class="bi bi-file-person iconos-menu"> Privado</i></span><i class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <ul>
+            <li><a [routerLink]="['/mis-datos']" routerLinkActive="active">Mis datos</a></li>
+            <li><a [routerLink]="['/mis-cursos']" routerLinkActive="active">Mis cursos</a></li>
+            <li><a href="#" (click)="logout()">Desconectar</a></li>
+          </ul>
+        </li>
+      </ul>
+
+    </nav>
+
+  </div>
+</header>
