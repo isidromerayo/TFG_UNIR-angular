@@ -1,8 +1,4 @@
 <div class="container pagina-datos">
-
-    <div class="col-lg-8" *ngIf="submitted">
-        <div class="sent-message">{{message_process}}</div>
-    </div>
     <div class="col-lg-8">
         <form name="registro" #f="ngForm" (ngSubmit)="crearUsuario(f)" class="signup-form">
             <h1 class="title">Registro de usuario</h1>
