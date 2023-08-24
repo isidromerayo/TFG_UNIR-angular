@@ -4,7 +4,6 @@ import { LoginUsuario } from 'src/app/model/login-usuario';
 import { UsuarioAuth } from 'src/app/model/usuario-auth';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
-import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-acceso',
@@ -17,7 +16,7 @@ export class AccesoComponent {
 
   usuario_auth: UsuarioAuth = {} as UsuarioAuth;
 
-  constructor(private servicioLogin:AuthService, private router:Router) {
+  constructor(private servicioLogin:AuthService, private router:Router ) {
 
   }
 
