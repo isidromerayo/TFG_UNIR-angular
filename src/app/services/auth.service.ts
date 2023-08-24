@@ -3,7 +3,7 @@ import { LoginUsuario } from '../model/login-usuario';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { UsuarioAuth } from '../model/usuario-auth';
-import { TOKEN, USER } from '../utils/constants';
+import { API_URL, TOKEN, USER } from '../utils/constants';
 
 type Nullable<T> = T | undefined | null;
 
@@ -12,12 +12,10 @@ type Nullable<T> = T | undefined | null;
 })
 export class AuthService {
 
-  url_api: string = "http://localhost:8080/api";
-
   constructor(private http: HttpClient) { }
 
   login(creds: LoginUsuario):Observable<any> {
-    return this.http.post<LoginUsuario>(`${this.url_api}/auth`,creds, {observe: "response"})
+    return this.http.post<LoginUsuario>(`${API_URL}/auth`,creds, {observe: "response"})
       .pipe(map((response: HttpResponse<any>) => {
           const body = response.body
           const headers = response.headers
