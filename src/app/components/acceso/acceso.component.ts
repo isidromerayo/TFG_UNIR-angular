@@ -24,7 +24,6 @@ export class AccesoComponent {
   loginUsuario() {
     this.servicioLogin.login(this.login_usuario).subscribe({
       next: (respuesta) => {
-        console.log(respuesta)
         this.usuario_auth = respuesta;
         this.servicioLogin.register(respuesta)
         // mensaje de OK y redireccionar a parte privada

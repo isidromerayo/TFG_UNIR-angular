@@ -16,7 +16,6 @@ export class AuthService {
   login(creds: LoginUsuario):Observable<any> {
     return this.http.post<LoginUsuario>(`${this.url_api}/auth`,creds, {observe: "response"})
       .pipe(map((response: HttpResponse<any>) => {
-        console.log(response);
           const body = response.body
           const headers = response.headers
 
