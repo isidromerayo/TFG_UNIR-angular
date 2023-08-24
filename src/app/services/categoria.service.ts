@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { API_URL } from '../utils/constants';
 
 
 @Injectable({
@@ -8,19 +9,17 @@ import { Observable, map } from 'rxjs';
 })
 export class CategoriaService {
 
-  url_api: string = "http://localhost:8080/api";
-
   constructor(private http: HttpClient) { }
 
   getAllCategorias():Observable<any> {
-    return this.http.get<any>(`${this.url_api}/categorias?sort=nombre`).pipe(map(res => res._embedded.categorias))
+    return this.http.get<any>(`${API_URL}/categorias?sort=nombre`).pipe(map(res => res._embedded.categorias))
   }
   getCategoriaId(id:number):Observable<any> {
-    return this.http.get<any>(`${this.url_api}/categorias/${id}`);
+    return this.http.get<any>(`${API_URL}/categorias/${id}`);
   }
 
   getCategoriaIdCursos(id:number):Observable<any> {
-    return this.http.get<any>(`${this.url_api}/categorias/${id}/cursos`).pipe(map(res => res._embedded.cursos));
+    return this.http.get<any>(`${API_URL}/categorias/${id}/cursos`).pipe(map(res => res._embedded.cursos));
   }
 
 

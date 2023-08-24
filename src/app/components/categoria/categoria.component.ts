@@ -27,7 +27,6 @@ export class CategoriaComponent {
       this.servicio.getCategoriaIdCursos(id).subscribe({
         next: (respuesta): void => {
           this.categoria_cursos = respuesta
-          console.log(respuesta)
         },
         error: (err) => { console.error(err) }
       });

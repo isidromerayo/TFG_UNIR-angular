@@ -3,43 +3,46 @@ import { LoginUsuario } from '../model/login-usuario';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { UsuarioAuth } from '../model/usuario-auth';
+import { API_URL, TOKEN, USER } from '../utils/constants';
+
+type Nullable<T> = T | undefined | null;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  url_api: string = "http://localhost:8080/api";
-
   constructor(private http: HttpClient) { }
 
   login(creds: LoginUsuario):Observable<any> {
-    return this.http.post<LoginUsuario>(`${this.url_api}/auth`,creds, {observe: "response"})
+    return this.http.post<LoginUsuario>(`${API_URL}/auth`,creds, {observe: "response"})
       .pipe(map((response: HttpResponse<any>) => {
-        console.log(response);
           const body = response.body
           const headers = response.headers
 
           const bearerToken = headers.get('Authorization');
           const token = bearerToken?.replace('Bearer ','');
 
-          localStorage.setItem('token', token as string);
+          localStorage.setItem(TOKEN, token as string);
 
           return body;
       }))
     
   }
 
-  getToken() {
-    return localStorage.getItem('token');
+  getToken():string {
+    return localStorage.getItem(TOKEN) as string;
+  }
+
+  getUser():string {
+    return JSON.parse(localStorage.getItem(USER) as string);
   }
 
   register(auth: UsuarioAuth):void {
     localStorage.setItem('isLoggedIn','true');
-    localStorage.setItem('usuario',auth.username);
-    localStorage.setItem('id',auth.id)
-    localStorage.setItem('nombre_apellidos',auth.fullname);
-    localStorage.setItem('token',auth.token);
+    localStorage.setItem(TOKEN,auth.token);
+    localStorage.setItem(USER,JSON.stringify(auth));
+    
   }
   isLoginUser():boolean {
     return (localStorage.getItem('isLoggedIn')=='true') ? true:false;
@@ -47,8 +50,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.setItem('isLoggedIn','false');    
-    localStorage.removeItem('usuario');    
-    localStorage.removeItem('nombre_apellidos');    
-    localStorage.removeItem('token');    
+    localStorage.removeItem(USER);    
+    localStorage.removeItem(TOKEN);    
   }
 }

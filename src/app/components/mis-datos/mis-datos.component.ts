@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-mis-datos',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./mis-datos.component.css']
 })
 export class MisDatosComponent {
+  
+  usuario: any = {}
 
+  constructor(private servicioLogin:AuthService) {
+      this.usuario = servicioLogin.getUser()
+  }
 }
