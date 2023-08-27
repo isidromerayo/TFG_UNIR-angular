@@ -31,13 +31,21 @@ export class CarritoComponent {
 
   comprar() {
     if(this.servicioLogin.isLoginUser()) {
-      // TODO
-      // validamos compra
-      // añadimos los cursos a mis cursos
+      Swal.fire({
+        title: '¿Estas seguro de realizar la compra?',
+        text: "No se puede deshacer",
+        showCancelButton: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log("inicio de transacción de compra")
+          this.carrito.clean()
+          this.router.navigate(["/mis-cursos"])
+          Swal.fire('Compra','Procesada la compra correctamente');
+        }
+      }).catch((error) => {
+        console.log(error)
+      });
 
-      Swal.fire('Compra','Procesada la compra correctamente');
-      this.carrito.clean()
-      this.router.navigate(["/mis-cursos"])
     } 
     else {
       Swal.fire('Compra','Debe estar logeado para realizar la compra');
