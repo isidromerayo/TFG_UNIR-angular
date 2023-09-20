@@ -1,14 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { autenticacionGuard } from './autenticacion.guard';
+import { AutenticacionGuard } from './autenticacion.guard';
+import { UsuarioAuth } from './model/usuario-auth';
 
 describe('autenticacionGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => autenticacionGuard(...guardParameters));
+      TestBed.runInInjectionContext(() => AutenticacionGuard(...guardParameters));
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [UsuarioAuth],
+      providers: [],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+    }).compileComponents();
   });
 
   it('should be created', () => {
