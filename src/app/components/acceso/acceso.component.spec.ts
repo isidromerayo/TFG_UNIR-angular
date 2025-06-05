@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AccesoComponent } from './acceso.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AccesoComponent', () => {
   let component: AccesoComponent;
@@ -9,10 +10,10 @@ describe('AccesoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AccesoComponent],
-      imports: [FormsModule, HttpClientTestingModule],
-      providers: [],
-    }).compileComponents();
+    declarations: [AccesoComponent],
+    imports: [FormsModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
   });
 
   beforeEach(() => {

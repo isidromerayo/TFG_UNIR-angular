@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { CarritoService } from './carrito.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CarritoService', () => {
   let service: CarritoService;
@@ -10,12 +11,14 @@ describe('CarritoService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
-        CarritoService
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
-    });
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+    imports: [],
+    providers: [
+        CarritoService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
   });
 
   beforeEach(() => {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,33 +22,26 @@ import { MisCursosComponent } from './components/mis-cursos/mis-cursos.component
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { MisDatosComponent } from './components/mis-datos/mis-datos.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    SliderComponent,
-    HomeComponent,
-    RegistroComponent,
-    NoEncontradoComponent,
-    CategoriasComponent,
-    CarritoComponent,
-    AccesoComponent,
-    CategoriaComponent,
-    CursoComponent,
-    BusquedaComponent,
-    ValoracionComponent,
-    MisCursosComponent,
-    MisDatosComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    SweetAlert2Module.forRoot()
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+        SliderComponent,
+        HomeComponent,
+        RegistroComponent,
+        NoEncontradoComponent,
+        CategoriasComponent,
+        CarritoComponent,
+        AccesoComponent,
+        CategoriaComponent,
+        CursoComponent,
+        BusquedaComponent,
+        ValoracionComponent,
+        MisCursosComponent,
+        MisDatosComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        SweetAlert2Module.forRoot()], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

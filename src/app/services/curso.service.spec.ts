@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { CursoService } from './curso.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 
 describe('CursoService', () => {
@@ -11,12 +12,14 @@ describe('CursoService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
-        CursoService
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
-    });
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+    imports: [],
+    providers: [
+        CursoService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
   });
   
   beforeEach(() => {
