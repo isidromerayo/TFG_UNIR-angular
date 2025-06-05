@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ValoracionComponent } from './valoracion.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ValoracionService } from 'src/app/services/valoracion.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ValoracionComponent', () => {
   let component: ValoracionComponent;
@@ -13,12 +14,14 @@ describe('ValoracionComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule,Router,ActivatedRoute,ValoracionService],
-      providers: [
-        ValoracionComponent
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
-    });
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+    imports: [Router, ActivatedRoute, ValoracionService],
+    providers: [
+        ValoracionComponent,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
   });
 
   beforeEach(() => {
