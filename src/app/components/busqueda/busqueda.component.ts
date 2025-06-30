@@ -3,9 +3,10 @@ import { CursoService } from 'src/app/services/curso.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-busqueda',
-  templateUrl: './busqueda.component.html',
-  styleUrls: ['./busqueda.component.css']
+    selector: 'app-busqueda',
+    templateUrl: './busqueda.component.html',
+    styleUrls: ['./busqueda.component.css'],
+    standalone: false
 })
 export class BusquedaComponent {
 

@@ -3,9 +3,10 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ValoracionService } from 'src/app/services/valoracion.service';
 
 @Component({
-  selector: 'app-valoracion',
-  templateUrl: './valoracion.component.html',
-  styleUrls: ['./valoracion.component.css']
+    selector: 'app-valoracion',
+    templateUrl: './valoracion.component.html',
+    styleUrls: ['./valoracion.component.css'],
+    standalone: false
 })
 
 export class ValoracionComponent {

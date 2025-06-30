@@ -6,9 +6,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-acceso',
-  templateUrl: './acceso.component.html',
-  styleUrls: ['./acceso.component.css']
+    selector: 'app-acceso',
+    templateUrl: './acceso.component.html',
+    styleUrls: ['./acceso.component.css'],
+    standalone: false
 })
 export class AccesoComponent {
 

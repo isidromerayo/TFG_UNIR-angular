@@ -6,9 +6,10 @@ import Swal from 'sweetalert2';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
-  selector: 'app-carrito',
-  templateUrl: './carrito.component.html',
-  styleUrls: ['./carrito.component.css']
+    selector: 'app-carrito',
+    templateUrl: './carrito.component.html',
+    styleUrls: ['./carrito.component.css'],
+    standalone: false
 })
 export class CarritoComponent {
 
