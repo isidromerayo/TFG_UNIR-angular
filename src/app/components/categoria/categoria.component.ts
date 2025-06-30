@@ -3,9 +3,10 @@ import { CategoriaService } from 'src/app/services/categoria.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-categoria',
-  templateUrl: './categoria.component.html',
-  styleUrls: ['./categoria.component.css']
+    selector: 'app-categoria',
+    templateUrl: './categoria.component.html',
+    styleUrls: ['./categoria.component.css'],
+    standalone: false
 })
 export class CategoriaComponent {
 

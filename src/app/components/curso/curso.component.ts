@@ -6,9 +6,10 @@ import Swal from 'sweetalert2';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
-  selector: 'app-curso',
-  templateUrl: './curso.component.html',
-  styleUrls: ['./curso.component.css']
+    selector: 'app-curso',
+    templateUrl: './curso.component.html',
+    styleUrls: ['./curso.component.css'],
+    standalone: false
 })
 export class CursoComponent {
 

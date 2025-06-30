@@ -22,6 +22,7 @@ describe('ValoracionComponent', () => {
         provideHttpClientTesting()
     ]
 });
+  httpMock = TestBed.inject(HttpTestingController);
   });
 
   beforeEach(() => {
