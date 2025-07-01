@@ -14,4 +14,8 @@ export class UsuarioService {
   crear(usuarioNew: Usuario):Observable<any> {
     return this.http.post<Usuario>(`${API_URL}/usuarios`,usuarioNew);
   }
+
+  getCursos(id: number):Observable<any> {
+    return this.http.get<any>(`${API_URL}/usuarios/${id}/cursos`);
+  }
 }

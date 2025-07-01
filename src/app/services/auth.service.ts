@@ -34,8 +34,20 @@ export class AuthService {
     return localStorage.getItem(TOKEN) as string;
   }
 
-  getUser():string {
-    return JSON.parse(localStorage.getItem(USER) as string);
+  getUser():any {
+    const user = localStorage.getItem(USER);
+    console.log("Raw user from localStorage:", user);
+    if (user && user !== '') {
+      try {
+        const parsedUser = JSON.parse(user);
+        console.log("Parsed user from localStorage:", parsedUser);
+        return parsedUser;
+      } catch (e) {
+        console.error("Error parsing user data from localStorage", e);
+        return null;
+      }
+    }
+    return null;
   }
 
   register(auth: UsuarioAuth):void {

@@ -29,6 +29,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/sweetalert2/dist/sweetalert2.css",
               "src/styles.css"
             ],
             "scripts": [],
@@ -90,6 +91,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/sweetalert2/dist/sweetalert2.css",
               "src/assets/vendor/bootstrap/css/bootstrap.min.css",
               "src/assets/vendor/bootstrap-icons/bootstrap-icons.css",
               "src/assets/vendor/fontawesome-free/css/all.min.css",
