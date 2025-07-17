@@ -1,8 +1,12 @@
 <div class="pagina-datos container">
     <h1>Mis cursos</h1>
-    <section class="detalle-curso card">
-        <div>
-            
+    <section class="detalle-curso card" *ngIf="cursos.length > 0; else noCursos">
+        <div *ngFor="let curso of cursos">
+            <h2>{{curso.titulo}}</h2>
+            <p>{{curso.descripcion}}</p>
         </div>
     </section>
+    <ng-template #noCursos>
+        <p>No tienes cursos matriculados.</p>
+    </ng-template>
 </div>

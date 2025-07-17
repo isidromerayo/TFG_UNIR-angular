@@ -11,7 +11,7 @@ export class CursoService {
   constructor(private http: HttpClient) { }
 
   getCursoPorId(id:number):Observable<any> {
-    return this.http.get<any>(`${API_URL}cursos/${id}`).pipe(map(res => res))
+    return this.http.get<any>(`${API_URL}/cursos/${id}`).pipe(map(res => res))
   }
 
   search(query_string: string):Observable<any> {

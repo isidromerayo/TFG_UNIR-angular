@@ -37,11 +37,12 @@ import { MisDatosComponent } from './components/mis-datos/mis-datos.component';
         CursoComponent,
         BusquedaComponent,
         ValoracionComponent,
-        MisCursosComponent,
         MisDatosComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         FormsModule,
-        SweetAlert2Module.forRoot()], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        SweetAlert2Module.forRoot(),
+        MisCursosComponent
+    ], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
