@@ -26,7 +26,6 @@ describe('AuthenticationService', () => {
     httpMock = TestBed.inject(HttpTestingController);
 
     // limpiar storage
-    storage = {};
 
     /*spyOn(localStorage, 'getItem').and.callFake((key:string) => {
         return storage[key] ? storage[key] : null;
