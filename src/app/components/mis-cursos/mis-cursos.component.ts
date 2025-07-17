@@ -14,7 +14,7 @@ export class MisCursosComponent implements OnInit {
 
   cursos: any[] = [];
 
-  constructor(private usuarioService: UsuarioService, private authService: AuthService) { }
+  constructor(private readonly usuarioService: UsuarioService, private readonly authService: AuthService) { }
 
   ngOnInit(): void {
     const usuario = this.authService.getUser();

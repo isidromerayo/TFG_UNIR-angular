@@ -10,10 +10,10 @@ import { API_URL } from '../utils/constants';
 export class CarritoService {
 
   private myList:any[]=[];
-  private myCart = new BehaviorSubject<any[]>([]);
-  myCart$ = this.myCart.asObservable();
+  private readonly myCart = new BehaviorSubject<any[]>([]);
+  readonly myCart$ = this.myCart.asObservable();
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private readonly http: HttpClient, private readonly authService: AuthService) { }
 
   addCurso(curso:any):void {
     if (this.myList.length == 0) {
