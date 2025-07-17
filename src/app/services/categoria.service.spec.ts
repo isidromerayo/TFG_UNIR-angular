@@ -7,7 +7,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 describe('CategoriaService', () => {
   let service: CategoriaService;
-  
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
