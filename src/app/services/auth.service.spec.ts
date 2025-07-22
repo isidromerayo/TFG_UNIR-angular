@@ -23,8 +23,7 @@ describe('AuthenticationService', () => {
   });
   beforeEach(() => {
     service = TestBed.inject(AuthService);
-    httpMock = TestBed.inject(HttpTestingController);
-
+    
     // limpiar storage
 
     /*spyOn(localStorage, 'getItem').and.callFake((key:string) => {

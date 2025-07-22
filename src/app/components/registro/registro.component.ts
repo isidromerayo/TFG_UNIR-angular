@@ -17,11 +17,9 @@ export class RegistroComponent {
   submitted: boolean = false;
   message_process: string = "";
 
-  constructor(public servicio: UsuarioService, private route: ActivatedRoute, private router: Router) {
+  constructor(public servicio: UsuarioService, private readonly route: ActivatedRoute, private readonly router: Router) {
   }
 
-  ngOnInit(): void {
-  }
 
   onReset(formulario: any): void {
     formulario.form.reset();
