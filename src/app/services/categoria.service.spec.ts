@@ -23,7 +23,6 @@ describe('CategoriaService', () => {
 
   beforeEach(() => {
     service = TestBed.inject(CategoriaService);
-    httpMock = TestBed.inject(HttpTestingController);
 
   });
 
