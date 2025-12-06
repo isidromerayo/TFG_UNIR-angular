@@ -154,10 +154,31 @@ El proyecto sigue las mejores prácticas de Angular 20+. Ver `.agents/best-pract
 - ✅ Dependencias actualizadas a versiones seguras
 - ✅ Angular 20.3.15 (incluye parches de seguridad)
 
-### Auditoría
+### Auditoría y Mantenimiento
+
 ```bash
-pnpm audit  # Verificar vulnerabilidades
+# Auditoría de seguridad completa
+pnpm security
+
+# Auditoría básica
+pnpm audit
+
+# Verificar dependencias desactualizadas
+pnpm outdated
+
+# Actualizar dependencias (respetando semver)
+pnpm update
+
+# Actualizar a últimas versiones
+pnpm update --latest
+
+# Actualizar interactivamente
+pnpm update --interactive
 ```
+
+**Estado actual**: 0 vulnerabilidades, múltiples herramientas de auditoría configuradas
+
+⚠️ **Importante**: No confiar solo en `pnpm audit`. Ver [SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md)
 
 ### Autenticación
 - Guard implementado: `autenticacion.guard.ts`

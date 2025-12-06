@@ -48,14 +48,32 @@ For headless testing (CI/CD):
 
 Run `pnpm run cypress:open` to open Cypress test runner, or `pnpm run cypress:run` to execute the end-to-end tests in headless mode.
 
-## Security
+## 🔒 Security
 
-To check for vulnerabilities, run:
+### Auditoría de Seguridad
+
 ```bash
-pnpm audit
+# Auditoría completa multi-herramienta
+pnpm security
+
+# Verificar vulnerabilidades (pnpm audit)
+pnpm security:audit
+
+# Ver dependencias desactualizadas
+pnpm security:outdated
 ```
 
-All dependencies are currently up to date with no known vulnerabilities.
+⚠️ **Importante**: `pnpm audit` solo consulta la npm Advisory Database. Para una seguridad completa:
+- Revisar PRs de Snyk y Dependabot
+- Monitorear security advisories de paquetes críticos
+- Usar múltiples herramientas de auditoría
+
+**Estado actual**: ✅ 0 vulnerabilidades conocidas
+
+Ver documentación completa:
+- [SECURITY_SETUP.md](./SECURITY_SETUP.md) - Configuración de seguridad
+- [SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md) - Análisis de herramientas
+- [DEPENDENCY_UPDATE_GUIDE.md](./DEPENDENCY_UPDATE_GUIDE.md) - Guía de actualización
 
 ### Why pnpm?
 
