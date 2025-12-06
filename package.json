@@ -11,7 +11,9 @@
     "test-headless-cc": "ng test --watch=false --browsers=ChromeHeadless --code-coverage",
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "verify": "pnpm run test-headless && pnpm run build && pnpm audit",
+    "precommit": "pnpm run verify"
   },
   "private": true,
   "dependencies": {

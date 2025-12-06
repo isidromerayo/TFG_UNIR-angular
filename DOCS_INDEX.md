@@ -6,9 +6,13 @@
 **Para**: Todos los usuarios  
 **Contenido**: Introducción al proyecto, comandos básicos, instalación de pnpm
 
-### 🤖 [AGENTS.md](AGENTS.md) (9.7KB)
+### 🤝 [CONTRIBUTING.md](CONTRIBUTING.md) (4.5KB)
+**Para**: Contribuidores y desarrolladores  
+**Contenido**: Guía de contribución, flujo de trabajo, checklist pre-commit, guías de estilo
+
+### 🤖 [AGENTS.md](AGENTS.md) (11KB)
 **Para**: Agentes IA y desarrolladores  
-**Contenido**: Contexto completo del proyecto, arquitectura, guías de desarrollo, mejores prácticas
+**Contenido**: Contexto completo del proyecto, arquitectura, flujo de desarrollo, mejores prácticas
 
 ### ⚙️ [.agents/best-practices.md](.agents/best-practices.md) (2.3KB)
 **Para**: Agentes IA y desarrolladores  
@@ -40,9 +44,10 @@
 
 ### Para Nuevos Desarrolladores
 1. Leer [README.md](README.md)
-2. Leer [AGENTS.md](AGENTS.md) - Sección "Arquitectura del Proyecto"
-3. Revisar [.agents/best-practices.md](.agents/best-practices.md)
-4. Seguir [CHECKLIST_EQUIPO.md](CHECKLIST_EQUIPO.md) para setup
+2. Leer [CONTRIBUTING.md](CONTRIBUTING.md) - **IMPORTANTE**
+3. Leer [AGENTS.md](AGENTS.md) - Sección "Arquitectura del Proyecto"
+4. Revisar [.agents/best-practices.md](.agents/best-practices.md)
+5. Seguir [CHECKLIST_EQUIPO.md](CHECKLIST_EQUIPO.md) para setup
 
 ### Para Agentes IA
 1. **SIEMPRE** leer [.agents/best-practices.md](.agents/best-practices.md)

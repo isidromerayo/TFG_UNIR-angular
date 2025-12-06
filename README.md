@@ -64,12 +64,29 @@ All dependencies are currently up to date with no known vulnerabilities.
 - **Disk Space**: Content-addressable storage saves disk space
 - **Monorepo Support**: Better support for monorepo structures
 
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our development workflow and how to submit pull requests.
+
+### Quick Start for Contributors
+```bash
+pnpm install
+pnpm run test-headless  # Verify tests pass
+pnpm run build          # Verify build works
+```
+
 ## Migration to pnpm
 
 This project has been migrated from npm to pnpm. For detailed migration information, see:
 - `MIGRATION_TO_PNPM.md` - Complete migration guide
 - `CHANGELOG_PNPM.md` - Summary of changes
 - `migrate-to-pnpm.sh` - Automated migration script
+
+## Documentation
+
+- [DOCS_INDEX.md](DOCS_INDEX.md) - Complete documentation index
+- [AGENTS.md](AGENTS.md) - Project context for AI agents
+- [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines
 
 ## Further help
 
