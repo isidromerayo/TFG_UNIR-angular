@@ -12,6 +12,9 @@
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
+    "security": "./scripts/security-check.sh",
+    "security:audit": "pnpm audit",
+    "security:outdated": "pnpm outdated",
     "verify": "pnpm run test-headless && pnpm run build && pnpm audit",
     "precommit": "pnpm run verify"
   },
