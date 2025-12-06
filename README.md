@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.2.
 
-*Current version 20.x*
+**Current version: Angular 20.3.15**
 
 ## Development server
 
@@ -20,9 +20,22 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+For headless testing (CI/CD):
+- `npm run test-headless` - Run tests once in headless Chrome
+- `npm run test-headless-cc` - Run tests with code coverage
+
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `npm run cypress:open` to open Cypress test runner, or `npm run cypress:run` to execute the end-to-end tests in headless mode.
+
+## Security
+
+To check for vulnerabilities, run:
+```bash
+npm audit
+```
+
+All dependencies are currently up to date with no known vulnerabilities.
 
 ## Further help
 
