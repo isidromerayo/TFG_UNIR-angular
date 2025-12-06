@@ -1,0 +1,31 @@
+#!/bin/sh
+# Pre-commit hook example
+# To use: npm install husky --save-dev && npx husky install
+
+echo "🔍 Running pre-commit checks..."
+
+# Run tests
+echo "📝 Running tests..."
+pnpm run test-headless
+if [ $? -ne 0 ]; then
+  echo "❌ Tests failed. Commit aborted."
+  exit 1
+fi
+
+# Run build
+echo "🔨 Running build..."
+pnpm run build
+if [ $? -ne 0 ]; then
+  echo "❌ Build failed. Commit aborted."
+  exit 1
+fi
+
+# Run audit
+echo "🔒 Running security audit..."
+pnpm audit
+if [ $? -ne 0 ]; then
+  echo "⚠️  Security vulnerabilities found. Please review."
+fi
+
+echo "✅ All checks passed!"
+exit 0
