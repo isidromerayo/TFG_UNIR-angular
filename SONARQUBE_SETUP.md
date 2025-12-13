@@ -24,9 +24,6 @@ Patrones de archivos a ignorar completamente por SonarQube.
 ### Ejecutar Tests con Cobertura
 ```bash
 # Generar reporte de cobertura completo
-pnpm run test:coverage
-
-# Alternativa (mismo comando)
 pnpm run test-headless-cc
 ```
 
@@ -60,7 +57,7 @@ SONAR_HOST_URL=https://sonarcloud.io
   run: pnpm install
 
 - name: Run tests with coverage
-  run: pnpm run test:coverage
+  run: pnpm run test-headless-cc
 
 - name: SonarCloud Scan
   uses: SonarSource/sonarcloud-github-action@master
@@ -100,7 +97,7 @@ SONAR_HOST_URL=https://sonarcloud.io
 # Si los tests fallan, limpiar y reinstalar
 rm -rf node_modules coverage
 pnpm install
-pnpm run test:coverage
+pnpm run test-headless-cc
 ```
 
 ## Comandos de Verificación
@@ -110,10 +107,10 @@ pnpm run test:coverage
 cat sonar-project.properties
 
 # Verificar que LCOV se genera
-pnpm run test:coverage && ls -la coverage/frontend-angular/lcov.info
+pnpm run test-headless-cc && ls -la coverage/frontend-angular/lcov.info
 
 # Ver estadísticas de cobertura
-pnpm run test:coverage | grep "Coverage summary"
+pnpm run test-headless-cc | grep "Coverage summary"
 
 # Verificar estructura de archivos de cobertura
 ls -la coverage/frontend-angular/
@@ -156,7 +153,7 @@ git commit -m "descripción"
 ### Para Cobertura en CI/CD
 ```bash
 # Comando completo con cobertura
-pnpm run test:coverage && pnpm run build && pnpm audit
+pnpm run test-headless-cc && pnpm run build && pnpm audit
 ```
 
 ## Archivos Importantes
