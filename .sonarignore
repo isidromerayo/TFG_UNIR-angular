@@ -1,0 +1,19 @@
+# SonarQube ignore patterns for Angular project
+
+# Node modules and dependencies
+node_modules/
+dist/
+coverage/
+
+# Build artifacts
+*.min.js
+*.bundle.js
+
+# Angular specific
+src/environments/
+src/assets/
+src/polyfills.ts
+
+# Test files with acceptable hard-coded test data
+**/*.spec.ts
+**/*.test.ts
