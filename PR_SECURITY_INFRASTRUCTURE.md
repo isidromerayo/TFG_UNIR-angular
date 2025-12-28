@@ -34,6 +34,7 @@ Establecer una infraestructura de seguridad profesional que:
 │  - Dependabot (actualizaciones auto)     │
 │  - Snyk (detección avanzada)             │
 │  - OSV Scanner (Google)                  │
+│  - Trivy (filesystem scan)               │
 └─────────────────────────────────────────┘
               ↓
 ┌─────────────────────────────────────────┐
@@ -55,7 +56,7 @@ Características:
 - ✅ Ejecución diaria programada (2 AM UTC)
 - ✅ Ejecución en push a main y PRs
 - ✅ Ejecución manual (workflow_dispatch)
-- ✅ 5 herramientas de auditoría integradas
+- ✅ 6 herramientas de auditoría integradas
 - ✅ Generación de reportes JSON
 - ✅ Creación automática de issues para vulnerabilidades críticas
 - ✅ Comentarios automáticos en PRs
@@ -67,6 +68,7 @@ Herramientas integradas:
 3. **pnpm outdated** - Dependencias desactualizadas
 4. **Snyk** - Detección avanzada (opcional)
 5. **OSV Scanner** - Google Open Source Vulnerabilities (opcional)
+6. **Trivy** - Filesystem scan para vulnerabilidades y secretos
 
 #### 2. `scripts/security-check.sh`
 **Script local de auditoría multi-herramienta**
@@ -74,7 +76,7 @@ Herramientas integradas:
 Características:
 - ✅ Ejecutable localmente con `pnpm security`
 - ✅ Output con colores y formato visual
-- ✅ Múltiples herramientas de auditoría
+- ✅ Múltiples herramientas de auditoría (incluyendo Trivy)
 - ✅ Generación de reportes JSON
 - ✅ Resumen detallado con estadísticas
 - ✅ Código de salida apropiado para CI/CD
@@ -149,6 +151,16 @@ Nuevos scripts:
   "security:outdated": "pnpm outdated"
 }
 ```
+
+### Correcciones de Seguridad (Actualización)
+
+Se ha corregido una vulnerabilidad detectada por **Trivy**:
+
+- **Paquete**: `sweetalert2`
+- **Vulnerabilidad**: Hidden functionality (GHSA-457r-cqc8-9vj9)
+- **Fix**: Actualizado de 11.4.8 a **11.26.17**
+- **Impacto**: Eliminada funcionalidad no documentada y mejorada la seguridad.
+- **Nota**: También actualizado `@sweetalert2/ngx-sweetalert2` a 14.1.1 para compatibilidad.
 
 #### 3. `README.md`
 **Sección de seguridad actualizada**
