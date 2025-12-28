@@ -14,7 +14,7 @@ NC='\033[0m' # No Color
 
 echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${BLUE}║  🔒 Auditoría de Seguridad Multi-Herramienta             ║${NC}"
-echo -e "${BLUE}║  Proyecto: TFG_UNIR-react                                 ║${NC}"
+echo -e "${BLUE}║  Proyecto: TFG_UNIR-angular                                 ║${NC}"
 echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
 echo ""
 
@@ -78,7 +78,10 @@ fi
 print_section "3️⃣  Dependencias Desactualizadas"
 
 if command -v pnpm &> /dev/null; then
-    OUTDATED=$(pnpm outdated --format json 2>/dev/null || echo "[]")
+    OUTDATED=$(pnpm outdated --format json 2>/dev/null || true)
+    if [ -z "$OUTDATED" ]; then
+        OUTDATED="[]"
+    fi
     COUNT=$(echo "$OUTDATED" | jq 'length' 2>/dev/null || echo "0")
     
     if [ "$COUNT" -gt 0 ]; then
@@ -155,20 +158,51 @@ else
     echo "   Install: https://google.github.io/osv-scanner/installation/"
 fi
 
-# 6. Verificar versiones de paquetes críticos
-print_section "6️⃣  Verificación de Paquetes Críticos"
+# 6. Trivy Filesystem Scan
+print_section "6️⃣  Trivy Filesystem Scan"
+
+if command -v trivy &> /dev/null; then
+    if trivy fs . --scanners vuln,secret --format json --output trivy-report.json > /dev/null 2>&1; then
+        VULNS=$(jq '.Results | map(select(.Vulnerabilities != null)) | map(.Vulnerabilities) | flatten | length' trivy-report.json 2>/dev/null || echo "0")
+        SECRETS=$(jq '.Results | map(select(.Secrets != null)) | map(.Secrets) | flatten | length' trivy-report.json 2>/dev/null || echo "0")
+        
+        if [ "$VULNS" -gt 0 ] || [ "$SECRETS" -gt 0 ]; then
+            echo -e "${RED}❌ Trivy: Found issues${NC}"
+            if [ "$VULNS" -gt 0 ]; then
+                echo -e "${RED}  • Vulnerabilities: $VULNS${NC}"
+            fi
+            if [ "$SECRETS" -gt 0 ]; then
+                echo -e "${RED}  • Secrets: $SECRETS${NC}"
+            fi
+            TOTAL_VULNS=$((TOTAL_VULNS + VULNS + SECRETS))
+            TOOLS_FAILED=$((TOOLS_FAILED + 1))
+        else
+            echo -e "${GREEN}✅ Trivy: No vulnerabilities or secrets found${NC}"
+        fi
+    else
+        echo -e "${RED}❌ Trivy failed to run${NC}"
+    fi
+else
+    echo -e "${YELLOW}⚠️  Trivy not installed${NC}"
+    echo "   Install: https://aquasecurity.github.io/trivy/"
+fi
+
+# 7. Verificar versiones de paquetes críticos
+print_section "7️⃣  Verificación de Paquetes Críticos"
 
 check_package() {
     local package=$1
-    local current=$(pnpm list "$package" --depth=0 --json 2>/dev/null | jq -r ".[0].dependencies.\"$package\".version" 2>/dev/null || echo "not installed")
+    local output=$(pnpm list "$package" --depth=0 --json 2>/dev/null)
+    local current=$(echo "$output" | jq -r ".[0].dependencies.\"$package\".version // .[0].devDependencies.\"$package\".version // \"not installed\"" 2>/dev/null)
     echo "  • $package: $current"
 }
 
 echo "Versiones actuales:"
-check_package "next"
-check_package "react"
-check_package "react-dom"
+check_package "@angular/core"
+check_package "@angular/cli"
 check_package "typescript"
+check_package "rxjs"
+check_package "zone.js"
 check_package "axios"
 
 # Resumen final
@@ -189,6 +223,12 @@ if command -v osv-scanner &> /dev/null; then
     echo "  • OSV Scanner: ✅"
 else
     echo "  • OSV Scanner: ⚠️  (not installed)"
+fi
+
+if command -v trivy &> /dev/null; then
+    echo "  • Trivy: ✅"
+else
+    echo "  • Trivy: ⚠️  (not installed)"
 fi
 
 echo ""
@@ -217,6 +257,7 @@ else
     [ -f npm-audit.json ] && echo "  • npm-audit.json"
     [ -f snyk-report.json ] && echo "  • snyk-report.json"
     [ -f osv-report.json ] && echo "  • osv-report.json"
+    [ -f trivy-report.json ] && echo "  • trivy-report.json"
     echo ""
     echo -e "${RED}╔════════════════════════════════════════════════════════════╗${NC}"
     echo -e "${RED}║  ⚠️  Security audit failed - action required!            ║${NC}"
