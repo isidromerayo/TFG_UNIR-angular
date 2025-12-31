@@ -52,21 +52,69 @@ jobs:
         retention-days: 7
 
   component-tests:
-    name: Component Tests (Cypress) - Temporarily Disabled
+    name: Component Tests (Cypress)
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Component testing status
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10
+
+    - name: Get pnpm store directory
+      shell: bash
       run: |
-        echo "⚠️ Cypress component testing temporarily disabled"
-        echo "Reason: Angular CLI webpack configuration conflicts"
-        echo "Error: TypeError: paths[1] argument must be of type string"
-        echo "Status: Will be re-enabled once compatibility issue is resolved"
-        echo "Alternative: E2E testing remains functional"
-        echo "✅ This job passes to not block the pipeline"
+        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+    - name: Setup pnpm cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
+    - name: Cache Cypress binary
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/Cypress
+        key: ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-cypress-
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+
+    - name: Install Cypress binary
+      run: pnpm cypress install
+
+    - name: Run Cypress component tests
+      run: pnpm cypress:component:coverage
+
+    - name: Upload Cypress coverage artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: cypress-coverage
+        path: coverage/cypress/
+        retention-days: 7
+
+    - name: Upload Cypress artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: cypress-artifacts
+        path: |
+          cypress/screenshots/
+          cypress/videos/
+        retention-days: 7
 
   e2e-tests:
     name: E2E Tests (Cypress)
@@ -162,9 +210,11 @@ jobs:
         name: karma-coverage
         path: coverage/
 
-    - name: Download Cypress coverage artifact (disabled)
-      run: |
-        echo "Cypress coverage artifact download skipped - component testing temporarily disabled"
+    - name: Download Cypress coverage artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: cypress-coverage
+        path: coverage/cypress/
       continue-on-error: true
 
     - name: Install lcov-result-merger
@@ -179,15 +229,18 @@ jobs:
           cp coverage/frontend-angular/lcov.info coverage/merged/karma-lcov.info
         fi
         
-        # Note: Cypress component testing temporarily disabled due to Angular CLI conflicts
-        # Copy Cypress coverage when component testing is re-enabled
-        # if [ -f "coverage/cypress/lcov.info" ]; then
-        #   cp coverage/cypress/lcov.info coverage/merged/cypress-lcov.info
-        # fi
+        # Copy Cypress coverage
+        if [ -f "coverage/cypress/lcov.info" ]; then
+          cp coverage/cypress/lcov.info coverage/merged/cypress-lcov.info
+        fi
         
-        # Use Karma coverage as main coverage for now
-        if [ -f "coverage/merged/karma-lcov.info" ]; then
+        # Merge coverage files if both exist
+        if [ -f "coverage/merged/karma-lcov.info" ] && [ -f "coverage/merged/cypress-lcov.info" ]; then
+          lcov-result-merger 'coverage/merged/*-lcov.info' coverage/merged/lcov.info
+        elif [ -f "coverage/merged/karma-lcov.info" ]; then
           cp coverage/merged/karma-lcov.info coverage/merged/lcov.info
+        elif [ -f "coverage/merged/cypress-lcov.info" ]; then
+          cp coverage/merged/cypress-lcov.info coverage/merged/lcov.info
         fi
 
     - name: Check if coverage file exists
@@ -206,8 +259,6 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         lcov-file: ./coverage/merged/lcov.info
-        delete-old-comments: true
-        title: "📊 Merged Coverage Report (Karma + Cypress)"
         delete-old-comments: true
         title: "📊 Merged Coverage Report (Karma + Cypress)"
 
