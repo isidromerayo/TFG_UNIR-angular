@@ -62,7 +62,7 @@ jobs:
       run: pnpm run test-headless-cc
 
     - name: Run Cypress component tests with coverage
-      run: pnpm run cypress:coverage
+      run: pnpm run cypress:component:coverage
 
     - name: Merge coverage reports
       run: |
@@ -88,6 +88,9 @@ jobs:
           cp coverage/merged/cypress-lcov.info coverage/merged/lcov.info
         fi
 
+    - name: Run Cypress component tests
+      run: pnpm run cypress:component
+
     - name: Audit vulnerabilities
       run: |
         pnpm audit || EXIT_CODE=$?
@@ -96,6 +99,24 @@ jobs:
         else
           echo "pnpm audit found no vulnerabilities."
         fi
+
+    - name: Check if coverage file exists
+      id: coverage-check
+      run: |
+        if [ -f "./coverage/merged/lcov.info" ]; then
+          echo "coverage-exists=true" >> $GITHUB_OUTPUT
+        else
+          echo "coverage-exists=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Comment coverage on PR
+      if: github.event_name == 'pull_request' && steps.coverage-check.outputs.coverage-exists == 'true'
+      uses: romeovs/lcov-reporter-action@v0.3.1
+      continue-on-error: true
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        lcov-file: ./coverage/merged/lcov.info
+        delete-old-comments: true
 
     - name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v6
