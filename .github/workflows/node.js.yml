@@ -26,7 +26,7 @@ jobs:
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       with:
-        version: 9
+        version: 10
 
     - name: Get pnpm store directory
       shell: bash
@@ -41,8 +41,19 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
 
+    - name: Cache Cypress binary
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/Cypress
+        key: ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-cypress-
+
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
+
+    - name: Install Cypress binary
+      run: pnpm cypress install
 
     - name: Build
       run: pnpm run build
