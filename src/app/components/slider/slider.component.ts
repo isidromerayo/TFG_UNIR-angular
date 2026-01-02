@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-slider',
     templateUrl: './slider.component.html',
     styleUrls: ['./slider.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [FormsModule]
 })
 export class SliderComponent {
   public query_string: string;

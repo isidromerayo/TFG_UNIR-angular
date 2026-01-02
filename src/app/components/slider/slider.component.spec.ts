@@ -20,8 +20,7 @@ describe('SliderComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [SliderComponent],
-      imports: [FormsModule],
+      imports: [FormsModule, SliderComponent],
       providers: [
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: mockActivatedRoute }

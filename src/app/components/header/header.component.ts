@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 import { UsuarioAuth } from 'src/app/model/usuario-auth';
 import { HomeService } from 'src/app/services/home.service';
 import Swal from 'sweetalert2';
-import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 export class HeaderComponent {
   

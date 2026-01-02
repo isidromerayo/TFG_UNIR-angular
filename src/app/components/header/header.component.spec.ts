@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { HeaderComponent } from './header.component';
@@ -17,16 +18,14 @@ describe('HeaderComponent', () => {
   beforeEach(() => {
     mockHomeService = jasmine.createSpyObj('HomeService', ['getCategoriasPortada']);
     mockAuthService = jasmine.createSpyObj('AuthService', ['logout']);
-    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
     mockHomeService.getCategoriasPortada.and.returnValue(of([]));
 
     TestBed.configureTestingModule({
-      declarations: [HeaderComponent],
+      imports: [HeaderComponent, RouterTestingModule],
       providers: [
         { provide: HomeService, useValue: mockHomeService },
-        { provide: AuthService, useValue: mockAuthService },
-        { provide: Router, useValue: mockRouter }
+        { provide: AuthService, useValue: mockAuthService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     });
