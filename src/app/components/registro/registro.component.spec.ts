@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -19,8 +21,8 @@ describe('RegistroComponent', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
+      imports: [RouterTestingModule, HttpClientTestingModule, FormsModule],
       declarations: [RegistroComponent],
-      imports: [FormsModule],
       providers: [
         { provide: UsuarioService, useValue: usuarioServiceSpy },
         { provide: Router, useValue: routerSpy },

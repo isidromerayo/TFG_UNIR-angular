@@ -23,11 +23,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { MisDatosComponent } from './components/mis-datos/mis-datos.component';
 
 @NgModule({ declarations: [
-        AppComponent,
-        HeaderComponent,
-        FooterComponent,
-        SliderComponent,
-        HomeComponent,
         RegistroComponent,
         NoEncontradoComponent,
         CategoriasComponent,
@@ -43,6 +38,9 @@ import { MisDatosComponent } from './components/mis-datos/mis-datos.component';
         AppRoutingModule,
         FormsModule,
         SweetAlert2Module.forRoot(),
-        MisCursosComponent
+        MisCursosComponent,
+        AppComponent,
+        SliderComponent,
+        HomeComponent
     ], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

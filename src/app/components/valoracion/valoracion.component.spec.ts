@@ -1,44 +1,41 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { of } from 'rxjs';
 
 import { ValoracionComponent } from './valoracion.component';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ValoracionService } from 'src/app/services/valoracion.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ValoracionComponent', () => {
   let component: ValoracionComponent;
   let fixture: ComponentFixture<ValoracionComponent>;
-  let httpMock: HttpTestingController;
+  let mockValoracionService: jasmine.SpyObj<ValoracionService>;
 
   beforeEach(() => {
+    mockValoracionService = jasmine.createSpyObj('ValoracionService', [
+      'getValoracionPorId',
+      'getValoracionPorIdCurso',
+      'getValoracionPorIdUsuario'
+    ]);
+    mockValoracionService.getValoracionPorId.and.returnValue(of({}));
+    mockValoracionService.getValoracionPorIdCurso.and.returnValue(of({}));
+    mockValoracionService.getValoracionPorIdUsuario.and.returnValue(of({}));
+
     TestBed.configureTestingModule({
-    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-    imports: [Router, ActivatedRoute, ValoracionService],
-    providers: [
-        ValoracionComponent,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-});
-  httpMock = TestBed.inject(HttpTestingController);
-  });
-
-  beforeEach(() => {
-
+      imports: [RouterTestingModule, HttpClientTestingModule],
+      declarations: [ValoracionComponent],
+      providers: [
+        { provide: ValoracionService, useValue: mockValoracionService }
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+    });
     fixture = TestBed.createComponent(ValoracionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
   });
 
-  afterEach(()=>{
-    // esperar a que no haya peticiones pendientes del test
-    httpMock.verify();
-  })
-
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

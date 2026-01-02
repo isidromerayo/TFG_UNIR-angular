@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { HomeService } from 'src/app/services/home.service';
+import { SliderComponent } from '../slider/slider.component';
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule, SliderComponent]
 })
 
 export class HomeComponent {

@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -20,6 +22,7 @@ describe('BusquedaComponent', () => {
     const cursoServiceSpy = jasmine.createSpyObj('CursoService', ['search']);
 
     await TestBed.configureTestingModule({
+      imports: [RouterTestingModule, HttpClientTestingModule],
       declarations: [BusquedaComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
@@ -29,8 +32,7 @@ describe('BusquedaComponent', () => {
           useValue: {
             params: of({ search: 'Angular' })
           }
-        },
-        { provide: Router, useValue: {} }
+        }
       ]
     }).compileComponents();
 

@@ -13,8 +13,7 @@ describe('SliderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SliderComponent],
-      imports: [FormsModule],
+      imports: [FormsModule, SliderComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         {

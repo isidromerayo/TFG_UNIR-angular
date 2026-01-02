@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { UsuarioService } from './usuario.service';
 import { Usuario } from '../model/usuario';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { API_URL } from '../utils/constants';
 
 describe('UsuarioService', () => {
@@ -33,7 +33,6 @@ describe('UsuarioService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      imports: [],
       providers: [
         UsuarioService,
         provideHttpClient(withInterceptorsFromDi()),
