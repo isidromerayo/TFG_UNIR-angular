@@ -33,14 +33,14 @@ describe('HeaderComponent', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         { provide: HomeService, useValue: homeServiceSpy },
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: Router, useValue: routerSpy }
+        { provide: AuthService, useValue: authServiceSpy }
       ]
     }).compileComponents();
 
     homeService = TestBed.inject(HomeService) as jasmine.SpyObj<HomeService>;
     authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
-    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    router = TestBed.inject(Router) as any;
+    spyOn(router, 'navigate');
 
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
