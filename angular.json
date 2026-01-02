@@ -100,6 +100,10 @@
             "scripts": [
               "src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
               "src/assets/js/main.js"
+            ],
+            "codeCoverageExclude": [
+              "src/app/model/**",
+              "src/app/utils/constants.ts"
             ]
           }
         },
