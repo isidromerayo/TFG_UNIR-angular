@@ -1,0 +1,20 @@
+/* TypeScript configuration for Cypress component testing */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/cypress",
+    "types": [
+      "cypress",
+      "node"
+    ],
+    "lib": [
+      "ES2022",
+      "dom"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "cypress/component/**/*.cy.ts",
+    "cypress/support/**/*.ts"
+  ]
+}

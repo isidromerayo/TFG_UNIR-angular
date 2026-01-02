@@ -4,26 +4,30 @@ export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:4200',
     setupNodeEvents(on, config) {
-      // Enable code coverage conditionally
-      if (process.env.CYPRESS_COVERAGE === 'true') {
-        require('@cypress/code-coverage/task')(on, config)
-      }
+      // Always setup code coverage task
+      require('@cypress/code-coverage/task')(on, config)
       return config
     }
   },
-  
+
   component: {
-    // Temporarily disable component testing due to Angular CLI webpack config conflicts
-    // This will be re-enabled once the Angular CLI compatibility issue is resolved
+    // Component testing disabled for Angular due to TypeScript compilation conflicts
+    // Angular CLI 20.x + Cypress 15.x have issues with webpack configuration
+    // E2E testing remains fully functional
+    specPattern: 'cypress/component/**/*.cy.{js,jsx,ts,tsx}',
+    indexHtmlFile: 'cypress/support/component-index.html',
     devServer: {
       framework: 'angular',
-      bundler: 'webpack',
+      bundler: 'webpack'
     },
-    specPattern: '**/*.cy.ts',
     setupNodeEvents(on, config) {
-      // Disable component testing for now to avoid Angular CLI conflicts
-      console.log('Component testing temporarily disabled due to Angular CLI webpack configuration conflicts')
+      // Always setup code coverage task
+      require('@cypress/code-coverage/task')(on, config)
       return config
+    },
+    env: {
+      // Pass coverage flag to tests
+      coverage: process.env['CYPRESS_COVERAGE'] === 'true'
     }
-  }
+  },
 })

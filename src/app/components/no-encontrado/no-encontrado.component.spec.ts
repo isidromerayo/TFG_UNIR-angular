@@ -7,11 +7,12 @@ describe('NoEncontradoComponent', () => {
   let component: NoEncontradoComponent;
   let fixture: ComponentFixture<NoEncontradoComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [NoEncontradoComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
-    });
+    }).compileComponents();
+
     fixture = TestBed.createComponent(NoEncontradoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

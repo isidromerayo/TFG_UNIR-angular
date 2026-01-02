@@ -1,0 +1,272 @@
+{
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/app-routing.module.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/app-routing.module.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/app.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/app.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/app.module.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/app.module.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/autenticacion.guard.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/autenticacion.guard.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/acceso/acceso.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/acceso/acceso.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/busqueda/busqueda.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/busqueda/busqueda.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/carrito/carrito.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/carrito/carrito.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/categoria/categoria.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/categoria/categoria.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/categorias/categorias.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/categorias/categorias.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/curso/curso.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/curso/curso.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/footer/footer.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/footer/footer.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/header/header.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/header/header.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/home/home.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/home/home.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/mis-cursos/mis-cursos.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/mis-cursos/mis-cursos.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/mis-datos/mis-datos.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/mis-datos/mis-datos.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/no-encontrado/no-encontrado.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/no-encontrado/no-encontrado.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/registro/registro.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/registro/registro.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/slider/slider.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/slider/slider.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/valoracion/valoracion.component.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/components/valoracion/valoracion.component.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/model/login-usuario.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/model/login-usuario.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/model/usuario-auth.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/model/usuario-auth.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/model/usuario.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/model/usuario.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/auth.service.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/auth.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/carrito.service.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/carrito.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/categoria.service.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/categoria.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/curso.service.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/curso.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/home.service.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/home.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/usuario.service.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/usuario.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/valoracion.service.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/services/valoracion.service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/utils/constants.ts": {
+    "path": "/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-angular/src/app/utils/constants.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  }
+}

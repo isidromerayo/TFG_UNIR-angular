@@ -61,38 +61,12 @@ jobs:
     - name: Run tests (headless)
       run: pnpm run test-headless-cc
 
-    - name: Run Cypress component tests (temporarily disabled)
+    - name: Run Cypress component tests (temporarily disabled for Angular)
       run: |
-        echo "⚠️ Cypress component testing temporarily disabled due to Angular CLI webpack configuration conflicts"
-        echo "This will be re-enabled once the compatibility issue is resolved"
-        echo "E2E testing remains functional"
-
-    - name: Merge coverage reports
-      run: |
-        # Create merged coverage directory
-        mkdir -p coverage/merged
-        
-        # Copy Karma coverage
-        if [ -d "coverage/frontend-angular" ]; then
-          cp coverage/frontend-angular/lcov.info coverage/merged/karma-lcov.info || true
-        fi
-        
-        # Note: Cypress component testing temporarily disabled due to Angular CLI conflicts
-        # Copy Cypress coverage when component testing is re-enabled
-        # if [ -d "coverage/cypress" ]; then
-        #   cp coverage/cypress/lcov.info coverage/merged/cypress-lcov.info || true
-        # fi
-        
-        # Use Karma coverage as main coverage for now
-        if [ -f "coverage/merged/karma-lcov.info" ]; then
-          cp coverage/merged/karma-lcov.info coverage/merged/lcov.info
-        fi
-
-    - name: Run Cypress component tests (temporarily disabled)
-      run: |
-        echo "⚠️ Cypress component testing temporarily disabled due to Angular CLI webpack configuration conflicts"
-        echo "This will be re-enabled once the compatibility issue is resolved"
-        echo "E2E testing remains functional"
+        echo "⚠️ Cypress component testing temporarily disabled for Angular"
+        echo "Reason: Angular CLI 20.x + Cypress 15.x TypeScript compilation conflicts"
+        echo "Status: E2E testing remains fully functional"
+        echo "✅ This step passes to not block the pipeline"
 
     - name: Audit vulnerabilities
       run: |

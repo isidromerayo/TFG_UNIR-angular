@@ -52,7 +52,7 @@ jobs:
         retention-days: 7
 
   component-tests:
-    name: Component Tests (Cypress) - Temporarily Disabled
+    name: Component Tests (Cypress) - Temporarily Disabled for Angular
     runs-on: ubuntu-latest
     
     steps:
@@ -61,11 +61,9 @@ jobs:
 
     - name: Component testing status
       run: |
-        echo "⚠️ Cypress component testing temporarily disabled"
-        echo "Reason: Angular CLI webpack configuration conflicts"
-        echo "Error: TypeError: paths[1] argument must be of type string"
-        echo "Status: Will be re-enabled once compatibility issue is resolved"
-        echo "Alternative: E2E testing remains functional"
+        echo "⚠️ Cypress component testing temporarily disabled for Angular"
+        echo "Reason: Angular CLI 20.x + Cypress 15.x TypeScript compilation conflicts"
+        echo "Status: E2E testing remains fully functional"
         echo "✅ This job passes to not block the pipeline"
 
   e2e-tests:
@@ -164,7 +162,7 @@ jobs:
 
     - name: Download Cypress coverage artifact (disabled)
       run: |
-        echo "Cypress coverage artifact download skipped - component testing temporarily disabled"
+        echo "Cypress coverage artifact download skipped - component testing temporarily disabled for Angular"
       continue-on-error: true
 
     - name: Install lcov-result-merger
@@ -207,9 +205,7 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         lcov-file: ./coverage/merged/lcov.info
         delete-old-comments: true
-        title: "📊 Merged Coverage Report (Karma + Cypress)"
-        delete-old-comments: true
-        title: "📊 Merged Coverage Report (Karma + Cypress)"
+        title: "📊 Merged Coverage Report (Karma)"
 
   test-summary:
     name: Test Summary
