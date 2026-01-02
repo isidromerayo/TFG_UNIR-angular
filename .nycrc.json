@@ -1,0 +1,31 @@
+{
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "all": true,
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.cy.ts",
+    "**/*.d.ts",
+    "src/test.ts",
+    "src/polyfills.ts",
+    "src/environments/**",
+    "src/main.ts",
+    "src/app/utils/constants.ts",
+    "src/app/model/**"
+  ],
+  "extension": [
+    ".ts"
+  ],
+  "reporter": [
+    "lcov",
+    "text-summary",
+    "cobertura",
+    "json"
+  ],
+  "report-dir": "coverage/cypress",
+  "cache": false,
+  "instrument": false,
+  "sourceMap": false
+}

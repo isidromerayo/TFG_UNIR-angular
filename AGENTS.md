@@ -1,23 +1,12 @@
-# AGENTS.md - Contexto del Proyecto Frontend Angular
+# 🤖 AGENTS.md - Contexto Completo del Proyecto Angular
 
-## 📋 Información General del Proyecto
+## 📋 Información General
 
-### Descripción
-Aplicación web frontend desarrollada en Angular para un sistema de gestión de cursos online. Permite a los usuarios navegar, buscar, comprar y gestionar cursos educativos.
-
-### Tecnologías Principales
-- **Framework**: Angular 20.3.15
-- **Lenguaje**: TypeScript 5.8.3
-- **Package Manager**: pnpm 10.24.0
-- **Testing**: Karma + Jasmine, Cypress
-- **UI/Alerts**: SweetAlert2
-- **HTTP Client**: Axios + Angular HttpClient
-- **Estilos**: CSS + SCSS
-
-### Versión
-- **Versión actual**: 0.1.0
-- **Generado con**: Angular CLI 16.0.2
-- **Actualizado a**: Angular 20.3.15
+**Proyecto**: TFG UNIR - Frontend Angular
+**Framework**: Angular 20.3.15
+**Lenguaje**: TypeScript 5.8.3
+**Package Manager**: pnpm 10.x
+**Propósito**: Aplicación web frontend para sistema de gestión de cursos online
 
 ## 🏗️ Arquitectura del Proyecto
 
@@ -374,17 +363,15 @@ git commit -m "descripción del cambio"
 
 1. **Después de generar/modificar código**:
    ```bash
-   pnpm run test-headless
+   pnpm run test-headless && pnpm run cypress:component
    ```
-   - Si falla: Arreglar el código
-   - Si pasa: Continuar al paso 2
+   - Si falla: Arreglar el código o los tests.
 
 2. **Verificar build**:
    ```bash
    pnpm run build
    ```
-   - Si falla: Arreglar errores de compilación
-   - Si pasa: Continuar al paso 3
+   - Si falla: Arreglar errores de compilación o tipos.
 
 3. **Solo entonces hacer commit**:
    ```bash
@@ -396,9 +383,7 @@ git commit -m "descripción del cambio"
 
 ```bash
 # Verificación completa (ejecutar antes de commit)
-pnpm run test-headless && pnpm run build && echo "✅ Todo OK - Listo para commit"
-
-# Si falla, verás el error específico
+pnpm run test-headless && pnpm run cypress:run && pnpm run build && echo "✅ Todo OK - Listo para commit"
 ```
 
 ## 🤝 Contribución

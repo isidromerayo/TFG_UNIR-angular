@@ -12,6 +12,12 @@
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
+    "cypress:component": "cypress run --component",
+    "cypress:component:open": "cypress open --component",
+    "cypress:coverage": "CYPRESS_COVERAGE=true cypress run --component",
+    "cypress:component:coverage": "CYPRESS_COVERAGE=true cypress run --component",
+    "cypress:component:coverage:open": "CYPRESS_COVERAGE=true cypress open --component",
+    "cypress:e2e:coverage": "CYPRESS_COVERAGE=true cypress run --e2e",
     "security": "./scripts/security-check.sh",
     "security:audit": "pnpm audit",
     "security:outdated": "pnpm outdated",
@@ -40,15 +46,26 @@
     "@angular-devkit/build-angular": "^20.3.13",
     "@angular/cli": "^20.3.13",
     "@angular/compiler-cli": "^20.3.15",
+    "@cypress/code-coverage": "^3.13.4",
     "@cypress/schematic": "^2.5.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/jasmine": "~4.6.5",
-    "cypress": "15.8.1",
+    "cypress": "^15.8.1",
+    "istanbul-lib-coverage": "^3.2.2",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "lcov-result-merger": "^5.0.1",
+    "nyc": "^17.1.0",
     "typescript": "~5.9.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "qs": ">=6.14.1",
+      "js-yaml": ">=4.1.1"
+    }
   }
 }
