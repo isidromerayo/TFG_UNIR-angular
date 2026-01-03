@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { LoginUsuario } from 'src/app/model/login-usuario';
 import { UsuarioAuth } from 'src/app/model/usuario-auth';
 import { AuthService } from 'src/app/services/auth.service';
