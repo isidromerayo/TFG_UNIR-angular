@@ -52,15 +52,30 @@ describe('BusquedaComponent', () => {
       expect(component).toBeTruthy();
     });
 
+    it('should implement OnInit', () => {
+      expect(component.ngOnInit).toBeDefined();
+    });
+
     it('should search courses on init', () => {
       expect(cursoService.search).toHaveBeenCalledWith('Angular');
       expect(component.cursos).toEqual(mockCursos);
       expect(component.query_string).toBe('Angular');
     });
+
+    it('should handle empty search results', () => {
+      cursoService.search.and.returnValue(of([]));
+      
+      fixture = TestBed.createComponent(BusquedaComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      expect(component.cursos).toEqual([]);
+      expect(component.query_string).toBe('Angular');
+    });
   });
 
   describe('initialization error', () => {
-      beforeEach(() => {
+    beforeEach(() => {
       cursoService.search.and.returnValue(throwError(() => new Error('API Error')));
       fixture = TestBed.createComponent(BusquedaComponent);
       component = fixture.componentInstance;
@@ -70,6 +85,38 @@ describe('BusquedaComponent', () => {
     it('should handle search error', () => {
       expect(cursoService.search).toHaveBeenCalled();
       expect(component.cursos).toEqual([]);
+    });
+  });
+
+  describe('additional scenarios', () => {
+    it('should handle empty search results', () => {
+      cursoService.search.and.returnValue(of([]));
+      
+      fixture = TestBed.createComponent(BusquedaComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      expect(component.cursos).toEqual([]);
+    });
+
+    it('should handle network error', () => {
+      cursoService.search.and.returnValue(throwError(() => new Error('Network timeout')));
+      
+      fixture = TestBed.createComponent(BusquedaComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      expect(component.cursos).toEqual([]);
+    });
+
+    it('should handle null results', () => {
+      cursoService.search.and.returnValue(of(null));
+      
+      fixture = TestBed.createComponent(BusquedaComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      expect(component.cursos).toBeNull();
     });
   });
 });
