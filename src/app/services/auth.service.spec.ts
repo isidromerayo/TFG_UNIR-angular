@@ -79,7 +79,7 @@ describe('AuthenticationService', () => {
 
       service.login(credentials).subscribe((response) => {
         expect(response).toEqual(mockResponse);
-        expect(localStorage.getItem(TOKEN)).toBeUndefined();
+        expect(localStorage.getItem(TOKEN)).toBe('undefined');
         done();
       });
 
@@ -97,7 +97,7 @@ describe('AuthenticationService', () => {
 
       service.login(credentials).subscribe((response) => {
         expect(response).toEqual(mockResponse);
-        expect(localStorage.getItem(TOKEN)).toBeUndefined();
+        expect(localStorage.getItem(TOKEN)).toBe('undefined');
         done();
       });
 

@@ -99,13 +99,18 @@ describe('BusquedaComponent', () => {
       expect(component.cursos).toEqual([]);
     });
 
-    it('should handle network error', () => {
+    it('should handle network error gracefully', () => {
       cursoService.search.and.returnValue(throwError(() => new Error('Network timeout')));
       
       fixture = TestBed.createComponent(BusquedaComponent);
       component = fixture.componentInstance;
+      
+      // Spy on console.error to prevent test failure
+      spyOn(console, 'error');
+      
       fixture.detectChanges();
 
+      expect(console.error).toHaveBeenCalled();
       expect(component.cursos).toEqual([]);
     });
 

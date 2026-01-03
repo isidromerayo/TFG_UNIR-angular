@@ -71,12 +71,17 @@ describe('CursoComponent', () => {
   describe('initialization error', () => {
     beforeEach(() => {
       cursoService.getCursoPorId.and.returnValue(throwError(() => new Error('API Error')));
+      
+      // Spy on console.error to prevent test failure
+      spyOn(console, 'error');
+      
       fixture = TestBed.createComponent(CursoComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
 
     it('should handle error when loading course fails', () => {
+      expect(console.error).toHaveBeenCalled();
       expect(cursoService.getCursoPorId).toHaveBeenCalled();
       expect(component.curso).toEqual({});
     });

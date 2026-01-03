@@ -60,10 +60,14 @@ describe('CategoriaComponent', () => {
       mockCategoriaService.getCategoriaId.and.returnValue(throwError(() => new Error('API Error')));
       mockCategoriaService.getCategoriaIdCursos.and.returnValue(of(mockCursos));
       
+      // Spy on console.error to prevent test failure
+      spyOn(console, 'error');
+      
       fixture = TestBed.createComponent(CategoriaComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
 
+      expect(console.error).toHaveBeenCalled();
       expect(component.categoria).toEqual({});
       expect(component.categoria_cursos).toEqual(mockCursos);
     });
@@ -72,10 +76,14 @@ describe('CategoriaComponent', () => {
       mockCategoriaService.getCategoriaId.and.returnValue(of(mockCategoria));
       mockCategoriaService.getCategoriaIdCursos.and.returnValue(throwError(() => new Error('API Error')));
       
+      // Spy on console.error to prevent test failure
+      spyOn(console, 'error');
+      
       fixture = TestBed.createComponent(CategoriaComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
 
+      expect(console.error).toHaveBeenCalled();
       expect(component.categoria).toEqual(mockCategoria);
       expect(component.categoria_cursos).toEqual([]);
     });
@@ -84,10 +92,14 @@ describe('CategoriaComponent', () => {
       mockCategoriaService.getCategoriaId.and.returnValue(throwError(() => new Error('API Error')));
       mockCategoriaService.getCategoriaIdCursos.and.returnValue(throwError(() => new Error('API Error')));
       
+      // Spy on console.error to prevent test failure
+      spyOn(console, 'error');
+      
       fixture = TestBed.createComponent(CategoriaComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
 
+      expect(console.error).toHaveBeenCalled();
       expect(component.categoria).toEqual({});
       expect(component.categoria_cursos).toEqual([]);
     });
