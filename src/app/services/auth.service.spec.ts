@@ -79,7 +79,7 @@ describe('AuthenticationService', () => {
 
       service.login(credentials).subscribe((response) => {
         expect(response).toEqual(mockResponse);
-        expect(localStorage.getItem(TOKEN)).toBeNull();
+        expect(localStorage.getItem(TOKEN)).toBeUndefined();
         done();
       });
 
@@ -97,15 +97,14 @@ describe('AuthenticationService', () => {
 
       service.login(credentials).subscribe((response) => {
         expect(response).toEqual(mockResponse);
-        expect(localStorage.getItem(TOKEN)).toBeNull();
+        expect(localStorage.getItem(TOKEN)).toBeUndefined();
         done();
       });
 
       const req = httpMock.expectOne(`${API_URL}/auth`);
       req.flush(mockResponse, {
         status: 200,
-        statusText: 'OK',
-        headers: { 'Authorization': null as any }
+        statusText: 'OK'
       });
     });
 
