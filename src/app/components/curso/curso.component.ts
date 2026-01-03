@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Params, Router } from '@angular/router';
 import { CursoService } from 'src/app/services/curso.service';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
     standalone: true,
     imports: [CommonModule, RouterModule]
 })
-export class CursoComponent {
+export class CursoComponent implements OnInit {
 
   curso:any = {}
   add_curso:boolean = false;
