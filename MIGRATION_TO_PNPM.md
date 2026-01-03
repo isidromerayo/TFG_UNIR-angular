@@ -18,12 +18,27 @@ Este documento describe el proceso de migración del proyecto de npm a pnpm.
 
 3. **Eficiencia de espacio en disco**
    - Almacenamiento content-addressable
-   - Los paquetes se almacenan una sola vez globalmente
-   - Enlaces duros en lugar de copias
+   - Eliminación de duplicación de dependencias
+   - Ahorro significativo de espacio en proyectos grandes
 
-4. **Mejor soporte para monorepos**
-   - Workspace nativo y eficiente
-   - Gestión de dependencias entre paquetes
+## Actualización Concurrente de Angular
+
+Durante la migración a pnpm, también se actualizó Angular:
+
+### Cambios Realizados
+- **De**: Angular 16.x
+- **A**: Angular 20.3.15
+
+### Beneficios de la Actualización
+- **18 vulnerabilidades de seguridad resueltas**
+- **Últimas features y mejoras de rendimiento**
+- **Compatibilidad con pnpm optimizada**
+- **Dependencias sincronizadas y actualizadas**
+
+### Compatibilidad
+- Angular 20.3.15 es totalmente compatible con pnpm 10.x
+- TypeScript actualizado a 5.8.3
+- Todas las dependencias del proyecto sincronizadas
 
 ## Cambios realizados
 

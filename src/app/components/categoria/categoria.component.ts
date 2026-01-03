@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Params, Router } from '@angular/router';
 import { CategoriaService } from 'src/app/services/categoria.service';
@@ -10,7 +10,7 @@ import { CategoriaService } from 'src/app/services/categoria.service';
     standalone: true,
     imports: [CommonModule, RouterModule]
 })
-export class CategoriaComponent {
+export class CategoriaComponent implements OnInit {
 
   categoria: any = {};
   categoria_cursos: any[] = [];

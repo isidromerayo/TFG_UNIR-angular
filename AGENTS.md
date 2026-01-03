@@ -138,11 +138,6 @@ El proyecto sigue las mejores prácticas de Angular 20+. Ver `.agents/best-pract
 
 ## 🔒 Seguridad
 
-### Estado Actual
-- ✅ 0 vulnerabilidades conocidas
-- ✅ Dependencias actualizadas a versiones seguras
-- ✅ Angular 20.3.15 (incluye parches de seguridad)
-
 ### Auditoría y Mantenimiento
 
 ```bash
@@ -165,8 +160,6 @@ pnpm update --latest
 pnpm update --interactive
 ```
 
-**Estado actual**: 0 vulnerabilidades, múltiples herramientas de auditoría configuradas
-
 ⚠️ **Importante**: No confiar solo en `pnpm audit`. Ver [SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md)
 
 ### Autenticación
@@ -177,8 +170,6 @@ pnpm update --interactive
 ## 🧪 Testing
 
 ### Unit Tests (Karma + Jasmine)
-- **41 tests activos** ✅
-- 7 tests deshabilitados (marcados con `xit`)
 - Coverage configurado
 - **Estado**: Todos los tests pasan
 - Ejecutar: `pnpm run test-headless-cc`
@@ -195,38 +186,6 @@ pnpm run test-headless-cc    # Tests con code coverage
 - Tests interactivos: `pnpm run cypress:open`
 - Tests CI/CD: `pnpm run cypress:run`
 
-### Tests Implementados
-
-**Componentes con tests completos**:
-- ✅ FooterComponent
-- ✅ HeaderComponent (incluye tests de login)
-- ✅ HomeComponent (con verificación de servicios)
-- ✅ MisCursosComponent (standalone component)
-- ✅ MisDatosComponent (con AuthService)
-- ✅ NoEncontradoComponent
-- ✅ SliderComponent (con test de navegación)
-
-**Servicios con tests**:
-- ✅ HomeService (con tests HTTP)
-- ✅ ValoracionService
-
-### Estructura de Tests
-```
-src/app/
-├── app.component.spec.ts
-├── autenticacion.guard.spec.ts
-├── services/
-│   ├── home.service.spec.ts
-│   ├── valoracion.service.spec.ts
-│   └── usuario.service.spec.ts
-└── components/
-    ├── acceso/acceso.component.spec.ts
-    ├── carrito/carrito.component.spec.ts
-    ├── footer/footer.component.spec.ts
-    ├── header/header.component.spec.ts
-    ├── home/home.component.spec.ts
-    └── [otros componentes]/*.spec.ts
-```
 
 ## 🚀 CI/CD
 
@@ -242,36 +201,6 @@ Workflow configurado en `.github/workflows/node.js.yml`:
 ### Triggers
 - Push a `main`
 - Pull requests a `main`
-
-## 📦 Dependencias Clave
-
-### Producción
-- `@angular/*` - Framework Angular 20.3.15
-- `@sweetalert2/ngx-sweetalert2` - Alertas y modales
-- `axios` - Cliente HTTP alternativo
-- `rxjs` - Programación reactiva
-- `sweetalert2` - Librería de alertas
-
-### Desarrollo
-- `@angular/cli` - CLI de Angular
-- `@angular-devkit/build-angular` - Build tools
-- `cypress` - E2E testing
-- `karma` + `jasmine` - Unit testing
-- `typescript` - Lenguaje
-
-## 🔄 Migración Reciente
-
-### De npm a pnpm
-El proyecto fue migrado de npm a pnpm. Documentación disponible:
-- `MIGRATION_TO_PNPM.md` - Guía completa
-- `CHANGELOG_PNPM.md` - Resumen de cambios
-- `CHECKLIST_EQUIPO.md` - Checklist para el equipo
-- `migrate-to-pnpm.sh` - Script de migración
-
-### Actualización de Angular
-- Actualizado de Angular 16.x a 20.3.15
-- Resueltas 18 vulnerabilidades de seguridad
-- Todas las dependencias sincronizadas
 
 ## 🎨 Estilos y Assets
 
@@ -294,8 +223,8 @@ El proyecto fue migrado de npm a pnpm. Documentación disponible:
 **IMPORTANTE**: Antes de hacer cualquier commit, SIEMPRE ejecutar:
 
 ```bash
-# 1. Ejecutar tests
-pnpm run test-headless
+# 1. Ejecutar tests con coverage
+pnpm run test-headless-cc
 
 # 2. Verificar build
 pnpm run build
@@ -305,13 +234,31 @@ git add .
 git commit -m "descripción del cambio"
 ```
 
-### Checklist Pre-Commit
+### Checklist Pre-Commit Ampliada
 
-- [ ] ✅ Tests pasan: `pnpm run test-headless`
-- [ ] ✅ Build exitoso: `pnpm run build`
-- [ ] ✅ Sin errores de TypeScript
-- [ ] ✅ Sin vulnerabilidades: `pnpm audit`
-- [ ] ✅ Código formateado correctamente
+- [ ] ✅ **Tests pasan**: `pnpm run test-headless`
+- [ ] ✅ **Coverage ≥ 80%**: `pnpm run test-headless-cc`
+- [ ] ✅ **Build exitoso**: `pnpm run build`
+- [ ] ✅ **Sin errores de TypeScript**
+- [ ] ✅ **Sin vulnerabilidades**: `pnpm audit`
+- [ ] ✅ **Código formateado correctamente**
+
+### Verificación de Coverage
+
+Antes de hacer commit, verificar que el coverage cumpla los requisitos:
+
+```bash
+# Verificar coverage completo
+pnpm run test-headless-cc
+
+# Buscar en el output las métricas clave:
+=============================== Coverage summary ===============================
+Statements   : XX.XX% ( XXX/XXX )
+Branches     : XX.XX% ( XX/XX )  # ← Debe ser ≥ 80%
+Functions    : XX.XX% ( XXX/XXX )
+Lines        : XX.XX% ( XXX/XXX )
+================================================================================
+```
 
 ### Flujo Completo de Desarrollo
 
@@ -325,10 +272,11 @@ git commit -m "descripción del cambio"
    pnpm start  # Dev server con hot reload
    ```
 
-3. **Ejecutar tests**
+3. **Ejecutar tests con coverage**
    ```bash
-   pnpm run test-headless
+   pnpm run test-headless-cc
    # DEBE mostrar: TOTAL: X SUCCESS, 0 FAILED
+   # DEBE mostrar: Branches ≥ 80%
    ```
 
 4. **Verificar build**
@@ -349,23 +297,44 @@ git commit -m "descripción del cambio"
    git commit -m "feat: descripción del cambio"
    ```
 
-### ⚠️ Reglas Importantes
+### ⚠️ Reglas Importantes Actualizadas
 
 - **NUNCA** hacer commit si los tests fallan
+- **NUNCA** hacer commit si el coverage < 80%
 - **NUNCA** hacer commit si el build falla
-- **SIEMPRE** ejecutar tests antes de commit
+- **SIEMPRE** ejecutar tests con coverage antes de commit
 - **SIEMPRE** verificar que el build funciona
 - **SIEMPRE** revisar errores de TypeScript
 
+## 🎯 Métricas de Calidad Requeridas
+
+- **Branches**: ≥ 80% (Requisito SonarQube)
+- **Statements**: ≥ 80%
+- **Functions**: ≥ 80%
+- **Lines**: ≥ 80%
+- **Tests**: 0 FAILED
+
+## 📝 Nota sobre Coverage Estratégico
+
+Para alcanzar el 80% de coverage eficientemente:
+
+1. **Priorizar branches críticas**: `if/else` en componentes principales
+2. **Tests de alto impacto**: Cubrir caminos de error y edge cases
+3. **Evitar sobre-testing**: Tests simples y directos
+4. **Revisar exclusiones**: Configurar SonarQube para excluir código no relevante
+
+Este flujo garantiza que cada commit cumpla con los estándares de calidad del proyecto y pase el Quality Gate de SonarQube. 🚀
+
 ### Para Agentes IA
 
-**FLUJO OBLIGATORIO**:
+**FLUJO OBLIGATORIO ACTUALIZADO**:
 
 1. **Después de generar/modificar código**:
    ```bash
-   pnpm run test-headless && pnpm run cypress:component
+   pnpm run test-headless-cc && pnpm run cypress:component
    ```
    - Si falla: Arreglar el código o los tests.
+   - Si coverage < 80%: Añadir tests para alcanzar el objetivo.
 
 2. **Verificar build**:
    ```bash
@@ -382,8 +351,8 @@ git commit -m "descripción del cambio"
 ### Comandos de Verificación Rápida
 
 ```bash
-# Verificación completa (ejecutar antes de commit)
-pnpm run test-headless && pnpm run cypress:run && pnpm run build && echo "✅ Todo OK - Listo para commit"
+# Verificación completa con coverage (ejecutar antes de commit)
+pnpm run test-headless-cc && pnpm run cypress:run && pnpm run build && echo "✅ Todo OK - Coverage ≥ 80% - Listo para commit"
 ```
 
 ## 🤝 Contribución

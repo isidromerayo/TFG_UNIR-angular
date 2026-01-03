@@ -72,6 +72,59 @@ describe('AuthenticationService', () => {
       const req = httpMock.expectOne(`${API_URL}/auth`);
       req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
     });
+
+    it('should handle missing Authorization header', (done) => {
+      const credentials: LoginUsuario = new LoginUsuario('test@test.com', 'password123');
+      const mockResponse = { id: 1, username: 'test@test.com' };
+
+      service.login(credentials).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+        expect(localStorage.getItem(TOKEN)).toBe('undefined');
+        done();
+      });
+
+      const req = httpMock.expectOne(`${API_URL}/auth`);
+      req.flush(mockResponse, {
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      });
+    });
+
+    it('should handle null Authorization header', (done) => {
+      const credentials: LoginUsuario = new LoginUsuario('test@test.com', 'password123');
+      const mockResponse = { id: 1, username: 'test@test.com' };
+
+      service.login(credentials).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+        expect(localStorage.getItem(TOKEN)).toBe('undefined');
+        done();
+      });
+
+      const req = httpMock.expectOne(`${API_URL}/auth`);
+      req.flush(mockResponse, {
+        status: 200,
+        statusText: 'OK'
+      });
+    });
+
+    it('should handle Authorization header without Bearer prefix', (done) => {
+      const credentials: LoginUsuario = new LoginUsuario('test@test.com', 'password123');
+      const mockResponse = { id: 1, username: 'test@test.com' };
+
+      service.login(credentials).subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+        expect(localStorage.getItem(TOKEN)).toBe('token-without-bearer');
+        done();
+      });
+
+      const req = httpMock.expectOne(`${API_URL}/auth`);
+      req.flush(mockResponse, {
+        status: 200,
+        statusText: 'OK',
+        headers: { 'Authorization': 'token-without-bearer' }
+      });
+    });
   });
 
   describe('getToken', () => {

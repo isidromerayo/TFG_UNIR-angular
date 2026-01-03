@@ -8,14 +8,12 @@ import { SliderComponent } from './components/slider/slider.component';
 import { HomeComponent } from './components/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { MisCursosComponent } from './components/mis-cursos/mis-cursos.component';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({ declarations: [
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         FormsModule,
-        SweetAlert2Module.forRoot(),
         MisCursosComponent,
         AppComponent,
         SliderComponent,

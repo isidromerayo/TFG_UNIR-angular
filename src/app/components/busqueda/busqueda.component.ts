@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Params, Router } from '@angular/router';
 import { CursoService } from 'src/app/services/curso.service';
@@ -10,7 +10,7 @@ import { CursoService } from 'src/app/services/curso.service';
     standalone: true,
     imports: [CommonModule, RouterModule]
 })
-export class BusquedaComponent {
+export class BusquedaComponent implements OnInit {
 
   cursos: any[] = [];
   query_string: string = '';

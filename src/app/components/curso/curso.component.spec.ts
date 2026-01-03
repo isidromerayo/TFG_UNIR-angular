@@ -58,6 +58,10 @@ describe('CursoComponent', () => {
       expect(component).toBeTruthy();
     });
 
+    it('should implement OnInit', () => {
+      expect(component.ngOnInit).toBeDefined();
+    });
+
     it('should load course details on init', () => {
       expect(cursoService.getCursoPorId).toHaveBeenCalledWith(1);
       expect(component.curso).toEqual(mockCurso);
@@ -67,13 +71,19 @@ describe('CursoComponent', () => {
   describe('initialization error', () => {
     beforeEach(() => {
       cursoService.getCursoPorId.and.returnValue(throwError(() => new Error('API Error')));
+      
+      // Spy on console.error to prevent test failure
+      spyOn(console, 'error');
+      
       fixture = TestBed.createComponent(CursoComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
 
     it('should handle error when loading course fails', () => {
+      expect(console.error).toHaveBeenCalled();
       expect(cursoService.getCursoPorId).toHaveBeenCalled();
+      expect(component.curso).toEqual({});
     });
   });
 
@@ -85,13 +95,17 @@ describe('CursoComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should add course to cart and show alert', () => {
-      const swalSpy = spyOn(Swal, 'fire');
+    it('should add course to cart', () => {
+      spyOn(Swal, 'fire').and.returnValue(Promise.resolve({ 
+        isConfirmed: true, 
+        isDenied: false, 
+        isDismissed: false 
+      }));
       
       component.addCarritoCurso(mockCurso);
-
+      
       expect(carritoService.addCurso).toHaveBeenCalledWith(mockCurso);
-      expect(swalSpy).toHaveBeenCalledWith('Carrito', 'Curso añadido correctamente');
+      expect(Swal.fire).toHaveBeenCalledWith('Carrito', 'Curso añadido correctamente');
     });
   });
 });

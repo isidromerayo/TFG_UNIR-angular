@@ -14,7 +14,7 @@ import { MisCursosComponent } from './components/mis-cursos/mis-cursos.component
 import { AutenticacionGuard } from './autenticacion.guard';
 import { MisDatosComponent } from './components/mis-datos/mis-datos.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {path:'home', component: HomeComponent},
   {path:'registro', component: RegistroComponent},
   {path:'categorias', component: CategoriasComponent},

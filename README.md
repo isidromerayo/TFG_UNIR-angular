@@ -7,8 +7,6 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-angular&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-angular)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-angular&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-angular)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.2.
-
 **Current version: Angular 20.3.15**
 
 ## Package Manager
