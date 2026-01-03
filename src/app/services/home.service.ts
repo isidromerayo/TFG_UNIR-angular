@@ -10,7 +10,7 @@ export class HomeService {
 
   limite_portada: number = 5;
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   getCursosDestacadosPortada():Observable<any> {
     return this.http.get<any>(`${API_URL}/cursos/search/selectMorePoints`).pipe(map(res => res._embedded.cursos))

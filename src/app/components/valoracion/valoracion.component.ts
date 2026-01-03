@@ -1,22 +1,24 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, ActivatedRoute, Params, Router } from '@angular/router';
 import { ValoracionService } from 'src/app/services/valoracion.service';
 
 @Component({
     selector: 'app-valoracion',
     templateUrl: './valoracion.component.html',
     styleUrls: ['./valoracion.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 
-export class ValoracionComponent {
+export class ValoracionComponent implements OnInit {
 
   id:number = {} as number;
   valoracion:any = {} as any;
   curso: any = {} as any;
   alumno:any={} as any;
 
-  constructor(private service: ValoracionService, private _route: ActivatedRoute, private _router: Router) {
+  constructor(private readonly service: ValoracionService, private readonly _route: ActivatedRoute, private readonly _router: Router) {
   }
 
   ngOnInit() {

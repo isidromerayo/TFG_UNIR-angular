@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
 import { CategoriasComponent } from './categorias.component';
@@ -14,10 +14,10 @@ describe('CategoriasComponent', () => {
     mockCategoriaService = jasmine.createSpyObj('CategoriaService', ['getAllCategorias']);
     mockCategoriaService.getAllCategorias.and.returnValue(of([]));
 
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [CategoriasComponent],
+        TestBed.configureTestingModule({
+      imports: [CategoriasComponent],
       providers: [
+        provideHttpClient(),
         { provide: CategoriaService, useValue: mockCategoriaService }
       ]
     });

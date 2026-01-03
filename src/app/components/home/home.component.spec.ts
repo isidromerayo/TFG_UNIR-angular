@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
 import { HomeComponent } from './home.component';
@@ -23,9 +23,10 @@ describe('HomeComponent', () => {
     mockHomeService.getOpinionesCursosPortada.and.returnValue(of([]));
     mockHomeService.getCursosUltimasPortada.and.returnValue(of([]));
 
-    TestBed.configureTestingModule({
-      imports: [HomeComponent, RouterTestingModule],
+        TestBed.configureTestingModule({
+      imports: [HomeComponent],
       providers: [
+        provideRouter([]),
         { provide: HomeService, useValue: mockHomeService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

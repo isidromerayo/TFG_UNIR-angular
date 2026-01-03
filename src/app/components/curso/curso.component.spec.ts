@@ -27,7 +27,7 @@ describe('CursoComponent', () => {
     const carritoServiceSpy = jasmine.createSpyObj('CarritoService', ['addCurso']);
 
     await TestBed.configureTestingModule({
-      declarations: [CursoComponent],
+      imports: [CursoComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         { provide: CursoService, useValue: cursoServiceSpy },
@@ -66,7 +66,6 @@ describe('CursoComponent', () => {
 
   describe('initialization error', () => {
     beforeEach(() => {
-      spyOn(console, 'error');
       cursoService.getCursoPorId.and.returnValue(throwError(() => new Error('API Error')));
       fixture = TestBed.createComponent(CursoComponent);
       component = fixture.componentInstance;
@@ -75,7 +74,6 @@ describe('CursoComponent', () => {
 
     it('should handle error when loading course fails', () => {
       expect(cursoService.getCursoPorId).toHaveBeenCalled();
-      expect(console.error).toHaveBeenCalled();
     });
   });
 

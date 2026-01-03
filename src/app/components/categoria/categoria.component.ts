@@ -1,19 +1,21 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, ActivatedRoute, Params, Router } from '@angular/router';
 import { CategoriaService } from 'src/app/services/categoria.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
     selector: 'app-categoria',
     templateUrl: './categoria.component.html',
     styleUrls: ['./categoria.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 export class CategoriaComponent {
 
   categoria: any = {};
   categoria_cursos: any[] = [];
 
-  constructor(public servicio: CategoriaService, private _route: ActivatedRoute, private _router: Router) {
+  constructor(public readonly servicio: CategoriaService, private readonly _route: ActivatedRoute, private readonly _router: Router) {
 
   }
   ngOnInit() {

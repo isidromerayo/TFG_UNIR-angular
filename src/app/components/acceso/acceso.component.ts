@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { LoginUsuario } from 'src/app/model/login-usuario';
 import { UsuarioAuth } from 'src/app/model/usuario-auth';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,7 +11,8 @@ import Swal from 'sweetalert2';
     selector: 'app-acceso',
     templateUrl: './acceso.component.html',
     styleUrls: ['./acceso.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule, FormsModule]
 })
 export class AccesoComponent {
 
@@ -17,7 +20,7 @@ export class AccesoComponent {
 
   usuario_auth: UsuarioAuth = {} as UsuarioAuth;
 
-  constructor(private servicioLogin:AuthService, private router:Router ) {
+  constructor(private readonly servicioLogin:AuthService, private readonly router:Router ) {
 
   }
 

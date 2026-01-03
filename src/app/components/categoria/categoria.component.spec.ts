@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
 import { CategoriaComponent } from './categoria.component';
@@ -16,10 +16,11 @@ describe('CategoriaComponent', () => {
     mockCategoriaService.getCategoriaId.and.returnValue(of({}));
     mockCategoriaService.getCategoriaIdCursos.and.returnValue(of([]));
 
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule],
-      declarations: [CategoriaComponent],
+        TestBed.configureTestingModule({
+      imports: [CategoriaComponent],
       providers: [
+        provideRouter([]),
+        provideHttpClient(),
         { provide: CategoriaService, useValue: mockCategoriaService }
       ]
     });

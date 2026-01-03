@@ -12,7 +12,7 @@ describe('CarritoComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CarritoComponent],
+      imports: [CarritoComponent],
       providers: [
         { provide: CarritoService, useValue: { clean: jasmine.createSpy('clean'), myCart$: { subscribe: () => {} }, isEmpty: () => true, totalCart: () => 0, deleteCurso: () => {} } },
         { provide: AuthService, useValue: { isLoginUser: () => false } },

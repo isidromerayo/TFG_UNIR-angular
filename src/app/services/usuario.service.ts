@@ -9,7 +9,7 @@ import { API_URL } from '../utils/constants';
 })
 export class UsuarioService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   crear(usuarioNew: Usuario):Observable<any> {
     return this.http.post<Usuario>(`${API_URL}/usuarios`,usuarioNew);

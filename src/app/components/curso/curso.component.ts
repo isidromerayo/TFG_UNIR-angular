@@ -1,22 +1,23 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, ActivatedRoute, Params, Router } from '@angular/router';
 import { CursoService } from 'src/app/services/curso.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CarritoService } from 'src/app/services/carrito.service';
 import Swal from 'sweetalert2';
-import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
     selector: 'app-curso',
     templateUrl: './curso.component.html',
     styleUrls: ['./curso.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 export class CursoComponent {
 
   curso:any = {}
   add_curso:boolean = false;
 
-  constructor(public servicio: CursoService, public carrito: CarritoService, private _route: ActivatedRoute, private _router: Router){
+  constructor(public readonly servicio: CursoService, public readonly carrito: CarritoService, private readonly _route: ActivatedRoute, private readonly _router: Router){
     
   }
 

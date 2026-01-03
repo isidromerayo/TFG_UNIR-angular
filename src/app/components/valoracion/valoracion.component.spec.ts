@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 
@@ -22,10 +22,11 @@ describe('ValoracionComponent', () => {
     mockValoracionService.getValoracionPorIdCurso.and.returnValue(of({}));
     mockValoracionService.getValoracionPorIdUsuario.and.returnValue(of({}));
 
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule],
-      declarations: [ValoracionComponent],
+        TestBed.configureTestingModule({
+      imports: [ValoracionComponent],
       providers: [
+        provideRouter([]),
+        provideHttpClient(),
         { provide: ValoracionService, useValue: mockValoracionService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

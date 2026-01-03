@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 
@@ -29,9 +29,10 @@ describe('HeaderComponent', () => {
     homeServiceSpy.getCategoriasPortada.and.returnValue(of(mockCategorias));
 
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent, RouterTestingModule],
+      imports: [HeaderComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
+        provideRouter([]),
         { provide: HomeService, useValue: homeServiceSpy },
         { provide: AuthService, useValue: authServiceSpy }
       ]

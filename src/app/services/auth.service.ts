@@ -12,7 +12,7 @@ type Nullable<T> = T | undefined | null;
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   login(creds: LoginUsuario):Observable<any> {
     return this.http.post<LoginUsuario>(`${API_URL}/auth`,creds, {observe: "response"})
@@ -36,11 +36,9 @@ export class AuthService {
 
   getUser():any {
     const user = localStorage.getItem(USER);
-    console.log("Raw user from localStorage:", user);
     if (user && user !== '') {
       try {
         const parsedUser = JSON.parse(user);
-        console.log("Parsed user from localStorage:", parsedUser);
         return parsedUser;
       } catch (e) {
         console.error("Error parsing user data from localStorage", e);
@@ -57,7 +55,7 @@ export class AuthService {
     
   }
   isLoginUser():boolean {
-    return (localStorage.getItem('isLoggedIn')=='true') ? true:false;
+    return localStorage.getItem('isLoggedIn') === 'true';
   }
 
   logout(): void {

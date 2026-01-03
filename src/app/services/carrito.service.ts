@@ -43,6 +43,10 @@ export class CarritoService {
     return (this.myList.length == 0)
   }
   
+  hasItems():boolean {
+    return (this.myList.length > 0)
+  }
+  
   clean():void {
     this.myList = []
     this.myCart.next(this.myList)
@@ -61,9 +65,6 @@ export class CarritoService {
     const cursoUris = cursos.map(curso => `${API_URL}/cursos/${curso.id}`);
     const headers = new HttpHeaders().set('Content-Type', 'text/uri-list');
     const userId = Number(user.id);
-    console.log("User ID before request:", userId);
-    console.log("Cursos array before request:", cursos);
-    console.log("Curso URIs before request:", cursoUris);
     return this.http.post(`${API_URL}/usuarios/${userId}/misCursosComprados`, cursoUris, { headers });
   }
 }

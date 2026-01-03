@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 
 import { MisDatosComponent } from './mis-datos.component';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,10 +14,10 @@ describe('MisDatosComponent', () => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['getUser']);
     mockAuthService.getUser.and.returnValue({});
 
-    TestBed.configureTestingModule({
-      declarations: [MisDatosComponent],
-      imports: [HttpClientTestingModule],
+        TestBed.configureTestingModule({
+      imports: [MisDatosComponent],
       providers: [
+        provideHttpClient(),
         { provide: AuthService, useValue: mockAuthService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

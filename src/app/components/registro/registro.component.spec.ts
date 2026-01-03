@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -21,9 +21,10 @@ describe('RegistroComponent', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, FormsModule],
-      declarations: [RegistroComponent],
+      imports: [FormsModule, RegistroComponent],
       providers: [
+        provideRouter([]),
+        provideHttpClient(),
         { provide: UsuarioService, useValue: usuarioServiceSpy },
         { provide: Router, useValue: routerSpy },
         { provide: ActivatedRoute, useValue: {} }
@@ -72,7 +73,6 @@ describe('RegistroComponent', () => {
 
     it('should handle registration error', () => {
       const swalSpy = spyOn(Swal, 'fire');
-      spyOn(console, 'dir');
       const errorMsg = 'Email already exists';
       usuarioService.crear.and.returnValue(throwError(() => ({ error: { message: errorMsg } })));
       const form = { form: { status: 'VALID', reset: jasmine.createSpy('reset') } };
@@ -82,7 +82,6 @@ describe('RegistroComponent', () => {
 
       expect(component.submitted).toBeTrue();
       expect(usuarioService.crear).toHaveBeenCalled();
-      expect(console.dir).toHaveBeenCalledWith(errorMsg);
       expect(swalSpy).toHaveBeenCalledWith('Alta de usuario', jasmine.stringMatching(/problemas/), 'error');
     });
   });

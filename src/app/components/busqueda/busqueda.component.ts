@@ -1,19 +1,21 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, ActivatedRoute, Params, Router } from '@angular/router';
 import { CursoService } from 'src/app/services/curso.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
     selector: 'app-busqueda',
     templateUrl: './busqueda.component.html',
     styleUrls: ['./busqueda.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 export class BusquedaComponent {
 
   cursos: any[] = [];
   query_string: string = '';
 
-  constructor(private service: CursoService, private _route: ActivatedRoute, private _router: Router) {
+  constructor(private readonly service: CursoService, private readonly _route: ActivatedRoute, private readonly _router: Router) {
   }
 
   ngOnInit() {
