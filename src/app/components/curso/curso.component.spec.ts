@@ -27,7 +27,7 @@ describe('CursoComponent', () => {
     const carritoServiceSpy = jasmine.createSpyObj('CarritoService', ['addCurso']);
 
     await TestBed.configureTestingModule({
-      declarations: [CursoComponent],
+      imports: [CursoComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         { provide: CursoService, useValue: cursoServiceSpy },

@@ -9,7 +9,7 @@ describe('NoEncontradoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NoEncontradoComponent],
+      imports: [NoEncontradoComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     }).compileComponents();
 

@@ -26,8 +26,7 @@ describe('AccesoComponent', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      declarations: [AccesoComponent],
-      imports: [FormsModule],
+      imports: [FormsModule, AccesoComponent],
       providers: [
         { provide: AuthService, useValue: authServiceSpy },
         { provide: Router, useValue: routerSpy }

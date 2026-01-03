@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { CursoService } from 'src/app/services/curso.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
@@ -6,7 +8,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
     selector: 'app-busqueda',
     templateUrl: './busqueda.component.html',
     styleUrls: ['./busqueda.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 export class BusquedaComponent {
 

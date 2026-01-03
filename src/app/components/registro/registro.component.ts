@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from 'src/app/model/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -8,7 +11,8 @@ import Swal from 'sweetalert2';
     selector: 'app-registro',
     templateUrl: './registro.component.html',
     styleUrls: ['./registro.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule, FormsModule]
 })
 
 export class RegistroComponent {

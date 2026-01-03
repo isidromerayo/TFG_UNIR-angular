@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ValoracionService } from 'src/app/services/valoracion.service';
 
@@ -6,7 +8,8 @@ import { ValoracionService } from 'src/app/services/valoracion.service';
     selector: 'app-valoracion',
     templateUrl: './valoracion.component.html',
     styleUrls: ['./valoracion.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 
 export class ValoracionComponent {

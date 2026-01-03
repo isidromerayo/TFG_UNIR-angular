@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
     selector: 'app-no-encontrado',
     templateUrl: './no-encontrado.component.html',
     styleUrls: ['./no-encontrado.component.css'],
-    standalone: false
+    standalone: true
 })
 export class NoEncontradoComponent {
 

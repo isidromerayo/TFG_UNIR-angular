@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { CursoService } from 'src/app/services/curso.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CarritoService } from 'src/app/services/carrito.service';
@@ -9,7 +11,8 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
     selector: 'app-curso',
     templateUrl: './curso.component.html',
     styleUrls: ['./curso.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 export class CursoComponent {
 

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CarritoService } from 'src/app/services/carrito.service';
@@ -9,7 +12,8 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
     selector: 'app-carrito',
     templateUrl: './carrito.component.html',
     styleUrls: ['./carrito.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule, SweetAlert2Module]
 })
 export class CarritoComponent {
 
