@@ -14,11 +14,7 @@
             </div>
             <div class="total-carrito">Total: <span class="destacar-info">{{ totalCosteCursos() }}</span></div>
             <div class="boton-comprar">
-                <button class="btn btn-primary" (click)="iniciarCompra.fire()">comprar</button>
-                <swal #iniciarCompra title="¿Estas seguro de realizar la compra?" text="No se puede deshacer"
-                    icon="question" [showCancelButton]="true" [focusCancel]="true" (confirm)="comprar()">
-                </swal>
-
+                <button class="btn btn-primary" (click)="comprar()">comprar</button>
             </div>
         </div>
 

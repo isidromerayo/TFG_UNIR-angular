@@ -1,24 +1,22 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
 import { CarritoService } from 'src/app/services/carrito.service';
 import Swal from 'sweetalert2';
-import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
     selector: 'app-carrito',
     templateUrl: './carrito.component.html',
     styleUrls: ['./carrito.component.css'],
     standalone: true,
-    imports: [CommonModule, RouterModule, SweetAlert2Module]
+    imports: [CommonModule, RouterModule]
 })
 export class CarritoComponent {
 
   myCart$ = this.carrito.myCart$
 
-  constructor(public carrito: CarritoService,private servicioLogin:AuthService, private route: ActivatedRoute, private router: Router){
+  constructor(public carrito: CarritoService,private readonly servicioLogin:AuthService, private readonly route: ActivatedRoute, private readonly router: Router){
   }
   
   emptyCarritoCursos():boolean {
@@ -35,11 +33,13 @@ export class CarritoComponent {
 
   comprar() {
     if(this.servicioLogin.isLoginUser()) {
-      if (!this.carrito.isEmpty()) {
+      if (this.carrito.hasItems()) {
         Swal.fire({
           title: '¿Estas seguro de realizar la compra?',
           text: "No se puede deshacer",
-          showCancelButton: true
+          icon: "question",
+          showCancelButton: true,
+          focusCancel: true
         }).then((result) => {
           if (result.isConfirmed) {
             this.carrito.myCart$.subscribe(cursos => {

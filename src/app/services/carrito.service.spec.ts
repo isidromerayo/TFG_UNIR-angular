@@ -133,6 +133,29 @@ describe('CarritoService', () => {
     });
   });
 
+  describe('hasItems', () => {
+    it('should return false for empty cart', () => {
+      expect(service.hasItems()).toBe(false);
+    });
+
+    it('should return true when cart has items', () => {
+      service.addCurso(mockCurso1);
+      expect(service.hasItems()).toBe(true);
+    });
+
+    it('should return true when cart has multiple items', () => {
+      service.addCurso(mockCurso1);
+      service.addCurso(mockCurso2);
+      expect(service.hasItems()).toBe(true);
+    });
+
+    it('should return false after cleaning cart', () => {
+      service.addCurso(mockCurso1);
+      service.clean();
+      expect(service.hasItems()).toBe(false);
+    });
+  });
+
   describe('clean', () => {
     it('should clear all items from cart', (done) => {
       service.addCurso(mockCurso1);

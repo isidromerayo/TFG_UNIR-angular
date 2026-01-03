@@ -43,6 +43,10 @@ export class CarritoService {
     return (this.myList.length == 0)
   }
   
+  hasItems():boolean {
+    return (this.myList.length > 0)
+  }
+  
   clean():void {
     this.myList = []
     this.myCart.next(this.myList)
