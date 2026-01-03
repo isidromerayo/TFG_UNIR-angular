@@ -16,7 +16,7 @@ export class BusquedaComponent {
   cursos: any[] = [];
   query_string: string = '';
 
-  constructor(private service: CursoService, private _route: ActivatedRoute, private _router: Router) {
+  constructor(private readonly service: CursoService, private readonly _route: ActivatedRoute, private readonly _router: Router) {
   }
 
   ngOnInit() {

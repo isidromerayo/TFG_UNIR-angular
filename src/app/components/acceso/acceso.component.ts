@@ -21,7 +21,7 @@ export class AccesoComponent {
 
   usuario_auth: UsuarioAuth = {} as UsuarioAuth;
 
-  constructor(private servicioLogin:AuthService, private router:Router ) {
+  constructor(private readonly servicioLogin:AuthService, private readonly router:Router ) {
 
   }
 

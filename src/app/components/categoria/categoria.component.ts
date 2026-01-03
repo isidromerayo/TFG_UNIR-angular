@@ -16,7 +16,7 @@ export class CategoriaComponent {
   categoria: any = {};
   categoria_cursos: any[] = [];
 
-  constructor(public servicio: CategoriaService, private _route: ActivatedRoute, private _router: Router) {
+  constructor(public readonly servicio: CategoriaService, private readonly _route: ActivatedRoute, private readonly _router: Router) {
 
   }
   ngOnInit() {

@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 export class SliderComponent {
   public query_string: string;
 
-  constructor(private _route: ActivatedRoute, private _router: Router) {
+  constructor(private readonly _route: ActivatedRoute, private readonly _router: Router) {
     this.query_string = '';
   }
 

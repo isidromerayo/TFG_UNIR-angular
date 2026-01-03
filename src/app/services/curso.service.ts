@@ -8,7 +8,7 @@ import { API_URL } from '../utils/constants';
 })
 export class CursoService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   getCursoPorId(id:number):Observable<any> {
     return this.http.get<any>(`${API_URL}/cursos/${id}`).pipe(map(res => res))

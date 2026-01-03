@@ -13,7 +13,7 @@ export class MisDatosComponent {
   
   usuario: any = {}
 
-  constructor(private servicioLogin:AuthService) {
+  constructor(private readonly servicioLogin:AuthService) {
       this.usuario = servicioLogin.getUser()
   }
 }

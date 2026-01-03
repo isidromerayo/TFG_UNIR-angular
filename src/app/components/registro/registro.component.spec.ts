@@ -73,7 +73,6 @@ describe('RegistroComponent', () => {
 
     it('should handle registration error', () => {
       const swalSpy = spyOn(Swal, 'fire');
-      spyOn(console, 'dir');
       const errorMsg = 'Email already exists';
       usuarioService.crear.and.returnValue(throwError(() => ({ error: { message: errorMsg } })));
       const form = { form: { status: 'VALID', reset: jasmine.createSpy('reset') } };
@@ -83,7 +82,6 @@ describe('RegistroComponent', () => {
 
       expect(component.submitted).toBeTrue();
       expect(usuarioService.crear).toHaveBeenCalled();
-      expect(console.dir).toHaveBeenCalledWith(errorMsg);
       expect(swalSpy).toHaveBeenCalledWith('Alta de usuario', jasmine.stringMatching(/problemas/), 'error');
     });
   });

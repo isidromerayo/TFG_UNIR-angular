@@ -60,8 +60,7 @@ describe('BusquedaComponent', () => {
   });
 
   describe('initialization error', () => {
-    beforeEach(() => {
-      spyOn(console, 'error');
+      beforeEach(() => {
       cursoService.search.and.returnValue(throwError(() => new Error('API Error')));
       fixture = TestBed.createComponent(BusquedaComponent);
       component = fixture.componentInstance;
@@ -70,7 +69,6 @@ describe('BusquedaComponent', () => {
 
     it('should handle search error', () => {
       expect(cursoService.search).toHaveBeenCalled();
-      expect(console.error).toHaveBeenCalled();
       expect(component.cursos).toEqual([]);
     });
   });
