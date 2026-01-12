@@ -49,7 +49,7 @@
     "@cypress/code-coverage": "^3.13.4",
     "@cypress/schematic": "^2.5.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@types/jasmine": "~4.6.5",
+    "@types/jasmine": "~5.1.14",
     "cypress": "^15.8.1",
     "istanbul-lib-coverage": "^3.2.2",
     "jasmine-core": "~4.6.0",
