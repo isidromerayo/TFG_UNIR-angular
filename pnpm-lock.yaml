@@ -69,10 +69,10 @@ importers:
         version: 20.3.15(@angular/compiler@20.3.15)(typescript@5.9.3)
       '@cypress/code-coverage':
         specifier: ^3.13.4
-        version: 3.14.7(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(babel-loader@10.0.0(@babel/core@7.28.5)(webpack@5.101.2))(cypress@15.8.1)(webpack@5.101.2(esbuild@0.25.9))
+        version: 3.14.7(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(babel-loader@10.0.0(@babel/core@7.28.5)(webpack@5.101.2))(cypress@15.8.1)(webpack@5.101.2)
       '@cypress/schematic':
-        specifier: ^2.5.0
-        version: 2.5.2(@angular/cli@20.3.13(@types/node@24.10.1)(chokidar@4.0.3))(@angular/core@20.3.15(@angular/compiler@20.3.15)(rxjs@7.8.2)(zone.js@0.16.0))
+        specifier: ^5.0.0
+        version: 5.0.0(@angular/cli@20.3.13(@types/node@24.10.1)(chokidar@4.0.3))(@angular/core@20.3.15(@angular/compiler@20.3.15)(rxjs@7.8.2)(zone.js@0.16.0))(cypress@15.8.1)
       '@istanbuljs/nyc-config-typescript':
         specifier: ^1.0.2
         version: 1.0.2(nyc@17.1.0)
@@ -909,11 +909,12 @@ packages:
     resolution: {integrity: sha512-I3l7FdGRXluAS44/0NguwWlO83J18p0vlr2FYHrJkWdNYhgVoiYo61IXPqaOsL+vNxU1ZqMACzItGK3/KKDsdw==}
     engines: {node: '>= 6'}
 
-  '@cypress/schematic@2.5.2':
-    resolution: {integrity: sha512-H+V3ZP3KQVOs6b49N66jioXa+rkLzszVi+Bl3jiroVTURUNMOpSa4BOrt10Pn8F57TO0Bamhch2WOk/e9cq98w==}
+  '@cypress/schematic@5.0.0':
+    resolution: {integrity: sha512-z8+myDqT4SONCBvNI+cFzhADFCOOsSOcfp6mxMx4FxMMpyeaYbUNUCZlt886UnjnSsL5BWSX7WNJLhPptewKVw==}
     peerDependencies:
-      '@angular/cli': '>=14'
-      '@angular/core': '>=14'
+      '@angular/cli': '>=20.0.0'
+      '@angular/core': '>=20.0.0'
+      cypress: ^15.8.0
 
   '@cypress/webpack-preprocessor@6.0.4':
     resolution: {integrity: sha512-ly+EcabWWbhrSPr2J/njQX7Y3da+QqOmFg8Og/MVmLxhDLKIzr2WhTdgzDYviPTLx/IKsdb41cc2RLYp6mSBRA==}
@@ -4310,10 +4311,6 @@ packages:
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
 
-  rxjs@6.6.7:
-    resolution: {integrity: sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==}
-    engines: {npm: '>=2.0.0'}
-
   rxjs@7.8.2:
     resolution: {integrity: sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==}
 
@@ -4729,9 +4726,6 @@ packages:
   tree-kill@1.2.2:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
-
-  tslib@1.14.1:
-    resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
@@ -6689,11 +6683,11 @@ snapshots:
 
   '@colors/colors@1.5.0': {}
 
-  '@cypress/code-coverage@3.14.7(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(babel-loader@10.0.0(@babel/core@7.28.5)(webpack@5.101.2))(cypress@15.8.1)(webpack@5.101.2(esbuild@0.25.9))':
+  '@cypress/code-coverage@3.14.7(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(babel-loader@10.0.0(@babel/core@7.28.5)(webpack@5.101.2))(cypress@15.8.1)(webpack@5.101.2)':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/preset-env': 7.28.3(@babel/core@7.28.5)
-      '@cypress/webpack-preprocessor': 6.0.4(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(babel-loader@10.0.0(@babel/core@7.28.5)(webpack@5.101.2))(webpack@5.101.2(esbuild@0.25.9))
+      '@cypress/webpack-preprocessor': 6.0.4(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(babel-loader@10.0.0(@babel/core@7.28.5)(webpack@5.101.2))(webpack@5.101.2)
       babel-loader: 10.0.0(@babel/core@7.28.5)(webpack@5.101.2)
       chalk: 4.1.2
       cypress: 15.8.1
@@ -6729,14 +6723,16 @@ snapshots:
       tunnel-agent: 0.6.0
       uuid: 8.3.2
 
-  '@cypress/schematic@2.5.2(@angular/cli@20.3.13(@types/node@24.10.1)(chokidar@4.0.3))(@angular/core@20.3.15(@angular/compiler@20.3.15)(rxjs@7.8.2)(zone.js@0.16.0))':
+  '@cypress/schematic@5.0.0(@angular/cli@20.3.13(@types/node@24.10.1)(chokidar@4.0.3))(@angular/core@20.3.15(@angular/compiler@20.3.15)(rxjs@7.8.2)(zone.js@0.16.0))(cypress@15.8.1)':
     dependencies:
       '@angular/cli': 20.3.13(@types/node@24.10.1)(chokidar@4.0.3)
       '@angular/core': 20.3.15(@angular/compiler@20.3.15)(rxjs@7.8.2)(zone.js@0.16.0)
+      cypress: 15.8.1
       jsonc-parser: 3.3.1
-      rxjs: 6.6.7
+      rxjs: 7.8.2
+      semver: 7.7.3
 
-  '@cypress/webpack-preprocessor@6.0.4(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(babel-loader@10.0.0(@babel/core@7.28.5)(webpack@5.101.2))(webpack@5.101.2(esbuild@0.25.9))':
+  '@cypress/webpack-preprocessor@6.0.4(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(babel-loader@10.0.0(@babel/core@7.28.5)(webpack@5.101.2))(webpack@5.101.2)':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/preset-env': 7.28.3(@babel/core@7.28.5)
@@ -7242,7 +7238,7 @@ snapshots:
       npm-pick-manifest: 10.0.0
       proc-log: 5.0.0
       promise-retry: 2.0.1
-      semver: 7.7.2
+      semver: 7.7.3
       which: 5.0.0
 
   '@npmcli/installed-package-contents@3.0.0':
@@ -7259,7 +7255,7 @@ snapshots:
       hosted-git-info: 8.1.0
       json-parse-even-better-errors: 4.0.0
       proc-log: 5.0.0
-      semver: 7.7.2
+      semver: 7.7.3
       validate-npm-package-license: 3.0.4
 
   '@npmcli/promise-spawn@8.0.3':
@@ -9752,7 +9748,7 @@ snapshots:
     dependencies:
       hosted-git-info: 8.1.0
       proc-log: 5.0.0
-      semver: 7.7.2
+      semver: 7.7.3
       validate-npm-package-name: 6.0.2
 
   npm-package-arg@13.0.0:
@@ -9772,7 +9768,7 @@ snapshots:
       npm-install-checks: 7.1.2
       npm-normalize-package-bin: 4.0.0
       npm-package-arg: 12.0.2
-      semver: 7.7.2
+      semver: 7.7.3
 
   npm-registry-fetch@18.0.2:
     dependencies:
@@ -10313,10 +10309,6 @@ snapshots:
     dependencies:
       queue-microtask: 1.2.3
 
-  rxjs@6.6.7:
-    dependencies:
-      tslib: 1.14.1
-
   rxjs@7.8.2:
     dependencies:
       tslib: 2.8.1
@@ -10825,8 +10817,6 @@ snapshots:
       tslib: 2.8.1
 
   tree-kill@1.2.2: {}
-
-  tslib@1.14.1: {}
 
   tslib@2.8.1: {}
 
