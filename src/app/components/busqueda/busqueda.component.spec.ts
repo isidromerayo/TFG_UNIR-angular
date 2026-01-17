@@ -44,6 +44,7 @@ describe('BusquedaComponent', () => {
 
   describe('initialization success', () => {
     beforeEach(() => {
+      spyOn(console, 'log'); // Suppress console.log
       cursoService.search.and.returnValue(of(mockCursos));
       fixture = TestBed.createComponent(BusquedaComponent);
       component = fixture.componentInstance;
@@ -79,6 +80,7 @@ describe('BusquedaComponent', () => {
   describe('initialization error', () => {
     beforeEach(() => {
       cursoService.search.and.returnValue(throwError(() => new Error('API Error')));
+      spyOn(console, 'error'); // Suppress console.error for error handling tests
       fixture = TestBed.createComponent(BusquedaComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
@@ -87,11 +89,13 @@ describe('BusquedaComponent', () => {
     it('should handle search error', () => {
       expect(cursoService.search).toHaveBeenCalled();
       expect(component.cursos).toEqual([]);
+      expect(console.error).toHaveBeenCalled();
     });
   });
 
   describe('additional scenarios', () => {
     it('should handle empty search results', () => {
+      spyOn(console, 'log'); // Suppress console.log
       cursoService.search.and.returnValue(of([]));
       
       fixture = TestBed.createComponent(BusquedaComponent);
@@ -102,14 +106,12 @@ describe('BusquedaComponent', () => {
     });
 
     it('should handle network error gracefully', () => {
+      spyOn(console, 'log'); // Suppress console.log
+      spyOn(console, 'error'); // Suppress console.error
       cursoService.search.and.returnValue(throwError(() => new Error('Network timeout')));
       
       fixture = TestBed.createComponent(BusquedaComponent);
       component = fixture.componentInstance;
-      
-      // Spy on console.error to prevent test failure
-      spyOn(console, 'error');
-      
       fixture.detectChanges();
 
       expect(console.error).toHaveBeenCalled();
@@ -117,6 +119,7 @@ describe('BusquedaComponent', () => {
     });
 
     it('should handle null results', () => {
+      spyOn(console, 'log'); // Suppress console.log
       cursoService.search.and.returnValue(of(null));
       
       fixture = TestBed.createComponent(BusquedaComponent);

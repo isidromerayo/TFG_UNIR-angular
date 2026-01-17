@@ -7,7 +7,7 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-angular&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-angular)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-angular&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-angular)
 
-**Current version: Angular 20.3.15**
+**Current version: Angular 21.1.0**
 
 ## Package Manager
 
@@ -73,7 +73,7 @@ pnpm security:outdated
 - Monitorear security advisories de paquetes críticos
 - Usar múltiples herramientas de auditoría
 
-**Estado actual**: ✅ 0 vulnerabilidades conocidas
+**Estado actual**: ✅ 1 vulnerabilidad baja (dependencia transitiva de @angular-devkit/build-angular)
 
 Ver documentación completa:
 - [SECURITY_SETUP.md](./SECURITY_SETUP.md) - Configuración de seguridad

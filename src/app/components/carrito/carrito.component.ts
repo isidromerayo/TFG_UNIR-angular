@@ -51,7 +51,7 @@ export class CarritoComponent {
             });
           }
         }).catch((error) => {
-          console.log(error)
+          // Error handling - silently fail
         });
       } else {
         Swal.fire('Compra','El carrito está vacío');
