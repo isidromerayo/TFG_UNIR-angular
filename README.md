@@ -73,7 +73,7 @@ pnpm security:outdated
 - Monitorear security advisories de paquetes críticos
 - Usar múltiples herramientas de auditoría
 
-**Estado actual**: ✅ 1 vulnerabilidad baja (dependencia transitiva de @angular-devkit/build-angular)
+**Estado actual**: ✅ 0 vulnerabilidades conocidas
 
 Ver documentación completa:
 - [SECURITY_SETUP.md](./SECURITY_SETUP.md) - Configuración de seguridad
