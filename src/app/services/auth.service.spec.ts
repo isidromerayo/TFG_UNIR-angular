@@ -152,11 +152,13 @@ describe('AuthenticationService', () => {
     });
 
     it('should return null if no user in localStorage', () => {
+      localStorage.clear();
       const user = service.getUser();
       expect(user).toBeNull();
     });
 
     it('should return null if user is empty string', () => {
+      localStorage.clear();
       localStorage.setItem(USER, '');
 
       const user = service.getUser();
@@ -164,10 +166,15 @@ describe('AuthenticationService', () => {
     });
 
     it('should return null if user JSON is invalid', () => {
+      localStorage.clear();
       localStorage.setItem(USER, 'invalid-json{');
+
+      // Suppress console error for this expected error case
+      spyOn(console, 'error');
 
       const user = service.getUser();
       expect(user).toBeNull();
+      expect(console.error).toHaveBeenCalled();
     });
   });
 

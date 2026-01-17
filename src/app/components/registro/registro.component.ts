@@ -35,7 +35,6 @@ export class RegistroComponent {
     }
     this.submitted = true;
 
-    console.log(this.usuario)
     this.servicio.crear(this.usuario).subscribe({
       next: (respuesta: any): void => {
         Swal.fire('Alta', 'Se ha registrado su usuario correctamente, recibirá un correo para confirmar el alta');                      

@@ -21,7 +21,6 @@ export class BusquedaComponent implements OnInit {
   ngOnInit() {
     this._route.params.subscribe((params: Params) => {
       this.query_string = params['search'];
-      console.log(this.query_string)
       this.service.search(this.query_string).subscribe({
         next: (respuesta): void => {
           this.cursos = respuesta
