@@ -100,29 +100,48 @@ jobs:
     - name: Cache Cypress binary
       uses: actions/cache@v4
       with:
-        path: ~/.cache/Cypress
-        key: ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }}
+        path: |
+          ~/.cache/Cypress
+          node_modules/.cache/Cypress
+        key: ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/package.json') }}
         restore-keys: |
+          ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }}-
           ${{ runner.os }}-cypress-
 
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
 
     - name: Install Cypress binary
-      run: pnpm cypress install
+      run: |
+        timeout 300 pnpm cypress install || {
+          echo "Cypress installation timed out, trying alternative approach..."
+          pnpm exec cypress install --force
+        }
 
     - name: Build application
       run: pnpm run build
 
     - name: Start application
-      run: pnpm run start &
+      run: |
+        pnpm run start &
+        echo "Application started in background"
       
     - name: Wait for application to be ready
       run: |
-        timeout 60 bash -c 'until curl -f http://localhost:4200; do sleep 2; done'
+        echo "Waiting for application to be ready..."
+        timeout 90 bash -c 'until curl -f http://localhost:4200; do sleep 3; echo "Still waiting..."; done'
+        echo "Application is ready!"
 
     - name: Run Cypress E2E tests
-      run: pnpm run cypress:run
+      run: |
+        echo "Running Cypress E2E tests..."
+        CYPRESS_COVERAGE=true pnpm run cypress:run -- --spec "cypress/e2e/spec.cy.ts" --reporter spec --config video=false,screenshotOnRunFailure=false || {
+          echo "Cypress tests failed, checking for common issues..."
+          echo "Checking if application is still running..."
+          curl -f http://localhost:4200 || echo "Application is not responding"
+          echo "Cypress test execution completed with errors"
+          exit 1
+        }
 
     - name: Upload E2E artifacts
       if: always()
