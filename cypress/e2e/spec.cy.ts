@@ -28,10 +28,19 @@ describe('My First Test', () => {
       }
     }).as('getCursosUltimas');
 
+    cy.intercept('GET', 'http://localhost:8080/api/categorias?sort=nombre&size=5', {
+      statusCode: 200,
+      body: {
+        _embedded: {
+          categorias: []
+        }
+      }
+    }).as('getCategorias');
+
     cy.visit('/');
     
     // Wait for API calls to complete
-    cy.wait(['@getCursosDestacados', '@getOpiniones', '@getCursosUltimas']);
+    cy.wait(['@getCursosDestacados', '@getOpiniones', '@getCursosUltimas', '@getCategorias']);
     
     // Verify the page loads correctly
     cy.get('h2').contains('Encuentra tu curso');
