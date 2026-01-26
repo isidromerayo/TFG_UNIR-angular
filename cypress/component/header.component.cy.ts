@@ -4,6 +4,9 @@ import { AuthService } from '../../src/app/services/auth.service'
 import { Router } from '@angular/router'
 import { of } from 'rxjs'
 
+// Import the mount function from @cypress/angular
+import { mount } from '@cypress/angular'
+
 describe('HeaderComponent', () => {
   let mockHomeService: jasmine.SpyObj<HomeService>
   let mockAuthService: jasmine.SpyObj<AuthService>
@@ -23,7 +26,7 @@ describe('HeaderComponent', () => {
   })
 
   it('should mount', () => {
-    cy.mount(HeaderComponent, {
+    mount(HeaderComponent, {
       providers: [
         { provide: HomeService, useValue: mockHomeService },
         { provide: AuthService, useValue: mockAuthService },
@@ -33,7 +36,7 @@ describe('HeaderComponent', () => {
   })
 
   it('should load categories on init', () => {
-    cy.mount(HeaderComponent, {
+    mount(HeaderComponent, {
       providers: [
         { provide: HomeService, useValue: mockHomeService },
         { provide: AuthService, useValue: mockAuthService },
@@ -50,7 +53,7 @@ describe('HeaderComponent', () => {
       win.localStorage.setItem('isLoggedIn', 'true')
     })
 
-    cy.mount(HeaderComponent, {
+    mount(HeaderComponent, {
       providers: [
         { provide: HomeService, useValue: mockHomeService },
         { provide: AuthService, useValue: mockAuthService },
@@ -67,7 +70,7 @@ describe('HeaderComponent', () => {
       win.localStorage.removeItem('isLoggedIn')
     })
 
-    cy.mount(HeaderComponent, {
+    mount(HeaderComponent, {
       providers: [
         { provide: HomeService, useValue: mockHomeService },
         { provide: AuthService, useValue: mockAuthService },
@@ -79,7 +82,7 @@ describe('HeaderComponent', () => {
   })
 
   it('should call logout service and navigate on logout', () => {
-    cy.mount(HeaderComponent, {
+    mount(HeaderComponent, {
       providers: [
         { provide: HomeService, useValue: mockHomeService },
         { provide: AuthService, useValue: mockAuthService },

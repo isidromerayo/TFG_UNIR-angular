@@ -20,10 +20,8 @@ import './commands'
 // The task configuration will determine if it's active
 import '@cypress/code-coverage/support'
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
-
-import { mount } from 'cypress/angular'
+// Import the mount function from @cypress/angular
+import { mount } from '@cypress/angular'
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
