@@ -331,10 +331,11 @@ Este flujo garantiza que cada commit cumpla con los estándares de calidad del p
 
 1. **Después de generar/modificar código**:
    ```bash
-   pnpm run test-headless-cc && pnpm run cypress:component
+   pnpm run test-headless-cc && pnpm run cypress:run
    ```
    - Si falla: Arreglar el código o los tests.
    - Si coverage < 80%: Añadir tests para alcanzar el objetivo.
+   - Nota: Cypress component testing tiene limitaciones con Angular 21, usar E2E tests como alternativa principal.
 
 2. **Verificar build**:
    ```bash
@@ -354,6 +355,14 @@ Este flujo garantiza que cada commit cumpla con los estándares de calidad del p
 # Verificación completa con coverage (ejecutar antes de commit)
 pnpm run test-headless-cc && pnpm run cypress:run && pnpm run build && echo "✅ Todo OK - Coverage ≥ 80% - Listo para commit"
 ```
+
+### Notas sobre Cypress Component Testing
+
+Debido a incompatibilidades entre Angular 21 y Cypress component testing:
+- El componente de pruebas de componentes tiene limitaciones técnicas
+- Se recomienda enfocarse en pruebas E2E (end-to-end) para cobertura integral
+- Las pruebas unitarias con Karma/Jasmine siguen funcionando perfectamente
+- El pipeline CI/CD maneja adecuadamente los posibles fallos de component testing
 
 ## 🤝 Contribución
 
