@@ -3,8 +3,8 @@
 ## 📋 Información General
 
 **Proyecto**: TFG UNIR - Frontend Angular
-**Framework**: Angular 20.3.15
-**Lenguaje**: TypeScript 5.8.3
+**Framework**: Angular 21.1.1
+**Lenguaje**: TypeScript 5.9.3
 **Package Manager**: pnpm 10.x
 **Propósito**: Aplicación web frontend para sistema de gestión de cursos online
 
@@ -453,7 +453,7 @@ pnpm run build
 
 ---
 
-**Última actualización**: 6 de diciembre de 2024  
-**Versión de Angular**: 20.3.15  
+**Última actualización**: 23 de enero de 2026  
+**Versión de Angular**: 21.1.1  
 **Package Manager**: pnpm 10.24.0  
 **Node.js**: 20.x
