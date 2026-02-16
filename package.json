@@ -72,7 +72,8 @@
       "tar": ">=7.5.7",
       "lodash": ">=4.17.23",
       "undici": ">=7.18.2",
-      "@isaacs/brace-expansion": ">=5.0.1"
+      "@isaacs/brace-expansion": ">=5.0.1",
+      "hono": ">=4.11.9"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
