@@ -47,7 +47,7 @@
     "@angular/cli": "^21.1.4",
     "@angular/compiler-cli": "^21.1.4",
     "@cypress/angular": "^4.1.0",
-    "@cypress/code-coverage": "^3.13.4",
+    "@cypress/code-coverage": "^4.0.0",
     "@cypress/schematic": "^5.0.0",
     "@cypress/webpack-dev-server": "^5.6.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
