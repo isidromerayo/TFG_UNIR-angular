@@ -20,7 +20,7 @@ export class CategoriaComponent implements OnInit {
   }
   ngOnInit() {
     this._route.params.subscribe((params: Params) => {
-      let id = params['id'];
+      const id = params['id'];
       this.servicio.getCategoriaId(id).subscribe({
         next: (respuesta): void => {
           this.categoria = respuesta

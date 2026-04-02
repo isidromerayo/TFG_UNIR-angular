@@ -24,7 +24,7 @@ export class CursoComponent implements OnInit {
   ngOnInit() {
     
     this._route.params.subscribe((params: Params)=>{
-      let id = params['id'];
+      const id = params['id'];
       this.servicio.getCursoPorId(id).subscribe({
         next: (respuesta): void => { 
           this.curso = respuesta

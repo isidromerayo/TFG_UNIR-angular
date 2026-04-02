@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "skills": {
+    "angular-architect": {
+      "source": "jeffallan/claude-skills",
+      "sourceType": "github",
+      "computedHash": "0dcdd28f326940574f3f981b2d266b0cd27f060c2071f4b073206f734d13a4de"
+    },
+    "angular-component": {
+      "source": "analogjs/angular-skills",
+      "sourceType": "github",
+      "computedHash": "2789fdf11e2a70832ce2e6e79954018325a010ebdd45c5d4b1e7bfdf44679b7c"
+    },
+    "angular-testing": {
+      "source": "analogjs/angular-skills",
+      "sourceType": "github",
+      "computedHash": "66adf01ccb30305e179ce41ff76ded6b60dbb5909bd889cc350cdd13b6933130"
+    },
+    "wcag": {
+      "source": "claude-dev-suite/claude-dev-suite",
+      "sourceType": "github",
+      "computedHash": "2a64c12b65e36a3572cd4f2710515a136733a12704c1f128d9cae28fea627113"
+    },
+    "wcag-audit-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "computedHash": "df495bdd3466d293e019fa191422d0a3e6cb9c50f275189a70d9da25add075ac"
+    }
+  }
+}

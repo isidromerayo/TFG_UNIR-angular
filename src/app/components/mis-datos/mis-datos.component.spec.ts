@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { MisDatosComponent } from './mis-datos.component';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,6 +19,7 @@ describe('MisDatosComponent', () => {
       imports: [MisDatosComponent],
       providers: [
         provideHttpClient(),
+        provideHttpClientTesting(),
         { provide: AuthService, useValue: mockAuthService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

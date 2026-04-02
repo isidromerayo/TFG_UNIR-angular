@@ -1,10 +1,32 @@
 # AGENTS.md - Project Context for AI Agents
 
 ## Project Overview
-- **Framework**: Angular 21.1.1
+- **Framework**: Angular 21.2.7
 - **Language**: TypeScript 5.9.3
 - **Package Manager**: pnpm (NOT npm)
-- **Testing**: Karma/Jasmine + Cypress E2E
+- **Testing**: Karma/Jasmine (unit) + Cypress E2E
+
+## Agent Skills
+
+Use these skills for specific tasks:
+
+| Skill | When to Use |
+|-------|-------------|
+| `angular-component` | Creating new components, refactoring to signals, adding host bindings |
+| `angular-testing` | Writing unit tests, testing signal-based components, mocking deps |
+| `angular-architect` | Architecture decisions, NgRx state, routing patterns, RxJS patterns |
+| `wcag` | WCAG 2.2 accessibility guidelines, ARIA, color contrast, keyboard navigation |
+
+**Skill files location:** `.agents/skills/` (project-level)
+
+**How to use skills:**
+```
+# Read the skill file directly
+read .agents/skills/angular-component/SKILL.md
+read .agents/skills/angular-testing/SKILL.md
+read .agents/skills/angular-architect/SKILL.md
+read .agents/skills/wcag/SKILL.md
+```
 
 ## Build, Test & Development Commands
 
@@ -14,81 +36,104 @@ pnpm start              # Dev server at localhost:4200
 pnpm run build          # Production build
 pnpm run watch          # Watch mode for development
 
-# Testing
+# Testing (Karma/Jasmine)
 pnpm test               # Run tests in watch mode
-pnpm run test-headless       # Run tests once (headless Chrome)
-pnpm run test-headless-cc    # Run tests with code coverage
+pnpm run test-headless  # Run tests once (headless Chrome)
+pnpm run test-headless-cc  # Run tests with code coverage
 
 # Run a SINGLE test file
 pnpm test --include="**/some.component.spec.ts"
 
-# E2E Testing
+# E2E Testing (Cypress)
 pnpm run cypress:open   # Open Cypress UI
-pnpm run cypress:run    # Run Cypress tests headless
+pnpm run cypress:run     # Run Cypress tests headless
 
 # Security & Verification
 pnpm audit              # Check vulnerabilities
 pnpm run verify         # test-headless + build + audit
 
-# Pre-commit verification (REQUIRED before commit)
-pnpm run test-headless-cc && pnpm run build && pnpm audit
+# Linting (ESLint)
+pnpm run lint           # Run ESLint (warnings allowed)
+pnpm run lint:fix       # Auto-fix fixable issues
 ```
 
 ## Pre-Commit Checklist (MUST PASS)
 - [ ] Tests pass: `pnpm run test-headless`
 - [ ] Coverage ≥ 80%: `pnpm run test-headless-cc` (Branches ≥ 80%)
 - [ ] Build succeeds: `pnpm run build`
-- [ ] No TypeScript errors
-- [ ] No vulnerabilities: `pnpm audit`
+- [ ] ESLint passes: `pnpm run lint` (warnings allowed)
+- [ ] No vulnerabilities: `pnpm audit` (ignores ajv tool vulnerability in devDeps)
 
-## Code Style Guidelines
+---
 
-### TypeScript
-- Use strict type checking
+# Code Style Guidelines
+
+## TypeScript
+- **Strict type checking** is enabled
 - Avoid `any`; use `unknown` when type is uncertain
 - Prefer type inference when obvious
 - Use proper error handling with try/catch
+- Enable `strict: true` in tsconfig
 
-### Angular Components
+## Imports
+- Use absolute paths for app modules (e.g., `app/services/auth.service`)
+- Group imports in this order: external Angular, external libs, app modules
+- Use named imports: `import { Component } from '@angular/core'`
+- Avoid barrel files (index.ts) unless necessary
+
+## Formatting
+- Use 2 spaces for indentation
+- Maximum line length: 100 characters
+- Use single quotes for strings
+- Trailing commas in multiline arrays/objects
+- Use semicolons at statement end
+
+## Angular Components
 - **DO NOT** set `standalone: true` (default in Angular 20+)
 - Use `input()` and `output()` functions instead of decorators
 - Use `computed()` for derived state
 - Set `changeDetection: ChangeDetectionStrategy.OnPush`
-- Keep components small and focused
+- Keep components small and focused (single responsibility)
+- Prefer inline templates for small components (< 50 lines)
 
-### State Management
-- Use signals for local state
+## State Management (Signals)
+- Use signals for local component state
 - Use `computed()` for derived values
-- **NEVER** use `mutate()`, use `update()` or `set()`
+- **NEVER** use `mutate()` - use `update()` or `set()`
+- Keep state transformations pure and predictable
 
-### Templates
+## Templates
 - Use native control flow: `@if`, `@for`, `@switch`
 - **NEVER** use `*ngIf`, `*ngFor`, `*ngSwitch`
 - **NEVER** use `ngClass` (use class bindings instead)
 - **NEVER** use `ngStyle` (use style bindings instead)
 - **NEVER** write arrow functions in templates
 - Use async pipe for observables
+- Keep templates simple; avoid complex logic
 
-### Services
+## Services
 - Use `inject()` instead of constructor injection
-- Use `providedIn: 'root'` for singletons
+- Use `providedIn: 'root'` for singleton services
 - Keep services focused on single responsibility
 
-### Accessibility (REQUIRED)
-- Must pass all AXE checks
-- Must meet WCAG AA (focus management, color contrast, ARIA)
-
-### Naming Conventions
+## Naming Conventions
 - Components: `kebab-case` for files, `PascalCase` for classes
 - Services: `*.service.ts`
 - Models: `*.model.ts` or `*.interface.ts`
-- Use descriptive names
+- Directives/Pipes: `*.directive.ts`, `*.pipe.ts`
+- Use descriptive, meaningful names (avoid abbreviations)
 
-### General
+## Accessibility (REQUIRED)
+- Must pass all AXE checks
+- Must meet WCAG AA (focus management, color contrast, ARIA)
+
+## General
 - Use `NgOptimizedImage` for static images
 - Prefer Reactive forms over Template-driven forms
-- Keep templates simple; avoid complex logic
 - No globals like `new Date()` - inject or pass as input
+- Do NOT use `@HostBinding`/`@HostListener` decorators; use `host` object in decorator
+
+---
 
 ## Project Structure
 ```
@@ -114,5 +159,6 @@ src/app/
 - Run tests with coverage before any commit
 - Branches coverage must be ≥ 80% (SonarQube requirement)
 - Cypress component testing has limitations with Angular 21; use E2E tests
-- Check `.agents/best-practices.md` for detailed guidelines
-- No Cursor or Copilot rules found in this project
+- ESLint configured with angular-eslint v18 + ESLint v8
+- Run `pnpm run lint` to check code style (warnings allowed)
+- Run `pnpm run lint:fix` to auto-fix some issues
