@@ -7,9 +7,34 @@
 - **Testing**: Karma/Jasmine + Cypress E2E
 
 ## Agent Skills
-- `.agents/skills/angular-component/` - Create standalone components with signals
-- `.agents/skills/angular-testing/` - Unit testing with Vitest/Jasmine (see references/)
-- `.agents/skills/angular-architect/` - Architecture patterns and best practices
+
+Use these skills for specific tasks:
+
+| Skill | When to Use |
+|-------|-------------|
+| `angular-component` | Creating new components, refactoring to signals, adding host bindings |
+| `angular-testing` | Writing unit tests, testing signal-based components, mocking deps |
+| `angular-architect` | Architecture decisions, NgRx state, routing patterns, RxJS patterns |
+
+**Load a skill** when the task matches:
+- `angular-component`: Component creation/refactoring
+- `angular-testing`: Test creation or fixing
+- `angular-architect`: Architecture decisions
+
+**Skill files location:** `.agents/skills/` (project-level, committed to repo)
+
+**How to use skills:**
+Due to tool limitations, project-level skills must be loaded manually:
+```
+# Read the skill file directly
+read .agents/skills/angular-component/SKILL.md
+read .agents/skills/angular-testing/SKILL.md
+read .agents/skills/angular-architect/SKILL.md
+
+# For specific topics, check references:
+# - angular-testing/references/testing-patterns.md
+# - angular-architect/references/ngrx.md, routing.md, rxjs.md
+```
 
 ## Build, Test & Development Commands
 
