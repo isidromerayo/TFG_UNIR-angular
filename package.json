@@ -53,7 +53,6 @@
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/jasmine": "~5.1.15",
     "cypress": "^15.10.0",
-    "glob": "^11.1.0",
     "istanbul-lib-coverage": "^3.2.2",
     "jasmine-core": "~5.13.0",
     "karma": "~6.4.4",
@@ -73,7 +72,7 @@
       "tar": ">=7.5.11",
       "lodash": ">=4.18.0",
       "undici": ">=7.24.0",
-      "minimatch": ">=10.2.3",
+      "minimatch": ">=3.1.4",
       "@isaacs/brace-expansion": ">=5.0.1",
       "serialize-javascript": ">=7.0.3",
       "systeminformation": ">=5.31.0",
@@ -87,8 +86,7 @@
       "path-to-regexp": ">=8.4.0",
       "node-forge": ">=1.4.0",
       "picomatch": ">=4.0.4",
-      "ajv": ">=8.18.0",
-      "glob": ">=10.4.0"
+      "ajv": ">=8.18.0"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",

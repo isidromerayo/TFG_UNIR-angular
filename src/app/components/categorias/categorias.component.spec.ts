@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 import { CategoriasComponent } from './categorias.component';
@@ -18,6 +19,7 @@ describe('CategoriasComponent', () => {
       imports: [CategoriasComponent],
       providers: [
         provideHttpClient(),
+        provideHttpClientTesting(),
         { provide: CategoriaService, useValue: mockCategoriaService }
       ]
     });

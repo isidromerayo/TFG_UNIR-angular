@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -14,7 +15,8 @@ describe('AppComponent', () => {
       imports: [AppComponent],
       providers: [
         provideRouter([]),
-        provideHttpClient()
+        provideHttpClient(),
+        provideHttpClientTesting()
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     }).compileComponents();
