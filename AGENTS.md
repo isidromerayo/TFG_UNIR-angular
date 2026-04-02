@@ -1,10 +1,15 @@
 # AGENTS.md - Project Context for AI Agents
 
 ## Project Overview
-- **Framework**: Angular 21.1.1
+- **Framework**: Angular 21.2.7
 - **Language**: TypeScript 5.9.3
 - **Package Manager**: pnpm (NOT npm)
 - **Testing**: Karma/Jasmine + Cypress E2E
+
+## Agent Skills
+- `.agents/skills/angular-component/` - Create standalone components with signals
+- `.agents/skills/angular-testing/` - Unit testing with Vitest/Jasmine (see references/)
+- `.agents/skills/angular-architect/` - Architecture patterns and best practices
 
 ## Build, Test & Development Commands
 
@@ -115,4 +120,7 @@ src/app/
 - Branches coverage must be ≥ 80% (SonarQube requirement)
 - Cypress component testing has limitations with Angular 21; use E2E tests
 - Check `.agents/best-practices.md` for detailed guidelines
-- No Cursor or Copilot rules found in this project
+- Use skills for component creation and testing:
+  - `angular-component` skill for creating components
+  - `angular-testing` skill for unit testing
+  - `angular-architect` skill for architecture decisions
