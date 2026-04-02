@@ -22,7 +22,9 @@
     "security:audit": "pnpm audit",
     "security:outdated": "pnpm outdated",
     "verify": "pnpm run test-headless && pnpm run build && pnpm audit",
-    "precommit": "pnpm run verify"
+    "precommit": "pnpm run verify",
+    "lint": "eslint src --ext .ts,.html",
+    "lint:fix": "eslint src --ext .ts,.html --fix"
   },
   "private": true,
   "dependencies": {
@@ -44,6 +46,10 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^21.2.4",
+    "@angular-eslint/eslint-plugin": "^21.3.1",
+    "@angular-eslint/eslint-plugin-template": "^21.3.1",
+    "@angular-eslint/schematics": "^21.3.1",
+    "@angular-eslint/template-parser": "^21.3.1",
     "@angular/cli": "^21.2.4",
     "@angular/compiler-cli": "^21.2.4",
     "@cypress/angular": "^4.1.0",
@@ -52,7 +58,9 @@
     "@cypress/webpack-dev-server": "^5.6.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/jasmine": "~5.1.15",
+    "ajv": "^8.18.0",
     "cypress": "^15.10.0",
+    "eslint": "^10.1.0",
     "istanbul-lib-coverage": "^3.2.2",
     "jasmine-core": "~5.13.0",
     "karma": "~6.4.4",
