@@ -46,10 +46,10 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^21.2.4",
-    "@angular-eslint/eslint-plugin": "^21.3.1",
-    "@angular-eslint/eslint-plugin-template": "^21.3.1",
-    "@angular-eslint/schematics": "^21.3.1",
-    "@angular-eslint/template-parser": "^21.3.1",
+    "@angular-eslint/eslint-plugin": "^18.4.3",
+    "@angular-eslint/eslint-plugin-template": "^18.4.3",
+    "@angular-eslint/schematics": "^18.4.3",
+    "@angular-eslint/template-parser": "^18.4.3",
     "@angular/cli": "^21.2.4",
     "@angular/compiler-cli": "^21.2.4",
     "@cypress/angular": "^4.1.0",
@@ -58,9 +58,11 @@
     "@cypress/webpack-dev-server": "^5.6.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/jasmine": "~5.1.15",
-    "ajv": "^8.18.0",
+    "@typescript-eslint/eslint-plugin": "^8.58.0",
+    "@typescript-eslint/parser": "^8.58.0",
+    "ajv": "^7.2.4",
     "cypress": "^15.10.0",
-    "eslint": "^10.1.0",
+    "eslint": "^8.57.1",
     "istanbul-lib-coverage": "^3.2.2",
     "jasmine-core": "~5.13.0",
     "karma": "~6.4.4",
@@ -93,8 +95,7 @@
       "socket.io-parser": ">=4.2.6",
       "path-to-regexp": ">=8.4.0",
       "node-forge": ">=1.4.0",
-      "picomatch": ">=4.0.4",
-      "ajv": ">=8.18.0"
+      "picomatch": ">=4.0.4"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",

@@ -50,14 +50,18 @@ pnpm run cypress:run     # Run Cypress tests headless
 
 # Security & Verification
 pnpm audit              # Check vulnerabilities
-pnpm run verify         # test-headless + build + audit
+pnpm run verify         # test-headless + build + lint + audit
+
+# Linting (ESLint)
+pnpm run lint           # Run ESLint (warnings allowed)
+pnpm run lint:fix       # Auto-fix fixable issues
 ```
 
 ## Pre-Commit Checklist (MUST PASS)
 - [ ] Tests pass: `pnpm run test-headless`
 - [ ] Coverage ≥ 80%: `pnpm run test-headless-cc` (Branches ≥ 80%)
 - [ ] Build succeeds: `pnpm run build`
-- [ ] No TypeScript errors
+- [ ] ESLint passes: `pnpm run lint` (warnings allowed)
 - [ ] No vulnerabilities: `pnpm audit`
 
 ---
@@ -155,4 +159,6 @@ src/app/
 - Run tests with coverage before any commit
 - Branches coverage must be ≥ 80% (SonarQube requirement)
 - Cypress component testing has limitations with Angular 21; use E2E tests
-- No ESLint/TSLint configured; use Angular CLI for type checking
+- ESLint configured with angular-eslint v18 + ESLint v8
+- Run `pnpm run lint` to check code style (warnings allowed)
+- Run `pnpm run lint:fix` to auto-fix some issues
