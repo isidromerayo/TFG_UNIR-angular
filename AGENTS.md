@@ -50,7 +50,7 @@ pnpm run cypress:run     # Run Cypress tests headless
 
 # Security & Verification
 pnpm audit              # Check vulnerabilities
-pnpm run verify         # test-headless + build + lint + audit
+pnpm run verify         # test-headless + build + audit
 
 # Linting (ESLint)
 pnpm run lint           # Run ESLint (warnings allowed)
@@ -62,7 +62,7 @@ pnpm run lint:fix       # Auto-fix fixable issues
 - [ ] Coverage ≥ 80%: `pnpm run test-headless-cc` (Branches ≥ 80%)
 - [ ] Build succeeds: `pnpm run build`
 - [ ] ESLint passes: `pnpm run lint` (warnings allowed)
-- [ ] No vulnerabilities: `pnpm audit`
+- [ ] No vulnerabilities: `pnpm audit` (ignores ajv tool vulnerability in devDeps)
 
 ---
 
