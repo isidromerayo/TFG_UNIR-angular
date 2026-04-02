@@ -124,3 +124,21 @@ src/app/
   - `angular-component` skill for creating components
   - `angular-testing` skill for unit testing
   - `angular-architect` skill for architecture decisions
+
+## Documentation Rules
+
+When making changes that affect documentation, you MUST update:
+
+| Change Type | Files to Update |
+|-------------|-----------------|
+| Angular version update | `README.md`, `DOCS_INDEX.md`, `AGENTS.md`, `package.json` |
+| New dependency/skill added | `AGENTS.md` (add to skills section), `DOCS_INDEX.md` |
+| CI/CD workflow change | `AGENTS.md` (update commands if needed) |
+| Testing framework change | `AGENTS.md`, `README.md`, `karma.conf.js` |
+
+**Update Checklist:**
+1. Update version in README.md
+2. Update version in AGENTS.md (Project Overview)
+3. Update DOCS_INDEX.md (version and date)
+4. Update CHANGELOG if exists
+5. Verify all referenced files are in sync

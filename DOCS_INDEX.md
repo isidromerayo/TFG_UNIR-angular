@@ -171,8 +171,9 @@ pnpm audit              # Verificar seguridad
 
 ### 🔒 Seguridad
 - Proyecto sin vulnerabilidades conocidas
-- Dependencias actualizadas a Angular 20.3.15
+- Dependencias actualizadas a Angular 21.2.7
 - Usar `pnpm audit` regularmente
+- Skills de proyecto disponibles en `.agents/skills/`
 
 ## 🆘 Soporte
 
@@ -194,6 +195,6 @@ pnpm audit              # Verificar seguridad
 
 ---
 
-**Última actualización**: 3 de enero de 2026  
+**Última actualización**: 2 de abril de 2026  
 **Mantenido por**: Equipo de desarrollo  
-**Versión del proyecto**: 0.1.0
+**Versión del proyecto**: 0.2.0
