@@ -71,7 +71,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.2.0",
     "lcov-result-merger": "^5.0.1",
-    "nyc": "^17.1.0",
+    "nyc": "^18.0.0",
     "ts-loader": "^9.5.4",
     "typescript": "~5.9.3"
   },
