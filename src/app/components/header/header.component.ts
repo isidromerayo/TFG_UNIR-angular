@@ -19,7 +19,7 @@ export class HeaderComponent {
 
   usuario_auth: UsuarioAuth = {} as UsuarioAuth;
 
-  constructor(public servicio: HomeService, private readonly servicioLogin: AuthService, private readonly router: Router) { // eslint-disable-line @typescript-eslint/no-unused-vars
+  constructor(public servicio: HomeService, private readonly servicioLogin: AuthService, private readonly router: Router) {
     servicio.getCategoriasPortada().subscribe({
       next: (respuesta): void =>  {
           this.categorias = respuesta

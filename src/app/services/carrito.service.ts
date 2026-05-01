@@ -53,8 +53,8 @@ export class CarritoService {
   }
 
   comprarCursos(cursos: any[]): Observable<any> {
-    const user = this.authService.getUser() as { id?: number } | null;
-    if (!user?.id) {
+    const user = this.authService.getUser();
+    if (!user || !('id' in user)) {
       // Handle the case where user or user.id is not available
       // For example, throw an error or return an observable that emits an error
       return new Observable(observer => {

@@ -202,7 +202,7 @@ describe('CarritoService', () => {
     });
 
     it('should handle error when user id not available', (done) => {
-      const mockUser = { usuario: 'test@test.com' } as any;
+      const mockUser = { usuario: 'test@test.com' };
       spyOn(authService, 'getUser').and.returnValue(mockUser);
 
       service.comprarCursos([mockCurso1]).subscribe(
