@@ -142,6 +142,24 @@ Si tu cambio afecta:
 - Arquitectura: Actualizar `AGENTS.md`
 - Tests: Actualizar sección de testing
 
+### Reglas de Actualización de AGENTS.md
+**Cuándo actualizar:**
+- Versiones de dependencias principales cambiadas (Angular, TypeScript, ESLint, etc.)
+- Nuevos patrones de código adoptados (signals, standalone real, etc.)
+- Scripts de build/test añadidos o modificados en `package.json`
+- Reglas de código cambiadas
+- Archivos importantes movidos o renombrados
+
+**Quién actualiza:**
+- El desarrollador que hace el cambio DEBE actualizar la documentación
+- Revisión en PR: verificar que la documentación esté actualizada
+
+**Checklist para cambios que requieren update de docs:**
+- [ ] ¿Cambió la versión de Angular/TypeScript/otros?
+- [ ] ¿Se añadieron/quitaron scripts en package.json?
+- [ ] ¿Cambiaron las reglas de código?
+- [ ] ¿Se movieron/renombraron archivos importantes?
+
 ### Comentarios en Código
 - Comentar código complejo
 - Usar JSDoc para funciones públicas

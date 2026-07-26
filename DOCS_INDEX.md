@@ -17,6 +17,7 @@
 ### ⚙️ [.agents/best-practices.md](.agents/best-practices.md) (2.3KB)
 **Para**: Agentes IA y desarrolladores  
 **Contenido**: Mejores prácticas de TypeScript, Angular 20+, accesibilidad, patrones de código
+> **Nota**: Reglas para código nuevo. El código existente puede no seguirlas.
 
 ## 📦 Documentación de Migración a pnpm
 
@@ -157,10 +158,14 @@ pnpm audit              # Verificar seguridad
 ## 📝 Notas Importantes
 
 ### ⚠️ Deprecaciones
+> **Nota**: El código existente aún usa estas formas legacy. Las nuevas features
+> DEBEN usar la forma moderna. Ver `AGENTS.md` → "Current Code State (Legacy)".
+
 - **NO usar** `*ngIf`, `*ngFor`, `*ngSwitch` → Usar `@if`, `@for`, `@switch`
 - **NO usar** `ngClass`, `ngStyle` → Usar class/style bindings
 - **NO usar** decoradores `@Input()`, `@Output()` → Usar `input()`, `output()`
 - **NO usar** `standalone: true` en decoradores → Es el default en Angular 20+
+- **NO usar** constructor injection → Usar `inject()`
 
 ### ✅ Mejores Prácticas
 - Usar signals para estado
@@ -171,7 +176,7 @@ pnpm audit              # Verificar seguridad
 
 ### 🔒 Seguridad
 - Proyecto sin vulnerabilidades conocidas
-- Dependencias actualizadas a Angular 21.2.7
+- Dependencias actualizadas a Angular ^21.2.18
 - Usar `pnpm audit` regularmente
 - Skills de proyecto disponibles en `.agents/skills/`
 
@@ -195,6 +200,6 @@ pnpm audit              # Verificar seguridad
 
 ---
 
-**Última actualización**: 2 de abril de 2026  
+**Última actualización**: 26 de julio de 2026  
 **Mantenido por**: Equipo de desarrollo  
 **Versión del proyecto**: 0.2.0
