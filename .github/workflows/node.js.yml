@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     steps:
     - name: Checkout code
@@ -83,8 +85,7 @@ jobs:
         fi
 
     - name: SonarQube Scan
-      if: ${{ secrets.SONAR_TOKEN != '' }}
+      if: env.SONAR_TOKEN != ''
       uses: SonarSource/sonarqube-scan-action@v6
       env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
