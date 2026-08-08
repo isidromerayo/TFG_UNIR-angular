@@ -7,7 +7,32 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-angular&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-angular)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-angular&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-angular)
 
-**Current version: Angular 21.2.7**
+**Current version: Angular 21.2.19**
+
+## Ciclo de vida de Angular 21
+
+Angular publica una nueva versión mayor cada 6 meses, y cada versión mayor recibe **18 meses de soporte total**, divididos en dos fases:
+
+| Fase | Duración | Qué incluye |
+|------|----------|-------------|
+| Soporte activo (Active) | 6 meses | Actualizaciones programadas, versiones menores y parches rutinarios |
+| Soporte a largo plazo (LTS) | 12 meses | Solo correcciones críticas de bugs y parches de seguridad |
+
+### Estado de Angular 21
+
+| Hito | Fecha |
+|------|-------|
+| Lanzamiento v21.0.0 | 19 de noviembre de 2025 |
+| Fin del soporte activo | 3 de junio de 2026 (cuando se lanzó v22.0.0) |
+| Fin del soporte LTS | ~junio de 2027 |
+| Último parche disponible | 21.2.19 (29 de julio de 2026) |
+
+### Implicaciones para este proyecto
+
+- **Angular 21 está actualmente en fase LTS**: solo recibe correcciones críticas y parches de seguridad, ya no hay nuevas funcionalidades.
+- **Angular 22 es la versión activa** (lanzada el 3 de junio de 2026). La migración a v22 no es urgente desde el punto de vista de soporte, pero es el siguiente paso planificado.
+- **Es obligatorio mantener la rama 21.x al día**: los parches de seguridad (como el XSS i18n o el fallo de HttpTransferCache corregidos en 21.2.19) solo se aplican a las versiones dentro de la ventana de soporte.
+- **Fuente oficial**: [Angular versioning and releases](https://angular.dev/reference/releases)
 
 ## Package Manager
 

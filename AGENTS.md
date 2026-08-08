@@ -162,3 +162,4 @@ src/app/
 - ESLint configured with angular-eslint v18 + ESLint v8
 - Run `pnpm run lint` to check code style (warnings allowed)
 - Run `pnpm run lint:fix` to auto-fix some issues
+- **Upgrading Angular versions**: DO NOT edit `package.json` manually. Run `pnpm up '<pkg>@^<version>'` (e.g. `pnpm up '@angular/core@^21.2.19'`) so `package.json` + `pnpm-lock.yaml` stay consistent. `pnpm up --latest '<pkg>@spec'` errors — either use `--latest` without specs or specs without `--latest`.
