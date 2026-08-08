@@ -112,6 +112,39 @@ Ver documentación completa:
 - **Disk Space**: Content-addressable storage saves disk space
 - **Monorepo Support**: Better support for monorepo structures
 
+## 🚀 CI/CD
+
+### GitHub Actions
+
+El proyecto incluye los siguientes workflows en `.github/workflows/`. Todos usan **Node.js 22.x** (vía `actions/setup-node@v7`) y `pnpm` 10.x, y fijan las actions a commits SHA completos para builds inmutables.
+
+#### Pipeline (node.js.yml)
+
+Se ejecuta en push a `main` y pull requests a `main`:
+1. **Checkout** - Descarga el código
+2. **Setup Node.js** - Configura Node.js 22.x
+3. **Install pnpm** - Instala pnpm 10.x
+4. **Cache** - Cachea el store de pnpm
+5. **Install** - Instala dependencias con `--frozen-lockfile`
+6. **Build** - Compila el proyecto
+7. **Test** - Ejecuta tests con coverage
+8. **SonarQube** - Análisis de calidad de código (SonarCloud, gate ≥ 80%)
+
+#### Tests (tests.yml)
+
+Ejecuta la suite de pruebas (Unit Tests Karma/Jasmine, Component Tests Cypress, E2E) con fusión de cobertura, en push a `main`/`develop` y PRs.
+
+#### CodeQL (codeql.yml)
+
+Análisis estático de seguridad (`github/codeql-action`) con el análisis `javascript-typescript`, resultados en **Security → Code Scanning**.
+
+#### Security Workflow (security.yml)
+
+Auditoría de seguridad multi-herramienta (diaria 2 AM UTC, push y PRs a `main`):
+- pnpm audit, npm audit, outdated check, Snyk (opcional vía `SNYK_TOKEN`) y OSV Scanner (`google/osv-scanner-action/osv-scanner-action@<sha>`, serie v2.5.0)
+- Sube reportes como artifacts y crea issues/comentarios automáticos (permisos `issues: write` y `pull-requests: write`)
+- Pasos con secretos protegidos con `if: env.X != ''` (los secretos no son válidos en condiciones `if:`)
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our development workflow and how to submit pull requests.
