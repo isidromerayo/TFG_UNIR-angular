@@ -180,5 +180,5 @@ src/app/
 - ESLint configured with angular-eslint v21 + ESLint v9 (flat config: `eslint.config.js`)
 - Run `pnpm run lint` to check code style (warnings allowed)
 - Run `pnpm run lint:fix` to auto-fix some issues
-- Skills provide specialized instructions and workflows for specific tasks.
-Use the skill tool to load a skill when a task matches its description.
+- **Upgrading Angular versions**: DO NOT edit `package.json` manually. Run `pnpm up '<pkg>@^<version>'` (e.g. `pnpm up '@angular/core@^21.2.19'`) so `package.json` + `pnpm-lock.yaml` stay consistent. `pnpm up --latest '<pkg>@spec'` errors — either use `--latest` without specs or specs without `--latest`.
+- Skills provide specialized instructions and workflows for specific tasks. Use the skill tool to load a skill when a task matches its description.
