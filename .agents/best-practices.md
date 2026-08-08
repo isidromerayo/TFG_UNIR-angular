@@ -1,5 +1,10 @@
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+> **NOTA IMPORTANTE**: Estas reglas son para código **NUEVO**. El código existente
+> puede no seguir todas estas prácticas aún (legacy: constructor injection,
+> `*ngIf`/`*ngFor`, `standalone: true` explícito, sin signals).
+> Todo código nuevo DEBE seguir estas reglas.
+
 ## TypeScript Best Practices
 
 - Use strict type checking

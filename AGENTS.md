@@ -1,10 +1,11 @@
 # AGENTS.md - Project Context for AI Agents
 
 ## Project Overview
-- **Framework**: Angular 21.2.7
+- **Framework**: Angular ^21.2.18
 - **Language**: TypeScript 5.9.3
 - **Package Manager**: pnpm (NOT npm)
 - **Testing**: Karma/Jasmine (unit) + Cypress E2E
+- **Linting**: ESLint 9.x + angular-eslint 21.x (flat config: `eslint.config.js`)
 
 ## Agent Skills
 
@@ -63,6 +64,7 @@ pnpm run lint:fix       # Auto-fix fixable issues
 - [ ] Build succeeds: `pnpm run build`
 - [ ] ESLint passes: `pnpm run lint` (warnings allowed)
 - [ ] No vulnerabilities: `pnpm audit` (ignores ajv tool vulnerability in devDeps)
+- [ ] Docs actualizados si cambiaron versiones/scripts/reglas
 
 ---
 
@@ -88,21 +90,37 @@ pnpm run lint:fix       # Auto-fix fixable issues
 - Trailing commas in multiline arrays/objects
 - Use semicolons at statement end
 
-## Angular Components
-- **DO NOT** set `standalone: true` (default in Angular 20+)
+## Current Code State (Legacy)
+
+> **El código existente NO sigue las reglas modernas de Angular 20+.**
+> Esta sección describe cómo ES el código actual, no cómo DEBE ser.
+
+- **Standalone**: Todos los componentes usan `standalone: true` explícito (aunque es default en Angular 20+)
+- **Inyección**: Constructor injection en todos los servicios y componentes (no usan `inject()`)
+- **Templates**: Usan `*ngIf`/`*ngFor` (structural directives legacy)
+- **Signals**: No se usan aún en el código fuente
+- **Inputs/Outputs**: Decoradores clásicos `@Input()`/`@Output()` (no `input()`/`output()` functions)
+- **Change Detection**: No todos usan `OnPush`
+
+## Rules for NEW Code (mandatory)
+
+> **Todo código nuevo DEBE seguir estas reglas.** El código legacy se migrará gradualmente.
+
+### Angular Components
+- **DO NOT** set `standalone: true` (default en Angular 20+)
 - Use `input()` and `output()` functions instead of decorators
 - Use `computed()` for derived state
 - Set `changeDetection: ChangeDetectionStrategy.OnPush`
 - Keep components small and focused (single responsibility)
 - Prefer inline templates for small components (< 50 lines)
 
-## State Management (Signals)
+### State Management (Signals)
 - Use signals for local component state
 - Use `computed()` for derived values
 - **NEVER** use `mutate()` - use `update()` or `set()`
 - Keep state transformations pure and predictable
 
-## Templates
+### Templates
 - Use native control flow: `@if`, `@for`, `@switch`
 - **NEVER** use `*ngIf`, `*ngFor`, `*ngSwitch`
 - **NEVER** use `ngClass` (use class bindings instead)
@@ -111,7 +129,7 @@ pnpm run lint:fix       # Auto-fix fixable issues
 - Use async pipe for observables
 - Keep templates simple; avoid complex logic
 
-## Services
+### Services
 - Use `inject()` instead of constructor injection
 - Use `providedIn: 'root'` for singleton services
 - Keep services focused on single responsibility
@@ -159,7 +177,8 @@ src/app/
 - Run tests with coverage before any commit
 - Branches coverage must be ≥ 80% (SonarQube requirement)
 - Cypress component testing has limitations with Angular 21; use E2E tests
-- ESLint configured with angular-eslint v18 + ESLint v8
+- ESLint configured with angular-eslint v21 + ESLint v9 (flat config: `eslint.config.js`)
 - Run `pnpm run lint` to check code style (warnings allowed)
 - Run `pnpm run lint:fix` to auto-fix some issues
 - **Upgrading Angular versions**: DO NOT edit `package.json` manually. Run `pnpm up '<pkg>@^<version>'` (e.g. `pnpm up '@angular/core@^21.2.19'`) so `package.json` + `pnpm-lock.yaml` stay consistent. `pnpm up --latest '<pkg>@spec'` errors — either use `--latest` without specs or specs without `--latest`.
+- Skills provide specialized instructions and workflows for specific tasks. Use the skill tool to load a skill when a task matches its description.
