@@ -1,4 +1,4 @@
-# FrontendAngular
+# TFG UNIR - Angular
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-angular&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-angular)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-angular&metric=coverage)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-angular)
@@ -7,9 +7,19 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-angular&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-angular)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-angular&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-angular)
 
-**Current version: Angular 21.2.19**
+# Universidad Internacional de La Rioja
 
-## Ciclo de vida de Angular 21
+## Escuela Superior de Ingeniería y Tecnología 
+
+### Grado en Ingeniería Informática
+
+#### TFG: Frameworks frontend JavaScript: Análisis y estudio práctico
+
+##### Angular
+
+## 📅 Ciclo de Vida de Angular
+
+**Current version: Angular 21.2.19**
 
 Angular publica una nueva versión mayor cada 6 meses, y cada versión mayor recibe **18 meses de soporte total**, divididos en dos fases:
 
