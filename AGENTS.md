@@ -191,3 +191,10 @@ src/app/
 - **NEVER force-push to `main` or `master`.**
 - Releases MUST use a `release/X.Y.Z` branch, merge it via PR, then create the Git tag from the updated `main` branch.
 - This policy applies to both human contributors and AI agents.
+
+## Plan Mode & Execution Records (MUST)
+- When in **plan mode**, state it explicitly in every response and do NOT execute changes until the user approves with `adelante` and the system switches to build mode.
+- All non-trivial plans MUST be saved to `docs/plans/` with the format `YYYY-MM-DD-brief-description.md`.
+- Plan files MUST include: date, tool/model used, objectives, file changes, verification steps, design decisions, and current status (planned/in progress/done).
+- Before executing a plan, confirm explicit user approval.
+- After execution, record the outcome and update the plan status.

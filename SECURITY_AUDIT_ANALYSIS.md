@@ -377,6 +377,8 @@ Tras el tratamiento de `pnpm audit` (30 → 2 vulnerabilidades) mediante actuali
 | `image-size` (≤2.0.2) | CVE-2025-71330 | `@angular-devkit/build-angular > less > image-size` | DoS infinito en parser ICNS |
 | `image-size` (≤2.0.2) | CVE-2025-71329 | `@angular-devkit/build-angular > less > image-size` | DoS infinito en parser JXL/HEIF |
 
+> **Lista de aceptados usada por el CI** (`.github/workflows/security.yml`): `image-size`.
+
 ### Decisión
 **Aceptado.** Justificación:
 - Son dependencias **transitivas de desarrollo** (build toolchain de Angular), **no** se incluyen en el bundle de producción.
