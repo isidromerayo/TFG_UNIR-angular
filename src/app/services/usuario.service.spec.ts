@@ -140,6 +140,7 @@ describe('UsuarioService', () => {
     it('should fetch user courses', (done) => {
       service.getCursos(1).subscribe((response) => {
         expect(response).toEqual(mockCursos);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         expect(response).toHaveSize(3);
         done();
       });
