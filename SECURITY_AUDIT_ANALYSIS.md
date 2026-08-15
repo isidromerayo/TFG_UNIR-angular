@@ -360,3 +360,31 @@ Posibles razones:
 
 **Generado**: 6 de diciembre de 2024  
 **Autor**: Análisis de seguridad del proyecto TFG_UNIR-react
+
+---
+
+# 🛡️ Riesgos Aceptados — Proyecto TFG_UNIR-angular
+
+**Actualizado**: 15 de agosto de 2026  
+**Versión**: 0.2.3
+
+## Vulnerabilidades restantes (sin parche disponible)
+
+Tras el tratamiento de `pnpm audit` (30 → 2 vulnerabilidades) mediante actualizaciones de devDependencies y `pnpm.overrides`, permanecen **2 hallazgos high** en dependencias **solo dev** para las que **no existe versión parcheada** (`patched_versions: <0.0.0`).
+
+| Paquete | CVE | Ruta | Riesgo |
+|---------|-----|------|--------|
+| `image-size` (≤2.0.2) | CVE-2025-71330 | `@angular-devkit/build-angular > less > image-size` | DoS infinito en parser ICNS |
+| `image-size` (≤2.0.2) | CVE-2025-71329 | `@angular-devkit/build-angular > less > image-size` | DoS infinito en parser JXL/HEIF |
+
+### Decisión
+**Aceptado.** Justificación:
+- Son dependencias **transitivas de desarrollo** (build toolchain de Angular), **no** se incluyen en el bundle de producción.
+- `pnpm audit --prod` reporta **0 vulnerabilidades**.
+- El paquete proviene de `less` (transitivo de `@angular-devkit/build-angular`); no hay versión parcheada ni override posible.
+- No hay código de la aplicación que invoque directamente a `image-size` ni procese imágenes no confiables en runtime.
+
+### Mitigación futura
+- Revisar al actualizar Angular toolchain (las próximas versiones de `@angular/build` pueden reemplazar `less`/`image-size`).
+- Aplicar si aparece una versión parcheada de `image-size` o `less`.
+- El workflow de seguridad ya trata estas vulns como no bloqueantes (modo warn) cuando afectan solo a devDependencies.
