@@ -150,12 +150,7 @@ jobs:
           ${{ runner.os }}-cypress-v15.9.0-
 
     - name: Install dependencies
-      run: |
-        echo "Installing dependencies with pnpm..."
-        pnpm install --frozen-lockfile --no-frozen-lockfile || {
-          echo "Install failed, trying without frozen lockfile..."
-          pnpm install
-        }
+      run: pnpm install --frozen-lockfile
 
     - name: Install Cypress binary
       run: |
