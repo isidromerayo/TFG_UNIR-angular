@@ -52,7 +52,7 @@ describe('CategoriaService', () => {
     it('should fetch all categories sorted by name', (done) => {
       service.getAllCategorias().subscribe((categorias) => {
         expect(categorias).toEqual(mockCategorias);
-        expect(categorias.length).toBe(5);
+        expect(categorias).toHaveSize(5);
         done();
       });
 
@@ -154,7 +154,7 @@ describe('CategoriaService', () => {
     it('should fetch courses for a category', (done) => {
       service.getCategoriaIdCursos(1).subscribe((cursos) => {
         expect(cursos).toEqual(mockCursos);
-        expect(cursos.length).toBe(3);
+        expect(cursos).toHaveSize(3);
         done();
       });
 
@@ -206,7 +206,7 @@ describe('CategoriaService', () => {
       ];
       service.getCategoriaIdCursos(2).subscribe((cursos) => {
         expect(cursos).toEqual(cursos2);
-        expect(cursos.length).toBe(2);
+        expect(cursos).toHaveSize(2);
         done();
       });
 

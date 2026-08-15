@@ -70,7 +70,7 @@ describe('CarritoService', () => {
 
       service.myCart$.subscribe((cart) => {
         if (cart.length > 0) {
-          expect(cart.length).toBe(1);
+          expect(cart).toHaveSize(1);
           done();
         }
       });
@@ -100,7 +100,7 @@ describe('CarritoService', () => {
 
       service.myCart$.subscribe((cart) => {
         if (cart.length > 0) {
-          expect(cart.length).toBe(1);
+          expect(cart).toHaveSize(1);
           done();
         }
       });

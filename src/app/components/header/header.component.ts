@@ -27,7 +27,7 @@ export class HeaderComponent {
     })
   }
   isLogin() {
-    return (localStorage.getItem('isLoggedIn')=='true') ? true:false;
+    return localStorage.getItem('isLoggedIn') == 'true';
   }
   logout() {
     this.servicioLogin.logout()

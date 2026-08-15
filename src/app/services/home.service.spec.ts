@@ -60,7 +60,7 @@ describe('HomeService', () => {
     it('should fetch highlighted courses from API', (done) => {
       service.getCursosDestacadosPortada().subscribe((cursos) => {
         expect(cursos).toEqual(mockCursos);
-        expect(cursos.length).toBe(3);
+        expect(cursos).toHaveSize(3);
         done();
       });
 
@@ -97,7 +97,7 @@ describe('HomeService', () => {
     it('should fetch course opinions from API', (done) => {
       service.getOpinionesCursosPortada().subscribe((valoraciones) => {
         expect(valoraciones).toEqual(mockValoraciones);
-        expect(valoraciones.length).toBe(3);
+        expect(valoraciones).toHaveSize(3);
         done();
       });
 
@@ -134,7 +134,7 @@ describe('HomeService', () => {
     it('should fetch latest updated courses from API', (done) => {
       service.getCursosUltimasPortada().subscribe((cursos) => {
         expect(cursos).toEqual(mockCursos);
-        expect(cursos.length).toBe(3);
+        expect(cursos).toHaveSize(3);
         done();
       });
 
@@ -171,7 +171,7 @@ describe('HomeService', () => {
     it('should fetch categories with limit from API', (done) => {
       service.getCategoriasPortada().subscribe((categorias) => {
         expect(categorias).toEqual(mockCategorias);
-        expect(categorias.length).toBe(5);
+        expect(categorias).toHaveSize(5);
         done();
       });
 

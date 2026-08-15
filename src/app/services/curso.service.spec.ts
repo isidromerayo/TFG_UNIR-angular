@@ -116,7 +116,7 @@ describe('CursoService', () => {
     it('should search courses by title', (done) => {
       service.search('Angular').subscribe((cursos) => {
         expect(cursos).toEqual(mockCursos);
-        expect(cursos.length).toBe(3);
+        expect(cursos).toHaveSize(3);
         done();
       });
 

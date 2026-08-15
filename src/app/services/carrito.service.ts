@@ -20,7 +20,7 @@ export class CarritoService {
       this.myList.push(curso)
       this.myCart.next(this.myList)
     } else {
-      const cursoExiste = this.myList.find((element) => {
+      const cursoExiste = this.myList.some((element) => {
         return element.id == curso.id
       })
       if (!cursoExiste) {

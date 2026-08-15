@@ -140,7 +140,7 @@ describe('UsuarioService', () => {
     it('should fetch user courses', (done) => {
       service.getCursos(1).subscribe((response) => {
         expect(response).toEqual(mockCursos);
-        expect(response.length).toBe(3);
+        expect(response).toHaveSize(3);
         done();
       });
 
