@@ -19,7 +19,7 @@
 
 ## 📅 Ciclo de Vida de Angular
 
-**Current version: Angular 21.2.19**
+**Current version: Angular 21.2.19** (proyecto en versión **0.2.3**)
 
 Angular publica una nueva versión mayor cada 6 meses, y cada versión mayor recibe **18 meses de soporte total**, divididos en dos fases:
 
@@ -96,8 +96,11 @@ Run `pnpm run cypress:open` to open Cypress test runner, or `pnpm run cypress:ru
 # Auditoría completa multi-herramienta
 pnpm security
 
-# Verificar vulnerabilidades (pnpm audit)
-pnpm security:audit
+# Verificar vulnerabilidades de producción (GATE en CI)
+pnpm audit --prod
+
+# Verificar todas las vulnerabilidades (dev + prod)
+pnpm audit
 
 # Ver dependencias desactualizadas
 pnpm security:outdated
@@ -108,7 +111,7 @@ pnpm security:outdated
 - Monitorear security advisories de paquetes críticos
 - Usar múltiples herramientas de auditoría
 
-**Estado actual**: ✅ 0 vulnerabilidades conocidas
+**Estado actual**: ✅ 0 vulnerabilidades de producción; 2 vulnerabilidades dev-only aceptadas (`image-size`, ver [SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md))
 
 Ver documentación completa:
 - [SECURITY_SETUP.md](./SECURITY_SETUP.md) - Configuración de seguridad
@@ -130,19 +133,13 @@ El proyecto incluye los siguientes workflows en `.github/workflows/`. Todos usan
 
 #### Pipeline (node.js.yml)
 
-Se ejecuta en push a `main` y pull requests a `main`:
-1. **Checkout** - Descarga el código
-2. **Setup Node.js** - Configura Node.js 22.x
-3. **Install pnpm** - Instala pnpm 10.x
-4. **Cache** - Cachea el store de pnpm
-5. **Install** - Instala dependencias con `--frozen-lockfile`
-6. **Build** - Compila el proyecto
-7. **Test** - Ejecuta tests con coverage
-8. **SonarQube** - Análisis de calidad de código (SonarCloud, gate ≥ 80%)
+Se ejecuta en push a `main` y pull requests a `main`. Dos jobs **paralelos**:
+- **`lint`** - Checkout, setup Node.js 22.x, pnpm 10.x con caché, instalación con `--frozen-lockfile` y `pnpm run lint` (ESLint).
+- **`build`** - Checkout (con `fetch-depth: 0`), setup Node.js 22.x, pnpm 10.x con caché, instalación con `--frozen-lockfile`, `pnpm run build` y **SonarQube** (SonarCloud, gate ≥ 80%, solo si `SONAR_TOKEN` está configurado).
 
 #### Tests (tests.yml)
 
-Ejecuta la suite de pruebas (Unit Tests Karma/Jasmine, Component Tests Cypress, E2E) con fusión de cobertura, en push a `main`/`develop` y PRs.
+Ejecuta la suite de pruebas (Unit Tests Karma/Jasmine, Component Tests Cypress, E2E Cypress) con fusión de cobertura y resumen de tests, en push a `main`/`develop` y PRs a esas ramas. La instalación usa estrictamente `--frozen-lockfile` (falla si `pnpm-lock.yaml` está desactualizado).
 
 #### CodeQL (codeql.yml)
 
@@ -151,8 +148,12 @@ Análisis estático de seguridad (`github/codeql-action`) con el análisis `java
 #### Security Workflow (security.yml)
 
 Auditoría de seguridad multi-herramienta (diaria 2 AM UTC, push y PRs a `main`):
-- pnpm audit, npm audit, outdated check, Snyk (opcional vía `SNYK_TOKEN`) y OSV Scanner (`google/osv-scanner-action/osv-scanner-action@<sha>`, serie v2.5.0)
-- Sube reportes como artifacts y crea issues/comentarios automáticos (permisos `issues: write` y `pull-requests: write`)
+1. **pnpm audit (production gate)** - `pnpm audit --prod --json`; **falla el workflow** si hay vulnerabilidades de producción.
+2. **pnpm audit (dev warning)** - `pnpm audit --json` completo; solo advierte, ignorando los riesgos dev-only aceptados y documentados en `SECURITY_AUDIT_ANALYSIS.md`.
+3. **Outdated check** - `pnpm outdated` para detectar dependencias desactualizadas.
+4. **Snyk** (opcional vía `SNYK_TOKEN`, `--severity-threshold=high`).
+5. **OSV Scanner** (`google/osv-scanner-action/osv-scanner-action@<sha>`, serie v2.5.0) sobre `pnpm-lock.yaml`.
+- Sube reportes como artifacts y crea issues/comentarios automáticos solo para **vulnerabilidades de producción** (permisos `issues: write` y `pull-requests: write`)
 - Pasos con secretos protegidos con `if: env.X != ''` (los secretos no son válidos en condiciones `if:`)
 
 ## Contributing
