@@ -3,7 +3,7 @@
 Este documento describe las opciones y el flujo de trabajo recomendado para gestionar el versionado del proyecto **TFG UNIR - Frontend Angular**.
 
 ## 📊 Estado Actual
-- **Versión Actual**: `0.1.0` (definida en `package.json`)
+- **Versión Actual**: `0.2.2` (definida en `package.json`)
 - **Convención de Mensajes**: Se recomienda seguir [Conventional Commits](https://www.conventionalcommits.org/).
 
 ---
@@ -57,9 +57,19 @@ Para este proyecto, se recomienda la **Opción 2** combinada con **Conventional 
     - `fix: corregir error en el carrito`
 2.  **Release**: Cuando el código esté listo en `main`:
     ```bash
-    pnpm run release
-    git push --follow-tags origin main
+    git checkout -b release/X.Y.Z
+    pnpm version X.Y.Z --no-git-tag-version
+    git add package.json
+    git commit -m "chore(release): X.Y.Z"
+    git push origin release/X.Y.Z
+    # Open and merge the Pull Request, then from the updated main branch:
+    git checkout main
+    git pull origin main
+    git tag -a vX.Y.Z -m "vX.Y.Z"
+    git push origin vX.Y.Z
+    gh release create vX.Y.Z --title "vX.Y.Z" --generate-notes
     ```
+    **Note:** Direct commits or pushes to `main` are not allowed, including release commits.
 
 ---
 

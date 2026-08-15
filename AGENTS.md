@@ -182,3 +182,12 @@ src/app/
 - Run `pnpm run lint:fix` to auto-fix some issues
 - **Upgrading Angular versions**: DO NOT edit `package.json` manually. Run `pnpm up '<pkg>@^<version>'` (e.g. `pnpm up '@angular/core@^21.2.19'`) so `package.json` + `pnpm-lock.yaml` stay consistent. `pnpm up --latest '<pkg>@spec'` errors — either use `--latest` without specs or specs without `--latest`.
 - Skills provide specialized instructions and workflows for specific tasks. Use the skill tool to load a skill when a task matches its description.
+
+## Branch Policy (MUST)
+- **NEVER commit or push directly to `main` or `master`.**
+- All changes (code, docs, CI, dependency updates, security fixes and hotfixes) MUST go through a branch and a Pull Request.
+- Use descriptive branch prefixes: `feature/`, `fix/`, `docs/`, `ci/`, `chore/`, `security/`, `release/`.
+- Prefer **squash merge** for a clean linear history.
+- **NEVER force-push to `main` or `master`.**
+- Releases MUST use a `release/X.Y.Z` branch, merge it via PR, then create the Git tag from the updated `main` branch.
+- This policy applies to both human contributors and AI agents.

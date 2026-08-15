@@ -159,6 +159,8 @@ Auditoría de seguridad multi-herramienta (diaria 2 AM UTC, push y PRs a `main`)
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our development workflow and how to submit pull requests.
 
+**Note:** Direct commits or pushes to `main` are not allowed. All changes must go through a Pull Request.
+
 ### Quick Start for Contributors
 ```bash
 pnpm install

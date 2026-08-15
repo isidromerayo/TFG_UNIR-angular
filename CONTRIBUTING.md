@@ -69,9 +69,24 @@ git commit -m "tipo: descripción"
 - `chore`: Tareas de mantenimiento
 
 ### 5. Push y Pull Request
+
+**Important:** Never push commits directly to `main` or `master`. All changes must be reviewed through a Pull Request.
+
 ```bash
+git checkout -b feature/nombre-feature
+# develop and commit locally
 git push origin feature/nombre-feature
+# open a Pull Request on GitHub and merge via squash merge
 ```
+
+Recommended branch prefixes:
+- `feature/` — new functionality
+- `fix/` — bug fixes
+- `docs/` — documentation changes
+- `ci/` — CI/CD changes
+- `chore/` — maintenance tasks
+- `security/` — security fixes
+- `release/` — version releases
 
 ## 🧪 Testing
 
@@ -173,6 +188,8 @@ Si tu cambio afecta:
 - ❌ NO agregar dependencias sin revisar
 - ❌ NO commitear código sin formatear
 - ❌ NO usar `console.log` en producción
+- ❌ NO hacer commit directamente en `main` o `master`
+- ❌ NO hacer push directo a `main` o `master`
 
 ## ✅ Checklist Pre-Commit
 
@@ -183,6 +200,7 @@ Si tu cambio afecta:
 - [ ] Documentación actualizada (si aplica)
 - [ ] Sin console.logs
 - [ ] Commit message descriptivo
+- [ ] Rama creada desde `main` y cambio enviado vía Pull Request (no commit/push directo a `main`)
 
 ## 🆘 Ayuda
 
