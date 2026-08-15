@@ -74,7 +74,7 @@ describe('CategoriaService', () => {
     it('should handle API error', (done) => {
       service.getAllCategorias().subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }
@@ -87,7 +87,7 @@ describe('CategoriaService', () => {
     it('should handle network error', (done) => {
       service.getAllCategorias().subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.error.type).toBe('Network error');
           done();
         }
@@ -114,7 +114,7 @@ describe('CategoriaService', () => {
     it('should handle category not found', (done) => {
       service.getCategoriaId(999).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(404);
           done();
         }
@@ -127,7 +127,7 @@ describe('CategoriaService', () => {
     it('should handle API error', (done) => {
       service.getCategoriaId(1).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }
@@ -176,7 +176,7 @@ describe('CategoriaService', () => {
     it('should handle category not found', (done) => {
       service.getCategoriaIdCursos(999).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(404);
           done();
         }
@@ -189,7 +189,7 @@ describe('CategoriaService', () => {
     it('should handle API error', (done) => {
       service.getCategoriaIdCursos(1).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }
@@ -217,7 +217,7 @@ describe('CategoriaService', () => {
     it('should handle network error', (done) => {
       service.getCategoriaIdCursos(1).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.error.type).toBe('Network error');
           done();
         }

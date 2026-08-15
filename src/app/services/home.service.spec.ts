@@ -82,7 +82,7 @@ describe('HomeService', () => {
     it('should handle API error', (done) => {
       service.getCursosDestacadosPortada().subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }
@@ -119,7 +119,7 @@ describe('HomeService', () => {
     it('should handle API error for opinions', (done) => {
       service.getOpinionesCursosPortada().subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }
@@ -156,7 +156,7 @@ describe('HomeService', () => {
     it('should handle API error for latest courses', (done) => {
       service.getCursosUltimasPortada().subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }
@@ -205,7 +205,7 @@ describe('HomeService', () => {
     it('should handle API error for categories', (done) => {
       service.getCategoriasPortada().subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }
@@ -232,7 +232,7 @@ describe('HomeService', () => {
     it('should handle valoracion not found', (done) => {
       service.getValoracionPorId(999).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(404);
           done();
         }
@@ -245,7 +245,7 @@ describe('HomeService', () => {
     it('should handle API error for valoracion', (done) => {
       service.getValoracionPorId(1).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }

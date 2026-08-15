@@ -68,7 +68,7 @@ describe('UsuarioService', () => {
     it('should handle validation error on user creation', (done) => {
       service.crear(mockUsuario).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(400);
           done();
         }
@@ -81,7 +81,7 @@ describe('UsuarioService', () => {
     it('should handle duplicate user error', (done) => {
       service.crear(mockUsuario).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(409);
           done();
         }
@@ -94,7 +94,7 @@ describe('UsuarioService', () => {
     it('should handle server error on user creation', (done) => {
       service.crear(mockUsuario).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }
@@ -107,7 +107,7 @@ describe('UsuarioService', () => {
     it('should handle network error on user creation', (done) => {
       service.crear(mockUsuario).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.error.type).toBe('Network error');
           done();
         }
@@ -152,7 +152,7 @@ describe('UsuarioService', () => {
     it('should handle user not found', (done) => {
       service.getCursos(999).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(404);
           done();
         }
@@ -175,7 +175,7 @@ describe('UsuarioService', () => {
     it('should handle server error', (done) => {
       service.getCursos(1).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }
@@ -188,7 +188,7 @@ describe('UsuarioService', () => {
     it('should handle network error', (done) => {
       service.getCursos(1).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.error.type).toBe('Network error');
           done();
         }

@@ -194,7 +194,7 @@ describe('CarritoService', () => {
 
       service.comprarCursos([mockCurso1]).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.message).toBe('User not logged in or user ID not found.');
           done();
         }
@@ -207,7 +207,7 @@ describe('CarritoService', () => {
 
       service.comprarCursos([mockCurso1]).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.message).toBe('User not logged in or user ID not found.');
           done();
         }

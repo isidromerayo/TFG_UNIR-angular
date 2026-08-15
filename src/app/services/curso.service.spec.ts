@@ -63,7 +63,7 @@ describe('CursoService', () => {
     it('should handle course not found', (done) => {
       service.getCursoPorId(999).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(404);
           done();
         }
@@ -76,7 +76,7 @@ describe('CursoService', () => {
     it('should handle API error', (done) => {
       service.getCursoPorId(1).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }
@@ -101,7 +101,7 @@ describe('CursoService', () => {
     it('should handle network error', (done) => {
       service.getCursoPorId(1).subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.error.type).toBe('Network error');
           done();
         }
@@ -148,7 +148,7 @@ describe('CursoService', () => {
     it('should handle API error on search', (done) => {
       service.search('Angular').subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.status).toBe(500);
           done();
         }
@@ -161,7 +161,7 @@ describe('CursoService', () => {
     it('should handle network error on search', (done) => {
       service.search('Angular').subscribe(
         () => fail('should have failed'),
-        (error) => {
+        (error: any) => {
           expect(error.error.type).toBe('Network error');
           done();
         }
