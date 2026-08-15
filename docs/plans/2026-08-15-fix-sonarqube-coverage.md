@@ -2,7 +2,7 @@
 
 **Fecha**: 2026-08-15
 **Herramienta/modelo**: opencode (opencode/big-pickle)
-**Estado**: in_progress
+**Estado**: done
 
 ## Objetivos
 Restaurar la cobertura reportada por SonarCloud (~80%, gate Verde). Tras el merge de #216 la cobertura cayó a 0.0% porque el job `build` de `node.js.yml` dejó de generar los `lcov.info` que consume el scan de SonarQube.
@@ -39,3 +39,6 @@ Mover el análisis de SonarQube a `tests.yml`, donde se produce la cobertura.
 
 ## Registro de ejecución
 - 2026-08-15: rama `fix/sonarqube-coverage` creada desde `main` (e8f24c8, incluye #217). Cambios aplicados y commit pendiente.
+- 2026-08-15: PR #218 mergeada (`33e7794`). Cobertura SonarCloud restaurada: 0.0% → 97.2% en PR #218 (232 líneas a cubrir, 7 sin cubrir), quality gate Verde.
+- 2026-08-15: 17 code smells detectados por SonarCloud corregidos en rama `fix/sonarqube-issues` (S5914 ×3, S6644, S7757, S7754, S5906 ×11). PR #219 mergeada. Codacy marcó falsos positivos `no-unsafe-call` sobre `toHaveSize` (resueltos con `eslint-disable-next-line` inline) y anotación trivial en `slider.component.ts` (eliminada). PR #220 de GHCopilot cerrada en favor de #219.
+- 2026-08-15: plan completado.
