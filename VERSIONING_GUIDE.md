@@ -3,7 +3,7 @@
 Este documento describe las opciones y el flujo de trabajo recomendado para gestionar el versionado del proyecto **TFG UNIR - Frontend Angular**.
 
 ## 📊 Estado Actual
-- **Versión Actual**: `0.2.2` (definida en `package.json`)
+- **Versión Actual**: `0.2.3` (definida en `package.json`)
 - **Convención de Mensajes**: Se recomienda seguir [Conventional Commits](https://www.conventionalcommits.org/).
 
 ---

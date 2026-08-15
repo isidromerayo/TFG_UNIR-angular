@@ -200,6 +200,6 @@ pnpm audit              # Verificar seguridad
 
 ---
 
-**Última actualización**: 26 de julio de 2026  
+**Última actualización**: 15 de agosto de 2026  
 **Mantenido por**: Equipo de desarrollo  
-**Versión del proyecto**: 0.2.0
+**Versión del proyecto**: 0.2.3
