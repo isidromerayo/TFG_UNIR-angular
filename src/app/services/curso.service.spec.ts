@@ -116,7 +116,8 @@ describe('CursoService', () => {
     it('should search courses by title', (done) => {
       service.search('Angular').subscribe((cursos) => {
         expect(cursos).toEqual(mockCursos);
-        expect(cursos.length).toBe(3);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        expect(cursos).toHaveSize(3);
         done();
       });
 
