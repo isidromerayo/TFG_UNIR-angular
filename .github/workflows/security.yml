@@ -156,7 +156,7 @@ jobs:
       # 7. Crear issue si hay vulnerabilidades de producción
       - name: Create issue for production vulnerabilities
         if: steps.pnpm-audit-prod.outputs.vulnerabilities != '0' || failure()
-        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         with:
           script: |
             const title = '🔒 Security Alert: Production Vulnerabilities Detected';
@@ -214,7 +214,7 @@ jobs:
       # 8. Comentar en PR solo si hay vulnerabilidades de producción
       - name: Comment on PR
         if: github.event_name == 'pull_request' && steps.pnpm-audit-prod.outputs.vulnerabilities != '0'
-        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         with:
           script: |
             const comment = `
