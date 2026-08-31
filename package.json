@@ -59,7 +59,7 @@
     "ajv": "^8.20.0",
     "angular-eslint": "^21.3.1",
     "cypress": "^15.21.0",
-    "eslint": "^9.27.0",
+    "eslint": "^10.9.1",
     "istanbul-lib-coverage": "^3.2.2",
     "jasmine-core": "~5.13.0",
     "karma": "~6.4.4",
