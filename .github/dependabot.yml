@@ -1,7 +1,6 @@
 version: 2
 
 updates:
-  # Mantener dependencias de npm actualizadas
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -9,83 +8,42 @@ updates:
       day: "monday"
       time: "09:00"
       timezone: "Europe/Madrid"
-    
-    # Límite de PRs abiertas
+
     open-pull-requests-limit: 10
-    
-    # Estrategia de versionado
     versioning-strategy: increase
-    
-    # Agrupar actualizaciones
+
     groups:
-      # Actualizaciones de producción
       production-dependencies:
         dependency-type: "production"
         update-types:
           - "minor"
           - "patch"
-      
-      # Actualizaciones de desarrollo
+
       development-dependencies:
         dependency-type: "development"
         update-types:
           - "minor"
           - "patch"
-      
-      # Next.js y React juntos
-      nextjs-ecosystem:
-        patterns:
-          - "next"
-          - "eslint-config-next"
-          - "@next/*"
-      
-      # React ecosystem
-      react-ecosystem:
-        patterns:
-          - "react"
-          - "react-dom"
-          - "@types/react"
-          - "@types/react-dom"
-      
-      # Testing tools
-      testing-tools:
-        patterns:
-          - "jest"
-          - "@jest/*"
-          - "@testing-library/*"
-          - "cypress"
-          - "@cypress/*"
-    
-    # Labels para PRs
+
     labels:
       - "dependencies"
       - "automated"
-    
-    # Reviewers (opcional)
-    # reviewers:
-    #   - "username"
-    
-    # Assignees (opcional)
-    # assignees:
-    #   - "username"
-    
-    # Commit message prefix
+
     commit-message:
       prefix: "chore"
       prefix-development: "chore"
       include: "scope"
-    
-    # Ignorar ciertas actualizaciones
+
     ignore:
-      # Ignorar actualizaciones mayores de Next.js por ahora
-      - dependency-name: "next"
-        update-types: ["version-update:semver-major"]
-      
-      # Ignorar actualizaciones mayores de Cypress
       - dependency-name: "cypress"
         update-types: ["version-update:semver-major"]
-  
-  # Mantener GitHub Actions actualizadas
+      - dependency-name: "@cypress/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "jasmine-core"
+        update-types: ["version-update:semver-major"]
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -93,10 +51,10 @@ updates:
       day: "monday"
       time: "09:00"
       timezone: "Europe/Madrid"
-    
+
     labels:
       - "github-actions"
       - "automated"
-    
+
     commit-message:
       prefix: "ci"
