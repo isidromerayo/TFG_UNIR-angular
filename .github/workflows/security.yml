@@ -66,7 +66,8 @@ jobs:
           pnpm audit --prod --json > pnpm-audit-prod.json || true
 
           if [ -s pnpm-audit-prod.json ]; then
-            PROD_VULNS=$(jq '.metadata.vulnerabilities | add // 0' pnpm-audit-prod.json)
+            PROD_VULNS=$(jq -r '.metadata.vulnerabilities | add // 0' pnpm-audit-prod.json 2>/dev/null || echo 0)
+            case "$PROD_VULNS" in (*[!0-9]*|'') PROD_VULNS=0;; esac
             echo "Production vulnerabilities found: $PROD_VULNS" >> $GITHUB_STEP_SUMMARY
             echo "vulnerabilities=$PROD_VULNS" >> $GITHUB_OUTPUT
             if [ "$PROD_VULNS" -gt 0 ]; then
@@ -88,8 +89,10 @@ jobs:
           if [ -s pnpm-audit.json ]; then
             # Accepted dev-only packages without upstream patch (see SECURITY_AUDIT_ANALYSIS.md)
             ACCEPTED="image-size"
-            TOTAL=$(jq '.metadata.vulnerabilities | add // 0' pnpm-audit.json)
+            TOTAL=$(jq -r '.metadata.vulnerabilities | add // 0' pnpm-audit.json 2>/dev/null || echo 0)
             ACCEPTED_COUNT=$(jq '[.advisories[] | select(.module_name as $m | ("'$ACCEPTED'" | split(" ") | index($m)))] | length' pnpm-audit.json 2>/dev/null || echo 0)
+            case "$TOTAL" in (*[!0-9]*|'') TOTAL=0;; esac
+            case "$ACCEPTED_COUNT" in (*[!0-9]*|'') ACCEPTED_COUNT=0;; esac
             DEV_VULNS=$(( TOTAL - ACCEPTED_COUNT ))
             echo "Total vulnerabilities found: $TOTAL (accepted: $ACCEPTED_COUNT)" >> $GITHUB_STEP_SUMMARY
             echo "vulnerabilities=$TOTAL" >> $GITHUB_OUTPUT
@@ -110,7 +113,8 @@ jobs:
           pnpm outdated --format json > outdated.json || true
           
           if [ -s outdated.json ]; then
-            COUNT=$(jq 'length' outdated.json 2>/dev/null || echo "0")
+            COUNT=$(jq -r 'length' outdated.json 2>/dev/null || echo 0)
+            case "$COUNT" in (*[!0-9]*|'') COUNT=0;; esac
             echo "Found $COUNT outdated packages" >> $GITHUB_STEP_SUMMARY
             echo "count=$COUNT" >> $GITHUB_OUTPUT
           else
@@ -153,12 +157,18 @@ jobs:
             osv-report.json
           retention-days: 30
       
-      # 7. Crear issue si hay vulnerabilidades de producción
+      # 7. Crear issue SOLO si hay vulnerabilidades de producción reales
+      #    (sin `|| failure()` para no abrir issues vacías cuando falla infra)
       - name: Create issue for production vulnerabilities
-        if: steps.pnpm-audit-prod.outputs.vulnerabilities != '0' || failure()
+        if: steps.pnpm-audit-prod.outputs.vulnerabilities != '' && steps.pnpm-audit-prod.outputs.vulnerabilities != '0'
+        env:
+          PROD_VULNS: ${{ steps.pnpm-audit-prod.outputs.vulnerabilities }}
+          OUTDATED_COUNT: ${{ steps.outdated.outputs.count }}
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         with:
           script: |
+            const prodVulns = process.env.PROD_VULNS || 'desconocido';
+            const outdatedCount = process.env.OUTDATED_COUNT || 'desconocido';
             const title = '🔒 Security Alert: Production Vulnerabilities Detected';
             const body = `
             ## Security Audit Results
@@ -168,8 +178,8 @@ jobs:
             **Run**: ${context.runNumber}
 
             ### Summary
-            - pnpm audit (production): ${{ steps.pnpm-audit-prod.outputs.vulnerabilities }} vulnerabilities
-            - Outdated packages: ${{ steps.outdated.outputs.count }}
+            - pnpm audit (production): ${prodVulns} vulnerabilities
+            - Outdated packages: ${outdatedCount}
 
             ### Actions Required
             1. Review the security reports in the workflow artifacts
@@ -213,14 +223,17 @@ jobs:
       
       # 8. Comentar en PR solo si hay vulnerabilidades de producción
       - name: Comment on PR
-        if: github.event_name == 'pull_request' && steps.pnpm-audit-prod.outputs.vulnerabilities != '0'
+        if: github.event_name == 'pull_request' && steps.pnpm-audit-prod.outputs.vulnerabilities != '' && steps.pnpm-audit-prod.outputs.vulnerabilities != '0'
+        env:
+          PROD_VULNS: ${{ steps.pnpm-audit-prod.outputs.vulnerabilities }}
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         with:
           script: |
+            const prodVulns = process.env.PROD_VULNS || 'desconocido';
             const comment = `
             ## 🔒 Security Audit Results
 
-            ❌ **Production vulnerabilities detected**: ${{ steps.pnpm-audit-prod.outputs.vulnerabilities }}
+            ❌ **Production vulnerabilities detected**: ${prodVulns}
 
             Please review and fix these before merging.
 
@@ -241,6 +254,6 @@ jobs:
       
       # 9. Warn if dev vulnerabilities are found (do not fail the workflow)
       - name: Warn on dev vulnerabilities
-        if: steps.pnpm-audit-dev.outputs.vulnerabilities != '0'
+        if: steps.pnpm-audit-dev.outputs.vulnerabilities != '' && steps.pnpm-audit-dev.outputs.vulnerabilities != '0'
         run: |
           echo "::warning::Dev/toolchain vulnerabilities found (${{ steps.pnpm-audit-dev.outputs.vulnerabilities }}). Production gate passed; review accepted risks in SECURITY_AUDIT_ANALYSIS.md."
