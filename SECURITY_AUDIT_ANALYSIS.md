@@ -370,7 +370,12 @@ Posibles razones:
 
 ## Vulnerabilidades restantes (sin parche disponible)
 
-Tras el tratamiento de `pnpm audit` (30 → 2 vulnerabilidades) mediante actualizaciones de devDependencies y `pnpm.overrides`, permanecen **2 hallazgos high** en dependencias **solo dev** para las que **no existe versión parcheada** (`patched_versions: <0.0.0`).
+> **Resuelto el 12 de septiembre de 2026**: el bump del toolchain de Angular
+> (`@angular-devkit/build-angular@21.2.24`) actualizó `less` a `4.9.0`, que ya **no
+> depende de `image-size`**. `pnpm audit` (prod + dev) reporta **0 vulnerabilidades**.
+> Se mantiene el histórico a continuación.
+
+Tras el tratamiento de `pnpm audit` (30 → 2 vulnerabilidades) mediante actualizaciones de devDependencies y `pnpm.overrides`, permanecían **2 hallazgos high** en dependencias **solo dev** para las que **no existía versión parcheada** (`patched_versions: <0.0.0`).
 
 | Paquete | CVE | Ruta | Riesgo |
 |---------|-----|------|--------|
@@ -379,7 +384,7 @@ Tras el tratamiento de `pnpm audit` (30 → 2 vulnerabilidades) mediante actuali
 
 > **Lista de aceptados usada por el CI** (`.github/workflows/security.yml`): `image-size`.
 
-### Decisión
+### Decisión (histórico)
 **Aceptado.** Justificación:
 - Son dependencias **transitivas de desarrollo** (build toolchain de Angular), **no** se incluyen en el bundle de producción.
 - `pnpm audit --prod` reporta **0 vulnerabilidades**.
@@ -390,3 +395,23 @@ Tras el tratamiento de `pnpm audit` (30 → 2 vulnerabilidades) mediante actuali
 - Revisar al actualizar Angular toolchain (las próximas versiones de `@angular/build` pueden reemplazar `less`/`image-size`).
 - Aplicar si aparece una versión parcheada de `image-size` o `less`.
 - El workflow de seguridad ya trata estas vulns como no bloqueantes (modo warn) cuando afectan solo a devDependencies.
+
+---
+
+# 🛡️ Actualización de seguridad Angular — 21.2.23
+
+**Fecha**: 12 de septiembre de 2026
+
+Se corrigen las **3 vulnerabilidades moderate de producción** que bloqueaban el gate duro `pnpm audit --prod`:
+
+| Paquete | GHSA | Descripción | Corregido en |
+|---------|------|-------------|--------------|
+| `@angular/core` | GHSA-hh8m-fm6v-7cvg | Sanitization bypass vía directive host bindings | `>=21.2.20` |
+| `@angular/compiler` | GHSA-hh8m-fm6v-7cvg | Sanitization bypass vía directive host bindings | `>=21.2.20` |
+| `@angular/common` | GHSA-p297-fm68-3q8c | Information leak vía `HttpTransferCache` | `>=21.2.20` |
+
+**Acción**: bump alineado de todo `@angular/*` a `21.2.23` (`@angular/cli` y `@angular-devkit/build-angular` a `21.2.24`) conservando el bloque `pnpm.overrides`.
+
+Además, se acota el override `@babel/core` a `>=7.29.6 <8` y se fija `@babel/core@7.29.7` como devDependency para evitar que `auto-install-peers` resuelva la rama 8.x (incompatible con el `babel-loader` 7 de Karma/Cypress).
+
+**Resultado**: `pnpm audit --prod` → **0 vulnerabilidades**. Además, el toolchain `21.2.24` actualiza `less` a 4.9.0, que deja de arrastrar `image-size`, por lo que `pnpm audit` completo también reporta **0 vulnerabilidades**.
