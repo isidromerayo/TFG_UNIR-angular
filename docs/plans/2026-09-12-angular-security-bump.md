@@ -2,8 +2,9 @@
 
 **Fecha**: 2026-09-12
 **Herramienta**: opencode (opencode-go/deepseek-v4.1-flash)
-**Estado**: in progress
+**Estado**: done
 **Rama de implementación**: `security/angular-21.2.23`
+**PR**: https://github.com/isidromerayo/TFG_UNIR-angular/pull/249
 
 ## Objetivos
 
@@ -51,4 +52,4 @@ Dependabot regenera `pnpm-lock.yaml` **eliminando el bloque `overrides:`** mient
 
 ## Estado actual
 
-Implementación y verificación local completadas. Pendiente: PR a `main` y cierre de #246/#247/#248.
+Implementación y verificación completadas. PR #249 abierto con todos los checks en verde; #246/#247/#248 cerrados como superseded.
