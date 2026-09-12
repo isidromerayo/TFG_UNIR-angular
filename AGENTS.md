@@ -1,200 +1,120 @@
-# AGENTS.md - Project Context for AI Agents
+# AGENTS.md - TFG_UNIR-angular (Angular 21 frontend)
 
-## Project Overview
-- **Framework**: Angular ^21.2.18
-- **Language**: TypeScript 5.9.3
-- **Package Manager**: pnpm (NOT npm)
-- **Testing**: Karma/Jasmine (unit) + Cypress E2E
-- **Linting**: ESLint 9.x + angular-eslint 21.x (flat config: `eslint.config.js`)
+This is one of several implementations of the same TFG app. Siblings live in the parent dir
+(`../TFG_UNIR-backend`, `-react`, `-vue3`, `-monorepo`); cross-project conventions are in
+`../AGENTS.md`. Root-level docs live here (`DOCS_INDEX.md` indexes them; plans in `docs/plans/`).
 
-## Agent Skills
+## Stack & tooling (verified 2026-09-12)
 
-Use these skills for specific tasks:
+- Angular **21.2.23** + TypeScript 5.9.3; Karma/Jasmine (181 unit tests) + Cypress for E2E.
+- **pnpm only, never npm.** CI runs pnpm 10 / Node 22.x.
+- ESLint 9 flat config (`eslint.config.js`, angular-eslint 21). No Prettier is installed.
+- SonarCloud gate: coverage ≥ 80%, branches ≥ 80%. Current: 96.98% lines / 100% branches
+  (181 tests, measured 2026-09-12).
 
-| Skill | When to Use |
-|-------|-------------|
-| `angular-component` | Creating new components, refactoring to signals, adding host bindings |
-| `angular-testing` | Writing unit tests, testing signal-based components, mocking deps |
-| `angular-architect` | Architecture decisions, NgRx state, routing patterns, RxJS patterns |
-| `wcag` | WCAG 2.2 accessibility guidelines, ARIA, color contrast, keyboard navigation |
-
-**Skill files location:** `.agents/skills/` (project-level)
-
-**How to use skills:**
-```
-# Read the skill file directly
-read .agents/skills/angular-component/SKILL.md
-read .agents/skills/angular-testing/SKILL.md
-read .agents/skills/angular-architect/SKILL.md
-read .agents/skills/wcag/SKILL.md
-```
-
-## Build, Test & Development Commands
+## Commands
 
 ```bash
-# Development
-pnpm start              # Dev server at localhost:4200
-pnpm run build          # Production build
-pnpm run watch          # Watch mode for development
-
-# Testing (Karma/Jasmine)
-pnpm test               # Run tests in watch mode
-pnpm run test-headless  # Run tests once (headless Chrome)
-pnpm run test-headless-cc  # Run tests with code coverage
-
-# Run a SINGLE test file
-pnpm test --include="**/some.component.spec.ts"
-
-# E2E Testing (Cypress)
-pnpm run cypress:open   # Open Cypress UI
-pnpm run cypress:run     # Run Cypress tests headless
-
-# Security & Verification
-pnpm audit              # Check vulnerabilities
-pnpm run verify         # test-headless + build + audit
-
-# Linting (ESLint)
-pnpm run lint           # Run ESLint (warnings allowed)
-pnpm run lint:fix       # Auto-fix fixable issues
+pnpm start                 # dev server on http://localhost:4200
+pnpm run build             # prod build; also the de-facto typecheck (AOT + strictTemplates)
+npx tsc -p tsconfig.app.json --noEmit   # typecheck only, faster
+pnpm test                  # Karma in watch mode
+pnpm run test-headless     # run once in ChromeHeadless
+pnpm run test-headless-cc  # + coverage -> coverage/frontend-angular/
+pnpm run test-headless --include="**/auth.service.spec.ts"   # single spec file
+pnpm run lint              # src/**/*.ts + src/**/*.html only (warnings allowed)
+pnpm run verify            # test-headless && build && audit  (same as ./verify.sh)
+pnpm security              # multi-tool audit: scripts/security-check.sh
+pnpm run cypress:run       # E2E — requires `pnpm start` already serving :4200
+pnpm run cypress:open      # Cypress UI (e2e baseUrl = http://localhost:4200)
 ```
 
-## Pre-Commit Checklist (MUST PASS)
-- [ ] Tests pass: `pnpm run test-headless`
-- [ ] Coverage ≥ 80%: `pnpm run test-headless-cc` (Branches ≥ 80%)
-- [ ] Build succeeds: `pnpm run build`
-- [ ] ESLint passes: `pnpm run lint` (warnings allowed)
-- [ ] No vulnerabilities: `pnpm audit` (ignores ajv tool vulnerability in devDeps)
-- [ ] Docs actualizados si cambiaron versiones/scripts/reglas
+There is no `typecheck`/`format` script; `pnpm run build` is the gate.
 
----
+## Architecture notes (not obvious from filenames)
 
-# Code Style Guidelines
+- `src/main.ts` bootstraps with `bootstrapApplication(AppComponent, { provideRouter(routes), provideHttpClient(withInterceptorsFromDi()) })`.
+  **`src/app/app.module.ts` is dead code** — nothing imports `AppModule`. Do not add
+  declarations/imports there; only the exported `routes` array in `app-routing.module.ts` is live.
+- Routes are all eager (no lazy loading). `AutenticacionGuard` protects `mis-datos` and `mis-cursos`.
+- Backend URL is hardcoded: `API_URL = 'http://localhost:8080/api'` in `src/app/utils/constants.ts`.
+  There is **no `src/environments/` and no dev-server proxy**; the Spring Boot backend must run on
+  :8080 for real data. Change that constant (or add a proxy) to retarget it.
+- Auth: JWT kept in `localStorage` under keys `token`, `usuario`, `isLoggedIn` (see `constants.ts`,
+  `AuthService`). Services use `HttpClient` + RxJS; user-facing errors go through SweetAlert2
+  (`sweetalert2` is listed in `allowedCommonJsDependencies` in `angular.json`).
+- Imports are written as `src/app/...` (tsconfig has `baseUrl: ./` and **no path aliases**).
+- Coverage excludes `src/app/model/**` and `src/app/utils/constants.ts` by design
+  (`angular.json` `codeCoverageExclude` + `sonar-project.properties` + `.nycrc.json`). Do not add
+  new exclusions to reach the 80% gate.
 
-## TypeScript
-- **Strict type checking** is enabled
-- Avoid `any`; use `unknown` when type is uncertain
-- Prefer type inference when obvious
-- Use proper error handling with try/catch
-- Enable `strict: true` in tsconfig
+## Code style: legacy vs new
 
-## Imports
-- Use absolute paths for app modules (e.g., `app/services/auth.service`)
-- Group imports in this order: external Angular, external libs, app modules
-- Use named imports: `import { Component } from '@angular/core'`
-- Avoid barrel files (index.ts) unless necessary
+Existing code does **not** follow modern Angular: explicit `standalone: true`, constructor
+injection, `*ngIf`/`*ngFor`, no signals, some `@Input()`/`@Output()`, mixed 2- and 4-space
+indentation. Don't reformat unrelated files (no formatter is enforced).
 
-## Formatting
-- Use 2 spaces for indentation
-- Maximum line length: 100 characters
-- Use single quotes for strings
-- Trailing commas in multiline arrays/objects
-- Use semicolons at statement end
+New code must: omit `standalone`, use `input()`/`output()`/`computed()`/`inject()`,
+`ChangeDetectionStrategy.OnPush`, native control flow (`@if`/`@for`/`@switch`), `host` object
+instead of `@HostBinding`/`@HostListener`, class/style bindings instead of `ngClass`/`ngStyle`.
+Full rules: `.agents/best-practices.md`. Accessibility (WCAG AA / AXE) is required.
 
-## Current Code State (Legacy)
+## Gotchas
 
-> **El código existente NO sigue las reglas modernas de Angular 20+.**
-> Esta sección describe cómo ES el código actual, no cómo DEBE ser.
+- **Cypress component testing is broken** with the Angular 21 application builder. The CI
+  `component-tests` job swallows its failure (`|| exit 0`) and the coverage job only merges Karma
+  output. Prefer E2E (`cypress/e2e/spec.cy.ts`), which mocks `localhost:8080` via `cy.intercept`
+  (no backend needed) — but the dev server must be running first.
+- **Local env (pnpm 12) breaks `build` and `lint`**: `TS2688: Cannot find type definition file for
+  'node'` and `Cannot find package '@eslint/js'`. `tsconfig.app.json` (`types: ["node"]`) and
+  `eslint.config.js` reference packages that are only transitive deps; the repo relies on
+  `shamefully-hoist` (.npmrc) exposing them in `node_modules/`. CI (pnpm 10) is green. Fix locally
+  with `pnpm add -D @types/node @eslint/js typescript-eslint`, or run the project with pnpm 10.
+- pnpm 12 warns that `pnpm.overrides` / `pnpm.onlyBuiltDependencies` in `package.json` are ignored;
+  pnpm 10 (CI) still honours them. Never delete those security overrides. Under pnpm 12 every
+  `pnpm run <script>` re-resolves and rewrites `pnpm-lock.yaml` + adds migrated settings to
+  `pnpm-workspace.yaml` — `git checkout` both before committing unless the migration is intended.
+  (It also prints a "supply-chain policy" warning block that can look fatal; the script still runs.)
+- Dependency bumps: never hand-edit versions in `package.json`. Use
+  `pnpm up '<pkg>@^x.y.z'` so `pnpm-lock.yaml` stays in sync. `pnpm up --latest '<pkg>@spec'`
+  errors — use `--latest` without specs.
+- CI: `pnpm audit --prod` is a hard gate (0 vulnerabilities); dev-only findings are warnings with an
+  accepted-list in `.github/workflows/security.yml` (`pnpm audit` is currently clean, 0 vulns).
+  Third-party actions must be pinned to 40-char SHAs; secrets are not allowed in `if:` conditions.
+- No git hooks are installed (`.husky-example/` is only a template) — run `pnpm run verify` manually.
+- Docs lag the manifests: `README.md` still says Angular 21.2.19 and `CONTRIBUTING.md` says Node
+  20.x. Trust `package.json` / `pnpm-lock.yaml` and `.github/workflows/` (Node 22.x, pnpm 10).
 
-- **Standalone**: Todos los componentes usan `standalone: true` explícito (aunque es default en Angular 20+)
-- **Inyección**: Constructor injection en todos los servicios y componentes (no usan `inject()`)
-- **Templates**: Usan `*ngIf`/`*ngFor` (structural directives legacy)
-- **Signals**: No se usan aún en el código fuente
-- **Inputs/Outputs**: Decoradores clásicos `@Input()`/`@Output()` (no `input()`/`output()` functions)
-- **Change Detection**: No todos usan `OnPush`
+## Pre-commit checklist
 
-## Rules for NEW Code (mandatory)
+- [ ] `pnpm run test-headless` — 0 failures
+- [ ] `pnpm run test-headless-cc` — branches ≥ 80%
+- [ ] `pnpm run build` — succeeds
+- [ ] `pnpm run lint` — no new errors (warnings allowed)
+- [ ] `pnpm audit --prod` — 0 vulnerabilities
+- [ ] Docs updated if versions, scripts or rules changed
 
-> **Todo código nuevo DEBE seguir estas reglas.** El código legacy se migrará gradualmente.
+## Skills
 
-### Angular Components
-- **DO NOT** set `standalone: true` (default en Angular 20+)
-- Use `input()` and `output()` functions instead of decorators
-- Use `computed()` for derived state
-- Set `changeDetection: ChangeDetectionStrategy.OnPush`
-- Keep components small and focused (single responsibility)
-- Prefer inline templates for small components (< 50 lines)
+Project skills in `.agents/skills/` — load the matching one before the task:
+`angular-component` (new components, signals, host bindings), `angular-testing` (unit tests,
+TestBed, mocks), `angular-architect` (routing/state/RxJS/architecture), `wcag` (accessibility).
+Supplementary: `.agents/best-practices.md` (full style rules).
 
-### State Management (Signals)
-- Use signals for local component state
-- Use `computed()` for derived values
-- **NEVER** use `mutate()` - use `update()` or `set()`
-- Keep state transformations pure and predictable
+## Branch policy (MUST)
 
-### Templates
-- Use native control flow: `@if`, `@for`, `@switch`
-- **NEVER** use `*ngIf`, `*ngFor`, `*ngSwitch`
-- **NEVER** use `ngClass` (use class bindings instead)
-- **NEVER** use `ngStyle` (use style bindings instead)
-- **NEVER** write arrow functions in templates
-- Use async pipe for observables
-- Keep templates simple; avoid complex logic
+- **NEVER commit or push directly to `main` or `master`.** Everything goes through a branch + PR
+  (squash merge). Prefixes: `feature/`, `fix/`, `docs/`, `ci/`, `chore/`, `security/`, `release/`.
+- **NEVER force-push to `main` or `master`.** Releases use a `release/X.Y.Z` branch, merged via PR,
+  then the tag is created from the updated `main`.
+- Commits use Conventional Commits (`feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:` …).
+- This applies to AI agents too.
 
-### Services
-- Use `inject()` instead of constructor injection
-- Use `providedIn: 'root'` for singleton services
-- Keep services focused on single responsibility
+## Plan mode & execution records (MUST)
 
-## Naming Conventions
-- Components: `kebab-case` for files, `PascalCase` for classes
-- Services: `*.service.ts`
-- Models: `*.model.ts` or `*.interface.ts`
-- Directives/Pipes: `*.directive.ts`, `*.pipe.ts`
-- Use descriptive, meaningful names (avoid abbreviations)
-
-## Accessibility (REQUIRED)
-- Must pass all AXE checks
-- Must meet WCAG AA (focus management, color contrast, ARIA)
-
-## General
-- Use `NgOptimizedImage` for static images
-- Prefer Reactive forms over Template-driven forms
-- No globals like `new Date()` - inject or pass as input
-- Do NOT use `@HostBinding`/`@HostListener` decorators; use `host` object in decorator
-
----
-
-## Project Structure
-```
-src/app/
-├── components/       # 15+ components (login, cursos, etc.)
-├── services/         # API services
-├── model/            # TypeScript interfaces
-├── utils/            # Helpers
-├── app-routing.module.ts
-└── app.module.ts
-```
-
-## Key Files
-- `package.json` - Dependencies and scripts
-- `angular.json` - Angular CLI config
-- `tsconfig.json` - TypeScript config
-- `.npmrc` - pnpm configuration
-- `karma.conf.js` - Test configuration
-- `.agents/best-practices.md` - Detailed best practices
-
-## Important Notes
-- **ALWAYS** use pnpm, never npm
-- Run tests with coverage before any commit
-- Branches coverage must be ≥ 80% (SonarQube requirement)
-- Cypress component testing has limitations with Angular 21; use E2E tests
-- ESLint configured with angular-eslint v21 + ESLint v9 (flat config: `eslint.config.js`)
-- Run `pnpm run lint` to check code style (warnings allowed)
-- Run `pnpm run lint:fix` to auto-fix some issues
-- **Upgrading Angular versions**: DO NOT edit `package.json` manually. Run `pnpm up '<pkg>@^<version>'` (e.g. `pnpm up '@angular/core@^21.2.19'`) so `package.json` + `pnpm-lock.yaml` stay consistent. `pnpm up --latest '<pkg>@spec'` errors — either use `--latest` without specs or specs without `--latest`.
-- Skills provide specialized instructions and workflows for specific tasks. Use the skill tool to load a skill when a task matches its description.
-
-## Branch Policy (MUST)
-- **NEVER commit or push directly to `main` or `master`.**
-- All changes (code, docs, CI, dependency updates, security fixes and hotfixes) MUST go through a branch and a Pull Request.
-- Use descriptive branch prefixes: `feature/`, `fix/`, `docs/`, `ci/`, `chore/`, `security/`, `release/`.
-- Prefer **squash merge** for a clean linear history.
-- **NEVER force-push to `main` or `master`.**
-- Releases MUST use a `release/X.Y.Z` branch, merge it via PR, then create the Git tag from the updated `main` branch.
-- This policy applies to both human contributors and AI agents.
-
-## Plan Mode & Execution Records (MUST)
-- When in **plan mode**, state it explicitly in every response and do NOT execute changes until the user approves with `adelante` and the system switches to build mode.
-- All non-trivial plans MUST be saved to `docs/plans/` with the format `YYYY-MM-DD-brief-description.md`.
-- Plan files MUST include: date, tool/model used, objectives, file changes, verification steps, design decisions, and current status (planned/in progress/done).
-- Before executing a plan, confirm explicit user approval.
-- After execution, record the outcome and update the plan status.
+- In **plan mode**, state it explicitly in every response and do NOT change anything until the user
+  approves with `adelante` and the system switches to build mode.
+- Non-trivial plans go to `docs/plans/YYYY-MM-DD-brief-description.md` including: date, tool/model,
+  objectives, file changes, verification steps, design decisions, and status
+  (planned / in progress / done).
+- Confirm explicit approval before executing a plan; afterwards record the outcome and update status.
