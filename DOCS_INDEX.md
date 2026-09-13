@@ -188,7 +188,7 @@ pnpm run a11y           # Accesibilidad WCAG2AA (advisory: no bloquea el PR)
 - Usar `pnpm audit` regularmente
 - Skills de proyecto disponibles en `.agents/skills/`
 
-### ♿ Accesibilidad
+### a11y (Accesibilidad)
 - Auditoría automatizada con pa11y-ci (runners htmlcs + axe, estándar WCAG2AA)
 - Informes en `reports/a11y/` (gitignored): resumen HTML + informe por página
 - Config de rutas y runners: `.pa11yci` (raíz del repo)
