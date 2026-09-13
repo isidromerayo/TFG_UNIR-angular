@@ -1705,12 +1705,24 @@ section {
   width: 100%;
   min-height: 50vh;
   background-color: var(--color-secondary);
-  background-image: linear-gradient(rgba(14, 29, 52, 0.75), rgba(14, 29, 52, 0.75)), url("../img/hero-bg.png");
+  background-image: url("../img/hero-bg.png");
   background-size: cover;
   background-position: center;
   position: relative;
   padding: 120px 0 60px 0;
   color: rgba(255, 255, 255, 0.8);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(14, 29, 52, 0.75);
+}
+
+.hero>* {
+  position: relative;
+  z-index: 1;
 }
 
 .hero h2 {

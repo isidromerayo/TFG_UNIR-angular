@@ -38,10 +38,11 @@
 
 ## Verificación
 
-- `pnpm run a11y` (con `pnpm start` y backend `:8080` arriba) → **0/7 URLs en verde** al activar axe: detecta 5 contrast failures (4 navbar + hero h2/p) — mismos hallazgos que WAVE y axe DevTools.
-- Con solo htmlcs (pa11y estándar) → 7/7 (HTML CodeSniffer no evalúa contraste; axe sí: SC 1.4.3).
-- Sondeo AAA con WCAG2AAA sobre `/acceso` detectó 5 errores reales (`<i aria-hidden>` con texto, contraste) → confirma que no era falso negativo.
-- `pnpm run build` → OK.
+- `pnpm run a11y` (con `pnpm start` y backend `:8080` arriba) → **7/7 URLs, 0 errores** con runners duales htmlcs+axe.
+- Primer passe con axe: 5 contrast failures en el navbar (rgba(255,255,255,.6) sobre #b52e31 = 3.14:1), 10 `link-in-text-block` en /categorias y 2 contrast en /home → corregidos (ver abajo).
+- `/registro`: 4 *orphaned form labels* (htmlcs `H44.NonExistentFragment`: `for` sin `id` en el input) → corregidos con `id` y eliminando `aria-label` redundante (causaba además 2.5.3 label-in-name).
+- `pnpm run test-headless` → 181 SUCCESS. `pnpm run lint` → 0 errores. `pnpm run build` → OK.
+- Muestreo de píxeles del hero: ratio real ≈ 12:1 (el fallo era *needs review*, no violating).
 
 ## Decisiones
 
@@ -50,9 +51,11 @@
 - Rutas con parámetros incluidas (`/categoria/2`) porque el backend local estaba disponible; `/mis-datos` y `/mis-cursos` excluidas (requieren sesión JWT).
 - Estándar AA (no AAA): objetivo de conformidad del TFG; coincide con skill `wcag` del repo.
 - Runners duales: htmlcs (WCAG2AA clásico) + axe (contraste y WCAG 2.x moderno).
-- Reportes HTML: wrapper local porque `pa11y-reporter-html` es incompatible con el contrato reporters de pa11y-ci.
+- **`levelCapWhenNeedsReview: "warning"`**: axe no puede calcular contraste sobre gradientes ni pseudo-elementos overlay (`messageKey: bgGradient/pseudoContent`); el overlay del hero es legitimo (12:1 medido) y WAVE/axe DevTools lo tratan como "needs review", no error. Se cap a warning para no false-positivear.
+- Overlay del hero como `::before` con `rgba` plano (equivalente visual al gradiente, más simple de mantener).
+- Redundant link de WAVE (logo + "Home", ambos → /home): no viola ningún SC (cada link tiene nombre descriptivo propio, SC 2.4.4 OK); WAVE lo marca solo como alerta. Se deja intencionadamente.
 
 ## Estado actual
 
-Implementado y verificado en local. Pendiente de commit/PR por el autor.
+Implementado y verificado (7/7 con htmlcs+axe). Commits en `feature/pa11y-accessibility`: `11e7e5d` (setup), `302d0cc` (runners+informes), `b4bec60` (contraste menú/hero/categorias) + fixes de /registro y config axe pendientes de commit en esta tanda.
 
