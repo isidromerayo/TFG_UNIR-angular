@@ -177,6 +177,9 @@ importers:
       pa11y-ci:
         specifier: ^4.1.1
         version: 4.1.1(typescript@5.9.3)
+      pa11y-reporter-html:
+        specifier: ^2.0.0
+        version: 2.0.0
       ts-loader:
         specifier: ^9.6.2
         version: 9.6.2(loader-utils@3.3.1)(typescript@5.9.3)(webpack@5.105.2(esbuild@0.28.1)(postcss@8.5.28))
@@ -2818,6 +2821,9 @@ packages:
   '@yarnpkg/lockfile@1.1.0':
     resolution: {integrity: sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==}
 
+  abbrev@1.1.1:
+    resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
+
   abbrev@4.0.0:
     resolution: {integrity: sha512-a1wflyaL0tHtJSmLSOVybYhy22vRih4eduhhrkcjgrWGnRfrZtovJ2FRjxuTtkkj47O/baf0R86QU5OuYpz8fA==}
     engines: {node: ^20.17.0 || >=22.9.0}
@@ -4182,6 +4188,10 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
+  hogan.js@3.0.2:
+    resolution: {integrity: sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==}
+    hasBin: true
+
   hono@4.13.7:
     resolution: {integrity: sha512-c8/gF9ac8Y78/agExVocyLevgR+JlpNB444Py0FSX8pJoPdYUfUzRcXtYEYGwt6l19qIlVZPN5Mfsw9jFShmQQ==}
     engines: {node: '>=16.9.0'}
@@ -4994,6 +5004,10 @@ packages:
   mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
 
+  mkdirp@0.3.0:
+    resolution: {integrity: sha512-OHsdUcVAQ6pOtg5JYWpCBo9W/GySVuwvP9hueRMW7UqshC0tbfzLv8wjySTPm3tfUZ/21CE9E1pJagOA91Pxew==}
+    deprecated: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
+
   mkdirp@0.5.6:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
     hasBin: true
@@ -5110,6 +5124,10 @@ packages:
   node.extend@2.0.3:
     resolution: {integrity: sha512-xwADg/okH48PvBmRZyoX8i8GJaKuJ1CqlqotlZOhUio8egD1P5trJupHKBzcPjSF9ifK2gPcEICRBnkfPqQXZw==}
     engines: {node: '>=0.4.0'}
+
+  nopt@1.0.10:
+    resolution: {integrity: sha512-NWmpvLSqUrgrAC9HCuxEvb+PSloHpqVu+FqcO4eeF2h5qYRhA7ev6KvelyQAKtegUbC6RypJnlEOhd8vloNKYg==}
+    hasBin: true
 
   nopt@9.0.0:
     resolution: {integrity: sha512-Zhq3a+yFKrYwSBluL4H9XP3m3y5uvQkB/09CwDruCiRmR/UJYnn9W4R48ry0uGC70aeTPKLynBtscP9efFFcPw==}
@@ -5262,6 +5280,10 @@ packages:
     resolution: {integrity: sha512-urSrJTTDtXypYxpjhYSzVsbHlFblmbPgMfCxJI6WyTF3oSxNHfQ77mFIv5PKGiN/k46Qc/tVc8+4Ny+y13pGow==}
     engines: {node: '>=20'}
     hasBin: true
+
+  pa11y-reporter-html@2.0.0:
+    resolution: {integrity: sha512-IuPxfb0P+uIAyoLSTkGyAv2jUHsN/iNEo3SHj0bUKQDRd84+tvEH3sHaO/ydIaECWcRYVGOADBNwMud6uQ5PNQ==}
+    engines: {node: '>=10'}
 
   pa11y@10.0.0:
     resolution: {integrity: sha512-bgNMoSH/a57sLhlllkKstcI6KRWsHVhBhZyWRbM9Z4uV9+nFsnra213QdO+KPVKD9mRtzQj48510CHLG4BBDZg==}
@@ -9544,6 +9566,8 @@ snapshots:
 
   '@yarnpkg/lockfile@1.1.0': {}
 
+  abbrev@1.1.1: {}
+
   abbrev@4.0.0: {}
 
   accepts@1.3.8:
@@ -11079,6 +11103,11 @@ snapshots:
 
   he@1.2.0: {}
 
+  hogan.js@3.0.2:
+    dependencies:
+      mkdirp: 0.3.0
+      nopt: 1.0.10
+
   hono@4.13.7: {}
 
   hoopy@0.1.4: {}
@@ -11955,6 +11984,8 @@ snapshots:
 
   mitt@3.0.1: {}
 
+  mkdirp@0.3.0: {}
+
   mkdirp@0.5.6:
     dependencies:
       minimist: 1.2.8
@@ -12069,6 +12100,10 @@ snapshots:
     dependencies:
       hasown: 2.0.4
       is: 3.3.2
+
+  nopt@1.0.10:
+    dependencies:
+      abbrev: 1.1.1
 
   nopt@9.0.0:
     dependencies:
@@ -12310,6 +12345,10 @@ snapshots:
       - supports-color
       - typescript
       - utf-8-validate
+
+  pa11y-reporter-html@2.0.0:
+    dependencies:
+      hogan.js: 3.0.2
 
   pa11y@10.0.0(yauzl@3.4.0):
     dependencies:

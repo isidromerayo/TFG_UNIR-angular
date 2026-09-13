@@ -27,9 +27,13 @@ pnpm run verify            # test-headless && build && audit  (same as ./verify.
 pnpm security              # multi-tool audit: scripts/security-check.sh
 pnpm run cypress:run       # E2E — requires `pnpm start` already serving :4200
 pnpm run cypress:open      # Cypress UI (e2e baseUrl = http://localhost:4200)
-pnpm run a11y              # pa11y-ci audit (WCAG2AA) — requires dev server on :4200
-pnpm run a11y:report       # same, JSON -> pa11y/report.json (gitignored)
+pnpm run a11y              # pa11y-ci audit (htmlcs+axe, WCAG2AA) — requires dev server on :4200
+pnpm run a11y:html         # only the per-URL HTML reporter (overrides config reporters)
 ```
+
+Reports land in `reports/a11y/` (gitignored): one HTML per URL + `report.json`.
+`pa11y-reporter-html` cannot be listed directly in `.pa11yci` `reporters` — pa11y-ci
+discards reporter return values, so `scripts/pa11y-html-reporter.js` adapts it to write files.
 
 There is no `typecheck`/`format` script; `pnpm run build` is the gate.
 

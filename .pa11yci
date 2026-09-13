@@ -1,12 +1,18 @@
 {
 	"defaults": {
 		"standard": "WCAG2AA",
+		"runners": ["htmlcs", "axe"],
 		"timeout": 60000,
 		"wait": 2000,
 		"chromeLaunchConfig": {
 			"executablePath": "/usr/bin/google-chrome-stable",
 			"args": ["--no-sandbox", "--disable-dev-shm-usage"]
-		}
+		},
+		"reporters": [
+			"cli",
+			["json", { "fileName": "./reports/a11y/report.json" }],
+			"./scripts/pa11y-html-reporter.js"
+		]
 	},
 	"urls": [
 		"http://localhost:4200/home",
