@@ -121,7 +121,7 @@ describe('CursoService', () => {
         done();
       });
 
-      const req = httpMock.expectOne(`${API_URL}cursos/search/findByTituloContaining?titulo=Angular`);
+      const req = httpMock.expectOne(`${API_URL}/cursos/search/findByTituloContaining?titulo=Angular`);
       expect(req.request.method).toBe('GET');
       req.flush({ _embedded: { cursos: mockCursos } });
     });
@@ -132,7 +132,7 @@ describe('CursoService', () => {
         done();
       });
 
-      const req = httpMock.expectOne(`${API_URL}cursos/search/findByTituloContaining?titulo=NonExistent`);
+      const req = httpMock.expectOne(`${API_URL}/cursos/search/findByTituloContaining?titulo=NonExistent`);
       req.flush({ _embedded: { cursos: [] } });
     });
 
@@ -142,7 +142,7 @@ describe('CursoService', () => {
         done();
       });
 
-      const req = httpMock.expectOne(`${API_URL}cursos/search/findByTituloContaining?titulo=C++`);
+      const req = httpMock.expectOne(`${API_URL}/cursos/search/findByTituloContaining?titulo=C++`);
       req.flush({ _embedded: { cursos: [] } });
     });
 
@@ -155,7 +155,7 @@ describe('CursoService', () => {
         }
       );
 
-      const req = httpMock.expectOne(`${API_URL}cursos/search/findByTituloContaining?titulo=Angular`);
+      const req = httpMock.expectOne(`${API_URL}/cursos/search/findByTituloContaining?titulo=Angular`);
       req.flush('Server error', { status: 500, statusText: 'Internal Server Error' });
     });
 
@@ -168,7 +168,7 @@ describe('CursoService', () => {
         }
       );
 
-      const req = httpMock.expectOne(`${API_URL}cursos/search/findByTituloContaining?titulo=Angular`);
+      const req = httpMock.expectOne(`${API_URL}/cursos/search/findByTituloContaining?titulo=Angular`);
       req.error(new ErrorEvent('Network error'));
     });
 
@@ -181,7 +181,7 @@ describe('CursoService', () => {
         done();
       });
 
-      const req = httpMock.expectOne(`${API_URL}cursos/search/findByTituloContaining?titulo=React`);
+      const req = httpMock.expectOne(`${API_URL}/cursos/search/findByTituloContaining?titulo=React`);
       req.flush({ _embedded: { cursos: searchResults } });
     });
   });

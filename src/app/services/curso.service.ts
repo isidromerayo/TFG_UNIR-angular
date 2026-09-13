@@ -15,6 +15,6 @@ export class CursoService {
   }
 
   search(query_string: string):Observable<any> {
-    return this.http.get<any>(`${API_URL}cursos/search/findByTituloContaining?titulo=${query_string}`).pipe(map(res => res._embedded.cursos))
+    return this.http.get<any>(`${API_URL}/cursos/search/findByTituloContaining?titulo=${query_string}`).pipe(map(res => res._embedded.cursos))
   }
 }
