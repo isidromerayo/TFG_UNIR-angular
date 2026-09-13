@@ -177,9 +177,9 @@ importers:
       pa11y-ci:
         specifier: ^4.1.1
         version: 4.1.1(typescript@5.9.3)
-      pa11y-reporter-html:
-        specifier: ^2.0.0
-        version: 2.0.0
+      pa11y-ci-reporter-html:
+        specifier: ^8.1.1
+        version: 8.1.1
       ts-loader:
         specifier: ^9.6.2
         version: 9.6.2(loader-utils@3.3.1)(typescript@5.9.3)(webpack@5.105.2(esbuild@0.28.1)(postcss@8.5.28))
@@ -2821,9 +2821,6 @@ packages:
   '@yarnpkg/lockfile@1.1.0':
     resolution: {integrity: sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==}
 
-  abbrev@1.1.1:
-    resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
-
   abbrev@4.0.0:
     resolution: {integrity: sha512-a1wflyaL0tHtJSmLSOVybYhy22vRih4eduhhrkcjgrWGnRfrZtovJ2FRjxuTtkkj47O/baf0R86QU5OuYpz8fA==}
     engines: {node: ^20.17.0 || >=22.9.0}
@@ -3300,6 +3297,10 @@ packages:
   ci-info@4.4.0:
     resolution: {integrity: sha512-77PSwercCZU2Fc4sX94eF8k8Pxte6JAwL4/ICZLFjJLqegs7kCuAsqqj/70NQF6TvDpgFjkubQB2FW2ZZddvQg==}
     engines: {node: '>=8'}
+
+  ci-logger@8.0.1:
+    resolution: {integrity: sha512-qyP6quwHiMa7X/EfWt4kXjuNi1A1TNhVkgvZbPMQNG+WRoKVVP5N1XtqLaeKtWUvfRpszfylDAK7SM7WCn4u6g==}
+    engines: {node: ^20.9.0 || ^22.11.0 || >=24.0.0}
 
   clean-css@5.3.3:
     resolution: {integrity: sha512-D5J+kHaVb/wKSFcyyV75uCn8fiY4sV38XJoe4CUyGQ+mOU/fMVYUdH1hJC+CJQ5uY3EnW27SbJYS4X8BiLrAFg==}
@@ -4160,6 +4161,11 @@ packages:
     resolution: {integrity: sha512-ax7ZYomf6jqPTQ4+XCpUGyXKHk5WweS+e05MBO4/y3WJ5RkmPXNKvX+bx1behVILVwr6JSQvZAku021CHPXG3Q==}
     engines: {node: '>=10'}
 
+  handlebars@4.7.9:
+    resolution: {integrity: sha512-4E71E0rpOaQuJR2A3xDZ+GM1HyWYv1clR58tC8emQNeQe3RH7MAzSbat+V0wG78LQBo6m6bzSG/L4pBuCsgnUQ==}
+    engines: {node: '>=0.4.7'}
+    hasBin: true
+
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
@@ -4186,10 +4192,6 @@ packages:
 
   he@1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
-    hasBin: true
-
-  hogan.js@3.0.2:
-    resolution: {integrity: sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==}
     hasBin: true
 
   hono@4.13.7:
@@ -5004,10 +5006,6 @@ packages:
   mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
 
-  mkdirp@0.3.0:
-    resolution: {integrity: sha512-OHsdUcVAQ6pOtg5JYWpCBo9W/GySVuwvP9hueRMW7UqshC0tbfzLv8wjySTPm3tfUZ/21CE9E1pJagOA91Pxew==}
-    deprecated: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
-
   mkdirp@0.5.6:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
     hasBin: true
@@ -5124,10 +5122,6 @@ packages:
   node.extend@2.0.3:
     resolution: {integrity: sha512-xwADg/okH48PvBmRZyoX8i8GJaKuJ1CqlqotlZOhUio8egD1P5trJupHKBzcPjSF9ifK2gPcEICRBnkfPqQXZw==}
     engines: {node: '>=0.4.0'}
-
-  nopt@1.0.10:
-    resolution: {integrity: sha512-NWmpvLSqUrgrAC9HCuxEvb+PSloHpqVu+FqcO4eeF2h5qYRhA7ev6KvelyQAKtegUbC6RypJnlEOhd8vloNKYg==}
-    hasBin: true
 
   nopt@9.0.0:
     resolution: {integrity: sha512-Zhq3a+yFKrYwSBluL4H9XP3m3y5uvQkB/09CwDruCiRmR/UJYnn9W4R48ry0uGC70aeTPKLynBtscP9efFFcPw==}
@@ -5276,14 +5270,18 @@ packages:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
 
+  pa11y-ci-reporter-html@8.1.1:
+    resolution: {integrity: sha512-aZoS7E+uYwOw4F2ChbJetqYtKWYiRQuuFIwhFG/TMtD0Wn0VZ3XOnXzRrRljTOgsjglAXsnxwIJXN+FxLTny6Q==}
+    engines: {node: ^20.9.0 || ^22.11.0 || >=24.0.0}
+
   pa11y-ci@4.1.1:
     resolution: {integrity: sha512-urSrJTTDtXypYxpjhYSzVsbHlFblmbPgMfCxJI6WyTF3oSxNHfQ77mFIv5PKGiN/k46Qc/tVc8+4Ny+y13pGow==}
     engines: {node: '>=20'}
     hasBin: true
 
-  pa11y-reporter-html@2.0.0:
-    resolution: {integrity: sha512-IuPxfb0P+uIAyoLSTkGyAv2jUHsN/iNEo3SHj0bUKQDRd84+tvEH3sHaO/ydIaECWcRYVGOADBNwMud6uQ5PNQ==}
-    engines: {node: '>=10'}
+  pa11y-reporter-html-plus@5.1.1:
+    resolution: {integrity: sha512-81GoYIJq00bY/In2BBbwv809xS5JiIPPorqG7ByGaaTulNqInXUnbPddV+2CdAd3FIUVDTMr3qf1nklbEugOIQ==}
+    engines: {node: ^20.9.0 || ^22.11.0 || >=24.0.0}
 
   pa11y@10.0.0:
     resolution: {integrity: sha512-bgNMoSH/a57sLhlllkKstcI6KRWsHVhBhZyWRbM9Z4uV9+nFsnra213QdO+KPVKD9mRtzQj48510CHLG4BBDZg==}
@@ -6254,6 +6252,11 @@ packages:
 
   ua-parser-js@0.7.41:
     resolution: {integrity: sha512-O3oYyCMPYgNNHuO7Jjk3uacJWZF8loBgwrfd/5LE/HyZ3lUIOdniQ7DNXJcIgZbwioZxk0fLfI4EVnetdiX5jg==}
+    hasBin: true
+
+  uglify-js@3.19.3:
+    resolution: {integrity: sha512-v3Xu+yuwBXisp6QYTcH4UbH+xYJXqnq2m/LtQVWKWzYc1iehYnLixoQDN9FH6/j9/oybfd6W9Ghwkl8+UMKTKQ==}
+    engines: {node: '>=0.8.0'}
     hasBin: true
 
   undici-types@6.21.0:
@@ -9566,8 +9569,6 @@ snapshots:
 
   '@yarnpkg/lockfile@1.1.0': {}
 
-  abbrev@1.1.1: {}
-
   abbrev@4.0.0: {}
 
   accepts@1.3.8:
@@ -10086,6 +10087,8 @@ snapshots:
       zod: 3.25.76
 
   ci-info@4.4.0: {}
+
+  ci-logger@8.0.1: {}
 
   clean-css@5.3.3:
     dependencies:
@@ -11080,6 +11083,15 @@ snapshots:
     dependencies:
       duplexer: 0.1.2
 
+  handlebars@4.7.9:
+    dependencies:
+      minimist: 1.2.8
+      neo-async: 2.6.2
+      source-map: 0.6.1
+      wordwrap: 1.0.0
+    optionalDependencies:
+      uglify-js: 3.19.3
+
   has-flag@4.0.0: {}
 
   has-symbols@1.1.0: {}
@@ -11102,11 +11114,6 @@ snapshots:
       function-bind: 1.1.2
 
   he@1.2.0: {}
-
-  hogan.js@3.0.2:
-    dependencies:
-      mkdirp: 0.3.0
-      nopt: 1.0.10
 
   hono@4.13.7: {}
 
@@ -11984,8 +11991,6 @@ snapshots:
 
   mitt@3.0.1: {}
 
-  mkdirp@0.3.0: {}
-
   mkdirp@0.5.6:
     dependencies:
       minimist: 1.2.8
@@ -12100,10 +12105,6 @@ snapshots:
     dependencies:
       hasown: 2.0.4
       is: 3.3.2
-
-  nopt@1.0.10:
-    dependencies:
-      abbrev: 1.1.1
 
   nopt@9.0.0:
     dependencies:
@@ -12323,6 +12324,12 @@ snapshots:
 
   p-try@2.2.0: {}
 
+  pa11y-ci-reporter-html@8.1.1:
+    dependencies:
+      ci-logger: 8.0.1
+      handlebars: 4.7.9
+      pa11y-reporter-html-plus: 5.1.1
+
   pa11y-ci@4.1.1(typescript@5.9.3):
     dependencies:
       async: 3.2.6
@@ -12346,9 +12353,9 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  pa11y-reporter-html@2.0.0:
+  pa11y-reporter-html-plus@5.1.1:
     dependencies:
-      hogan.js: 3.0.2
+      handlebars: 4.7.9
 
   pa11y@10.0.0(yauzl@3.4.0):
     dependencies:
@@ -13470,6 +13477,9 @@ snapshots:
   typescript@5.9.3: {}
 
   ua-parser-js@0.7.41: {}
+
+  uglify-js@3.19.3:
+    optional: true
 
   undici-types@6.21.0: {}
 

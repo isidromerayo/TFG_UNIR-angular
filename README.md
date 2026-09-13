@@ -95,14 +95,13 @@ Audits the running app against **WCAG 2.2 AA** (`standard: WCAG2AA` in `.pa11yci
 ```bash
 pnpm start              # 1. serve the app on http://localhost:4200
 pnpm run a11y           # 2. audit the public routes listed in .pa11yci
-pnpm run a11y:html      # only the per-URL HTML reports (no console/JSON reporters)
 ```
 
-- Reports: `reports/a11y/` (gitignored) — one HTML per URL + `report.json`.
+- Reports: `reports/a11y/` (gitignored) — `index.html` summary + one detailed HTML per URL + `report.json`.
 - Scanned URLs: `/home`, `/categorias`, `/categoria/2`, `/carrito`, `/acceso`, `/registro` and the 404 page.
 - `/home`, `/categorias` and `/categoria/:id` need the Spring Boot backend on `:8080` to render real course data.
 - Chrome: puppeteer cannot download its own browser here (`onlyBuiltDependencies`), so `.pa11yci` points to `/usr/bin/google-chrome-stable`. For one-off `pnpm exec pa11y <url>` runs, export `PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable`.
-- `pa11y-reporter-html` must be wired through `scripts/pa11y-html-reporter.js`: pa11y-ci discards reporter return values, so the raw package outputs nothing when listed in `reporters` (despite what the pa11y-ci README example suggests).
+- HTML reports come from `pa11y-ci-reporter-html` (the dedicated pa11y-ci reporter). Note: the similar-sounding `pa11y-reporter-html` is a pa11y reporter and does **not** work in pa11y-ci `reporters` (pa11y-ci discards return values).
 - Exit code is non-zero when errors are found; it is currently informational (no CI gate).
 
 ## 🔒 Security

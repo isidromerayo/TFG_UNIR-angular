@@ -25,15 +25,16 @@
 - `chromeLaunchConfig.executablePath: /usr/bin/google-chrome-stable` (+ `--no-sandbox`, `--disable-dev-shm-usage`).
 - 7 URLs: `/home`, `/categorias`, `/categoria/2`, `/carrito`, `/acceso`, `/registro`, `/no-existe-404`.
 
-### `scripts/pa11y-html-reporter.js` (nuevo)
-- Reporter local para pa11y-ci que usa `pa11y-reporter-html@2.0.0` y escribe un HTML por URL.
-- **Nota**: el ejemplo del README de pa11y-ci sugiere poner `"pa11y-reporter-html"` directamente en `defaults.reporters`, pero pa11y-ci descarta el valor de retorno de los reporters → ese paquete no funciona sin wrapper.
+### `pa11y-ci-reporter-html` (v8.1.1) como devDependency única
+- Reporter oficial compatible con pa11y-ci: escribe `index.html` resumen + un HTML por página + JSON.
+- Configurado en `.pa11yci` como `["pa11y-ci-reporter-html", { destination, includeZeroIssues }]`.
+- **Ojo con los nombres**: `pa11y-reporter-html` (el del README de pa11y-ci) es un reporter de pa11y que devuelve un string; pa11y-ci descarta el retorno (cycleReporters en lib/pa11y-ci.js) → no genera nada. Probado empíricamente con pa11y-ci 3 y 4: 0 bytes.
 
 ### `.gitignore`
 - `/reports` (salida de los informes pa11y).
 
 ### Documentación
-- `AGENTS.md`: comandos `a11y`/`a11y:html`, ubicación de informes y nota sobre el wrapper del reporter HTML.
+- `AGENTS.md`: comandos `a11y`, ubicación de informes y nota reporter correcto vs homónimo.
 - `README.md`: nueva sección "a11y: Accessibility audits (pa11y)".
 
 ## Verificación

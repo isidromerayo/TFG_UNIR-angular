@@ -31,9 +31,9 @@ pnpm run a11y              # pa11y-ci audit (htmlcs+axe, WCAG2AA) — requires d
 pnpm run a11y:html         # only the per-URL HTML reporter (overrides config reporters)
 ```
 
-Reports land in `reports/a11y/` (gitignored): one HTML per URL + `report.json`.
-`pa11y-reporter-html` cannot be listed directly in `.pa11yci` `reporters` — pa11y-ci
-discards reporter return values, so `scripts/pa11y-html-reporter.js` adapts it to write files.
+Reports land in `reports/a11y/` (gitignored): `index.html` summary + one HTML per URL + `report.json`.
+Use `pa11y-ci-reporter-html` (the pa11y-ci-compatible reporter). `pa11y-reporter-html` does not
+work inside pa11y-ci `reporters` — pa11y-ci discards reporter return values.
 
 There is no `typecheck`/`format` script; `pnpm run build` is the gate.
 
