@@ -19,6 +19,7 @@
 		"http://localhost:4200/home",
 		"http://localhost:4200/categorias",
 		"http://localhost:4200/categoria/2",
+		"http://localhost:4200/curso/12",
 		"http://localhost:4200/carrito",
 		"http://localhost:4200/acceso",
 		"http://localhost:4200/registro",

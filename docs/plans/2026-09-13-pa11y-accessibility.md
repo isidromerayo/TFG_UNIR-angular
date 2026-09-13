@@ -23,7 +23,7 @@
 ### `.pa11yci` (nuevo, raíz)
 - `standard: WCAG2AA`, `runners: ["htmlcs", "axe"]`, `timeout: 60000`, `wait: 2000`.
 - `chromeLaunchConfig.executablePath: /usr/bin/google-chrome-stable` (+ `--no-sandbox`, `--disable-dev-shm-usage`).
-- 7 URLs: `/home`, `/categorias`, `/categoria/2`, `/carrito`, `/acceso`, `/registro`, `/no-existe-404`.
+- 8 URLs: `/home`, `/categorias`, `/categoria/2`, `/curso/12`, `/carrito`, `/acceso`, `/registro`, `/no-existe-404`.
 
 ### `pa11y-ci-reporter-html` (v8.1.1) como devDependency única
 - Reporter oficial compatible con pa11y-ci: escribe `index.html` resumen + un HTML por página + JSON.
@@ -39,7 +39,7 @@
 
 ## Verificación
 
-- `pnpm run a11y` (con `pnpm start` y backend `:8080` arriba) → **7/7 URLs, 0 errores** con runners duales htmlcs+axe.
+- `pnpm run a11y` (con `pnpm start` y backend `:8080` arriba) → **8/8 URLs, 0 errores** con runners duales htmlcs+axe.
 - Primer passe con axe: 5 contrast failures en el navbar (rgba(255,255,255,.6) sobre #b52e31 = 3.14:1), 10 `link-in-text-block` en /categorias y 2 contrast en /home → corregidos (ver abajo).
 - `/registro`: 4 *orphaned form labels* (htmlcs `H44.NonExistentFragment`: `for` sin `id` en el input) → corregidos con `id` y eliminando `aria-label` redundante (causaba además 2.5.3 label-in-name).
 - `pnpm run test-headless` → 181 SUCCESS. `pnpm run lint` → 0 errores. `pnpm run build` → OK.

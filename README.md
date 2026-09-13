@@ -98,7 +98,7 @@ pnpm run a11y           # 2. audit the public routes listed in .pa11yci
 ```
 
 - Reports: `reports/a11y/` (gitignored) — `index.html` summary + one detailed HTML per URL + `report.json`.
-- Scanned URLs: `/home`, `/categorias`, `/categoria/2`, `/carrito`, `/acceso`, `/registro` and the 404 page.
+- Scanned URLs: `/home`, `/categorias`, `/categoria/2`, `/curso/12`, `/carrito`, `/acceso`, `/registro` and the 404 page.
 - `/home`, `/categorias` and `/categoria/:id` need the Spring Boot backend on `:8080` to render real course data.
 - Chrome: puppeteer cannot download its own browser here (`onlyBuiltDependencies`), so `.pa11yci` points to `/usr/bin/google-chrome-stable`. For one-off `pnpm exec pa11y <url>` runs, export `PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable`.
 - HTML reports come from `pa11y-ci-reporter-html` (the dedicated pa11y-ci reporter). Note: the similar-sounding `pa11y-reporter-html` is a pa11y reporter and does **not** work in pa11y-ci `reporters` (pa11y-ci discards return values).
