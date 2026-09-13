@@ -1,0 +1,20 @@
+{
+	"defaults": {
+		"standard": "WCAG2AA",
+		"timeout": 60000,
+		"wait": 2000,
+		"chromeLaunchConfig": {
+			"executablePath": "/usr/bin/google-chrome-stable",
+			"args": ["--no-sandbox", "--disable-dev-shm-usage"]
+		}
+	},
+	"urls": [
+		"http://localhost:4200/home",
+		"http://localhost:4200/categorias",
+		"http://localhost:4200/categoria/2",
+		"http://localhost:4200/carrito",
+		"http://localhost:4200/acceso",
+		"http://localhost:4200/registro",
+		"http://localhost:4200/no-existe-404"
+	]
+}

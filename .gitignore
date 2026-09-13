@@ -39,6 +39,7 @@ pnpm-debug.log*
 /connect.lock
 /coverage
 /libpeerconnection.log
+/pa11y
 testem.log
 /typings
 

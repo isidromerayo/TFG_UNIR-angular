@@ -88,6 +88,21 @@ For headless testing (CI/CD):
 
 Run `pnpm run cypress:open` to open Cypress test runner, or `pnpm run cypress:run` to execute the end-to-end tests in headless mode.
 
+## ♿ Accessibility audits (pa11y)
+
+Audits the running app against **WCAG 2.2 AA** (`standard: WCAG2AA` in `.pa11yci`) using headless Chrome.
+
+```bash
+pnpm start              # 1. serve the app on http://localhost:4200
+pnpm run a11y           # 2. audit the public routes listed in .pa11yci
+pnpm run a11y:report    # same, but JSON output -> pa11y/report.json
+```
+
+- Scanned URLs: `/home`, `/categorias`, `/categoria/2`, `/carrito`, `/acceso`, `/registro` and the 404 page.
+- `/home`, `/categorias` and `/categoria/:id` need the Spring Boot backend on `:8080` to render real course data.
+- Chrome: puppeteer cannot download its own browser here (`onlyBuiltDependencies`), so `.pa11yci` points to `/usr/bin/google-chrome-stable`. For one-off `pnpm exec pa11y <url>` runs, export `PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable`.
+- Exit code is non-zero when errors are found; it is currently informational (no CI gate).
+
 ## 🔒 Security
 
 ### Auditoría de Seguridad
