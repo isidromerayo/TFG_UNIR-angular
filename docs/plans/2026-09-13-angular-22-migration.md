@@ -17,7 +17,7 @@
 
 - Angular 22 (junio 2026) es la versión **activa**; 21 y 20 en LTS; 19 y anteriores EOL.
 - `ng update` solo admite **un salto de major por ejecución**: desde 21 es una única hop.
-- **TypeScript 22: `>= 6.0.0 < 6.1.0`** (obligatorio; googleamos de 5.9.3).
+- **TypeScript (para Angular 22): `>= 6.0.0 < 6.1.0`** (obligatorio; saltamos desde 5.9.3).
 - **Node (para Angular 22): `^22.22.3 || ^24.15.0 || ^26.0.0`** — el Node 22 local cumple si es ≥ 22.22.3; **CI debe fijar como mínimo 22.22.3** (comprobar `.github/workflows/node.js.yml`).
 - **RxJS: `^6.5.3 || ^7.4.0`** — nuestro `~7.8.0` cumple, sin cambios previstos.
 - Zoneless: **ya es el default del framework desde Angular 21+** (docs oficiales): nuestro `provideZoneChangeDetection` es una **compatibilidad explícita** a mantener hasta completar la Fase 4.
