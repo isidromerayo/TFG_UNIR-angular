@@ -22,8 +22,6 @@ jobs:
 
     - name: Install pnpm
       uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413
-      with:
-        version: 10
 
     - name: Get pnpm store directory
       shell: bash
@@ -66,8 +64,6 @@ jobs:
 
     - name: Install pnpm
       uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413
-      with:
-        version: 10
 
     - name: Get pnpm store directory
       shell: bash
@@ -120,8 +116,6 @@ jobs:
 
     - name: Install pnpm
       uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413
-      with:
-        version: 10
 
     - name: Get pnpm store directory
       shell: bash
@@ -249,8 +243,6 @@ jobs:
 
     - name: Install pnpm
       uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413
-      with:
-        version: 10
 
     - name: Download Karma coverage artifact
       uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
