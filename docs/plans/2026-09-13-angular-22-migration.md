@@ -18,7 +18,7 @@
 - Angular 22 (junio 2026) es la versión **activa**; 21 y 20 en LTS; 19 y anteriores EOL.
 - `ng update` solo admite **un salto de major por ejecución**: desde 21 es una única hop.
 - **TypeScript 22: `>= 6.0.0 < 6.1.0`** (obligatorio; googleamos de 5.9.3).
-- **Node para v22: `^22.22.3 || ^24.15.0 || ^26.0.0`** — el Node 22 local cumple si es ≥ 22.22.3; **CI debe fijar como mínimo 22.22.3** (comprobar `.github/workflows/node.js.yml`).
+- **Node (para Angular 22): `^22.22.3 || ^24.15.0 || ^26.0.0`** — el Node 22 local cumple si es ≥ 22.22.3; **CI debe fijar como mínimo 22.22.3** (comprobar `.github/workflows/node.js.yml`).
 - **RxJS: `^6.5.3 || ^7.4.0`** — nuestro `~7.8.0` cumple, sin cambios previstos.
 - Zoneless: **ya es el default del framework desde Angular 21+** (docs oficiales): nuestro `provideZoneChangeDetection` es una **compatibilidad explícita** a mantener hasta completar la Fase 4.
 
@@ -80,9 +80,9 @@
 ## Fase 4 — Zoneless (solo cuando la Fase 3 esté completa)
 
 1. Quitar `provideZoneChangeDetection` del bootstrap; añadir `provideZonelessChangeDetection()`.
-2. Eliminar `zone.js` de `polyfills` (`angular.json`, `build` y `test`) e instalar de `package.json`.
+2. Eliminar `zone.js` de `polyfills` (`angular.json`, `build` y `test`) y **desinstalar** la dependencia de `package.json`.
 3. Auditoría: no debe existir `NgZone.onMicrotaskEmpty/onStable/isStable` en el codebase (grep); revisar SSR (no aplica, no hay SSR).
-4. Activar el chequeo de debug `provideCheckNoChangesConfig({exhaustive: true, interval: N})` durante la fase de estabilización.
+4. Activar el chequeo de debug `provideCheckNoChangesConfig({exhaustive: true, interval: N})` durante la fase de estabilización — ojo: el API está en `developerPreview`; usarlo como ayuda de auditoría, no como gate de CI (puede cambiar entre minors).
 5. Gates: suite completa + E2E (incluido el de regresión, que captura exactamente esta clase de bug) + Sonar.
 - **Riesgo principal:** regresión de "pantalla congelada" — cubierta por el E2E de regresión y el inventario de la Fase 3.
 
