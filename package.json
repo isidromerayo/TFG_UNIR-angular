@@ -1,6 +1,7 @@
 {
   "name": "frontend-angular",
   "version": "0.2.3",
+  "packageManager": "pnpm@10.17.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
