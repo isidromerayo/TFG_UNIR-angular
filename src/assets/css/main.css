@@ -337,7 +337,7 @@ section {
     font-family: var(--font-primary);
     font-size: 16px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.85);
     white-space: nowrap;
     transition: 0.3s;
   }
@@ -1705,7 +1705,7 @@ section {
   width: 100%;
   min-height: 50vh;
   background-color: var(--color-secondary);
-  background-image: url("../img/hero-bg.png");
+  background-image: linear-gradient(rgba(14, 29, 52, 0.75), rgba(14, 29, 52, 0.75)), url("../img/hero-bg.png");
   background-size: cover;
   background-position: center;
   position: relative;
