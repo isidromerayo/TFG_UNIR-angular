@@ -337,7 +337,7 @@ section {
     font-family: var(--font-primary);
     font-size: 16px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.85);
     white-space: nowrap;
     transition: 0.3s;
   }
@@ -1711,6 +1711,18 @@ section {
   position: relative;
   padding: 120px 0 60px 0;
   color: rgba(255, 255, 255, 0.8);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(14, 29, 52, 0.75);
+}
+
+.hero>* {
+  position: relative;
+  z-index: 1;
 }
 
 .hero h2 {

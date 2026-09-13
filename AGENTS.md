@@ -27,7 +27,12 @@ pnpm run verify            # test-headless && build && audit  (same as ./verify.
 pnpm security              # multi-tool audit: scripts/security-check.sh
 pnpm run cypress:run       # E2E — requires `pnpm start` already serving :4200
 pnpm run cypress:open      # Cypress UI (e2e baseUrl = http://localhost:4200)
+pnpm run a11y              # pa11y-ci audit (htmlcs+axe, WCAG2AA) — requires dev server on :4200
 ```
+
+Reports land in `reports/a11y/` (gitignored): `index.html` summary + one HTML per URL + `report.json`.
+Use `pa11y-ci-reporter-html` (the pa11y-ci-compatible reporter). `pa11y-reporter-html` does not
+work inside pa11y-ci `reporters` — pa11y-ci discards reporter return values.
 
 There is no `typecheck`/`format` script; `pnpm run build` is the gate.
 
@@ -75,6 +80,11 @@ Full rules: `.agents/best-practices.md`. Accessibility (WCAG AA / AXE) is requir
   `pnpm run <script>` re-resolves and rewrites `pnpm-lock.yaml` + adds migrated settings to
   `pnpm-workspace.yaml` — `git checkout` both before committing unless the migration is intended.
   (It also prints a "supply-chain policy" warning block that can look fatal; the script still runs.)
+- **pa11y uses system Chrome**: puppeteer's postinstall (browser download) is blocked by
+  `pnpm.onlyBuiltDependencies`, so `.pa11yci` points `chromeLaunchConfig.executablePath` at
+  `/usr/bin/google-chrome-stable`. One-off `pnpm exec pa11y <url>` runs need
+  `PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable` (the CLI ignores `.pa11yci`).
+  Routes `/home`, `/categorias` and `/categoria/:id` need the backend on :8080 for real data.
 - Dependency bumps: never hand-edit versions in `package.json`. Use
   `pnpm up '<pkg>@^x.y.z'` so `pnpm-lock.yaml` stays in sync. `pnpm up --latest '<pkg>@spec'`
   errors — use `--latest` without specs.

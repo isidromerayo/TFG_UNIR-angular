@@ -5,23 +5,22 @@
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label for="nombre" class="label">Nombre (*)</label>
-                    <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre"
-                        placeholder="indique su nombre" aria-label="indique su nombre" required />
+                    <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre"
+                        placeholder="indique su nombre" required />
                     <span *ngIf="nombre.errors?.['required'] && nombre?.touched" class="error-form">el nombre es
                         obligatorio</span>
                 </div>
                 <div class="col-md-8 form-group">
                     <label for="apellidos" class="label">Apellidos (*)</label>
-                    <input type="text" class="form-control" name="apellidos" #apellidos="ngModel"
-                        [(ngModel)]="usuario.apellidos" placeholder="indique sus apellidos"
-                        aria-label="indique sus apellidos" required>
+                    <input type="text" class="form-control" id="apellidos" name="apellidos" #apellidos="ngModel"
+                        [(ngModel)]="usuario.apellidos" placeholder="indique sus apellidos" required>
                     <span *ngIf="apellidos.errors?.['required'] && apellidos?.touched" class="error-form">los apellidos
                         son obligatorio</span>
                 </div>
                 <div class="col-md-8 form-group">
                     <label for="email" class="label">Correo electrónico (*)</label>
-                    <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="usuario.email"
-                        placeholder="indique su correo electrónico" aria-label="indique su correo electrónico" required
+                    <input type="email" class="form-control" id="email" name="email" #email="ngModel" [(ngModel)]="usuario.email"
+                        placeholder="indique su correo electrónico" required
                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" />
                     <span *ngIf="email.errors?.['required'] && email?.touched" class="error-form">el email es
                         obligatorio</span>
@@ -30,9 +29,9 @@
                 </div>
                 <div class="col-md-6 form-group">
                     <label for="pass" class="label">Contraseña (*)</label>
-                    <input type="password" class="form-control" name="pass" #pass="ngModel"
+                    <input type="password" class="form-control" id="pass" name="pass" #pass="ngModel"
                         [(ngModel)]="usuario.password" placeholder="indique su contraseña"
-                        aria-label="indique su contraseña" required minlength="4" />
+                        required minlength="4" />
                     <span *ngIf="pass.errors?.['required'] && pass?.touched" class="error-form">la contraseña es
                         obligatoria</span>
                     <span *ngIf="pass.errors?.['minlength'] && pass?.touched" class="error-form">la contraseña debe
