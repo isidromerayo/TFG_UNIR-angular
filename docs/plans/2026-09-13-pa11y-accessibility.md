@@ -2,7 +2,7 @@
 
 **Fecha**: 2026-09-13
 **Herramienta**: opencode (opencode-go/qwen3.8-flash)
-**Estado**: in progress
+**Estado**: done
 **Rama de implementación**: `feature/pa11y-accessibility`
 
 ## Objetivos
@@ -15,10 +15,8 @@
 ## Cambios por archivo
 
 ### `package.json` + `pnpm-lock.yaml`
-- Nuevas devDependencies: `pa11y@10.0.0`, `pa11y-ci@4.1.1` (vía `pnpm add -D`, pnpm 10).
-- Nuevos scripts:
-  - `a11y`: `pa11y-ci` (usa `.pa11yci` del repo).
-  - `a11y:html`: solo el reporter HTML local.
+- Nuevas devDependencies: `pa11y@10.0.0`, `pa11y-ci@4.1.1`, `pa11y-ci-reporter-html@8.1.1` (vía `pnpm add -D`, pnpm 10).
+- Nuevo script: `a11y` → `pa11y-ci` (usa `.pa11yci` del repo; emite cli + json + html en cada ejecución).
 
 ### `.pa11yci` (nuevo, raíz)
 - `standard: WCAG2AA`, `runners: ["htmlcs", "axe"]`, `timeout: 60000`, `wait: 2000`.
@@ -40,7 +38,7 @@
 ## Verificación
 
 - `pnpm run a11y` (con `pnpm start` y backend `:8080` arriba) → **8/8 URLs, 0 errores** con runners duales htmlcs+axe.
-- Primer passe con axe: 5 contrast failures en el navbar (rgba(255,255,255,.6) sobre #b52e31 = 3.14:1), 10 `link-in-text-block` en /categorias y 2 contrast en /home → corregidos (ver abajo).
+- Primer passe con axe: contrast failures en los links del navbar (rgba(255,255,255,.6) sobre #b52e31 = 3.14:1; SC 1.4.3), 10 `link-in-text-block` en /categorias (SC 1.4.1) y el hero de /home → corregidos.
 - `/registro`: 4 *orphaned form labels* (htmlcs `H44.NonExistentFragment`: `for` sin `id` en el input) → corregidos con `id` y eliminando `aria-label` redundante (causaba además 2.5.3 label-in-name).
 - `pnpm run test-headless` → 181 SUCCESS. `pnpm run lint` → 0 errores. `pnpm run build` → OK.
 - Muestreo de píxeles del hero: ratio real ≈ 12:1 (el fallo era *needs review*, no violating).
@@ -58,5 +56,5 @@
 
 ## Estado actual
 
-Implementado y verificado (7/7 con htmlcs+axe). Commits en `feature/pa11y-accessibility`: `11e7e5d` (setup), `302d0cc` (runners+informes), `b4bec60` (contraste menú/hero/categorias) + fixes de /registro y config axe pendientes de commit en esta tanda.
+Implementado y verificado (8/8 con htmlcs+axe). Commits en `feature/pa11y-accessibility`: `11e7e5d` (setup), `302d0cc` (runners+informes), `b4bec60` (contraste menú/hero/categorias), `42fbf97` (registro + needs-review), `c40799a` (reporter oficial sin wrapper), `084bc10` (auditoría /curso/12).
 

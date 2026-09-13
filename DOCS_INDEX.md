@@ -101,6 +101,11 @@ TFG_UNIR-angular/
 → [README.md](README.md) - Sección "Running unit tests"  
 → [AGENTS.md](AGENTS.md) - Sección "Testing"
 
+### ¿Cómo auditar accesibilidad?
+→ [README.md](README.md) - Sección "a11y: Accessibility audits (pa11y)"  
+→ Ejecutar: `pnpm run a11y` (con `pnpm start` en marcha)  
+→ Registro del trabajo: [docs/plans/2026-09-13-pa11y-accessibility.md](docs/plans/2026-09-13-pa11y-accessibility.md)
+
 ### ¿Qué componentes tiene el proyecto?
 → [AGENTS.md](AGENTS.md) - Sección "Arquitectura del Proyecto"
 
@@ -145,6 +150,7 @@ pnpm start
 pnpm start              # Dev server
 pnpm test               # Tests con watch
 pnpm run build          # Build de producción
+pnpm run a11y           # Auditoría de accesibilidad (con dev server arriba)
 pnpm audit              # Check de seguridad
 ```
 
@@ -152,7 +158,9 @@ pnpm audit              # Check de seguridad
 ```bash
 pnpm run build          # Verificar build
 pnpm run test-headless  # Ejecutar tests
+pnpm run lint           # Verificar linter
 pnpm audit              # Verificar seguridad
+pnpm run a11y           # Accesibilidad WCAG2AA (advisory: no bloquea el PR)
 ```
 
 ## 📝 Notas Importantes
@@ -176,9 +184,15 @@ pnpm audit              # Verificar seguridad
 
 ### 🔒 Seguridad
 - Proyecto sin vulnerabilidades conocidas
-- Dependencias actualizadas a Angular ^21.2.18
+- Dependencias actualizadas a Angular ^21.2.23
 - Usar `pnpm audit` regularmente
 - Skills de proyecto disponibles en `.agents/skills/`
+
+### ♿ Accesibilidad
+- Auditoría automatizada con pa11y-ci (runners htmlcs + axe, estándar WCAG2AA)
+- Informes en `reports/a11y/` (gitignored): resumen HTML + informe por página
+- Config de rutas y runners: `.pa11yci` (raíz del repo)
+- Planes y registros de ejecución: `docs/plans/`
 
 ## 🆘 Soporte
 
@@ -200,6 +214,6 @@ pnpm audit              # Verificar seguridad
 
 ---
 
-**Última actualización**: 15 de agosto de 2026  
+**Última actualización**: 13 de septiembre de 2026  
 **Mantenido por**: Equipo de desarrollo  
 **Versión del proyecto**: 0.2.3

@@ -102,6 +102,7 @@ pnpm run test-headless-cc    # Con coverage
 - Mockear servicios externos
 - Usar `HttpClientTestingModule` para HTTP
 - Agregar `CUSTOM_ELEMENTS_SCHEMA` si es necesario
+- Seguir WCAG AA en componentes nuevos (labels, contraste, foco, `@if/@for`)
 
 Ejemplo:
 ```typescript
@@ -196,6 +197,7 @@ Si tu cambio afecta:
 - [ ] Tests pasan: `pnpm run test-headless`
 - [ ] Build exitoso: `pnpm run build`
 - [ ] Sin vulnerabilidades: `pnpm audit`
+- [ ] Accesibilidad: `pnpm run a11y` sin nuevos errores (advisory, requiere dev server)
 - [ ] Código formateado
 - [ ] Documentación actualizada (si aplica)
 - [ ] Sin console.logs

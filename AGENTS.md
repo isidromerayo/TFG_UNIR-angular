@@ -28,7 +28,6 @@ pnpm security              # multi-tool audit: scripts/security-check.sh
 pnpm run cypress:run       # E2E — requires `pnpm start` already serving :4200
 pnpm run cypress:open      # Cypress UI (e2e baseUrl = http://localhost:4200)
 pnpm run a11y              # pa11y-ci audit (htmlcs+axe, WCAG2AA) — requires dev server on :4200
-pnpm run a11y:html         # only the per-URL HTML reporter (overrides config reporters)
 ```
 
 Reports land in `reports/a11y/` (gitignored): `index.html` summary + one HTML per URL + `report.json`.

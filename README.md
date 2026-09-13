@@ -19,7 +19,7 @@
 
 ## 📅 Ciclo de Vida de Angular
 
-**Current version: Angular 21.2.19** (proyecto en versión **0.2.3**)
+**Current version: Angular 21.2.23** (proyecto en versión **0.2.3**)
 
 Angular publica una nueva versión mayor cada 6 meses, y cada versión mayor recibe **18 meses de soporte total**, divididos en dos fases:
 
@@ -35,7 +35,7 @@ Angular publica una nueva versión mayor cada 6 meses, y cada versión mayor rec
 | Lanzamiento v21.0.0 | 19 de noviembre de 2025 |
 | Fin del soporte activo | 3 de junio de 2026 (cuando se lanzó v22.0.0) |
 | Fin del soporte LTS | ~junio de 2027 |
-| Último parche disponible | 21.2.19 (29 de julio de 2026) |
+| Último parche disponible | 21.2.23 (12 de septiembre de 2026) |
 
 ### Implicaciones para este proyecto
 
@@ -99,7 +99,7 @@ pnpm run a11y           # 2. audit the public routes listed in .pa11yci
 
 - Reports: `reports/a11y/` (gitignored) — `index.html` summary + one detailed HTML per URL + `report.json`.
 - Scanned URLs: `/home`, `/categorias`, `/categoria/2`, `/curso/12`, `/carrito`, `/acceso`, `/registro` and the 404 page.
-- `/home`, `/categorias` and `/categoria/:id` need the Spring Boot backend on `:8080` to render real course data.
+- `/home`, `/categorias` and `/categoria/:id` need the Spring Boot backend on `:8080` to render real course data. `/categoria/2` and `/curso/12` assume those seed rows exist in the local DB; adjust `.pa11yci` if your dataset differs.
 - Chrome: puppeteer cannot download its own browser here (`onlyBuiltDependencies`), so `.pa11yci` points to `/usr/bin/google-chrome-stable`. For one-off `pnpm exec pa11y <url>` runs, export `PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable`.
 - HTML reports come from `pa11y-ci-reporter-html` (the dedicated pa11y-ci reporter). Note: the similar-sounding `pa11y-reporter-html` is a pa11y reporter and does **not** work in pa11y-ci `reporters` (pa11y-ci discards return values).
 - Exit code is non-zero when errors are found; it is currently informational (no CI gate).
