@@ -184,7 +184,7 @@ pnpm run a11y           # Accesibilidad WCAG2AA (advisory: no bloquea el PR)
 
 ### 🔒 Seguridad
 - Proyecto sin vulnerabilidades conocidas
-- Dependencias actualizadas a Angular ^21.2.23
+- Dependencias actualizadas a Angular ^21.2.25
 - Usar `pnpm audit` regularmente
 - Skills de proyecto disponibles en `.agents/skills/`
 

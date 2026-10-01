@@ -19,7 +19,7 @@
 
 ## 📅 Ciclo de Vida de Angular
 
-**Current version: Angular 21.2.23** (proyecto en versión **0.2.3**)
+**Current version: Angular 21.2.25** (proyecto en versión **0.2.3**)
 
 Angular publica una nueva versión mayor cada 6 meses, y cada versión mayor recibe **18 meses de soporte total**, divididos en dos fases:
 
@@ -35,7 +35,7 @@ Angular publica una nueva versión mayor cada 6 meses, y cada versión mayor rec
 | Lanzamiento v21.0.0 | 19 de noviembre de 2025 |
 | Fin del soporte activo | 3 de junio de 2026 (cuando se lanzó v22.0.0) |
 | Fin del soporte LTS | ~junio de 2027 |
-| Último parche disponible | 21.2.23 (12 de septiembre de 2026) |
+| Último parche disponible | 21.2.25 (30 de septiembre de 2026) |
 
 ### Implicaciones para este proyecto
 
