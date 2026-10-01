@@ -6,7 +6,7 @@ This is one of several implementations of the same TFG app. Siblings live in the
 
 ## Stack & tooling (verified 2026-09-12)
 
-- Angular **21.2.23** + TypeScript 5.9.3; Karma/Jasmine (181 unit tests) + Cypress for E2E.
+- Angular **21.2.25** + TypeScript 5.9.3; Karma/Jasmine (181 unit tests) + Cypress for E2E.
 - **pnpm only, never npm.** CI runs pnpm 10 / Node 22.x.
 - ESLint 9 flat config (`eslint.config.js`, angular-eslint 21). No Prettier is installed.
 - SonarCloud gate: coverage ≥ 80%, branches ≥ 80%. Current: 96.98% lines / 100% branches

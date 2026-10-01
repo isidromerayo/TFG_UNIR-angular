@@ -415,3 +415,22 @@ Se corrigen las **3 vulnerabilidades moderate de producción** que bloqueaban el
 Además, se acota el override `@babel/core` a `>=7.29.6 <8` y se fija `@babel/core@7.29.7` como devDependency para evitar que `auto-install-peers` resuelva la rama 8.x (incompatible con el `babel-loader` 7 de Karma/Cypress).
 
 **Resultado**: `pnpm audit --prod` → **0 vulnerabilidades**. Además, el toolchain `21.2.24` actualiza `less` a 4.9.0, que deja de arrastrar `image-size`, por lo que `pnpm audit` completo también reporta **0 vulnerabilidades**.
+
+---
+
+# 🛡️ Actualización de seguridad Angular — 21.2.25
+
+**Fecha**: 1 de octubre de 2026
+**Run afectado**: [Security Audit #36836499061](https://github.com/isidromerayo/TFG_UNIR-angular/actions/runs/36836499061)
+
+Se corrige la **vulnerabilidad high de producción** que bloqueaba el gate duro `pnpm audit --prod`:
+
+| Paquete | GHSA | CVE | Descripción | Corregido en |
+|---------|------|-----|-------------|--------------|
+| `@angular/router` | GHSA-ff3f-86qr-9cv3 | CVE-2026-101896 | SSR: Denial of Service vía parámetros de matriz numéricos en URL | `>=21.2.24` |
+
+**Acción**: bump alineado de `@angular/{animations,common,compiler,core,forms,platform-browser,platform-browser-dynamic,router}` y `@angular/compiler-cli` a `^21.2.25`, conservando `@angular/cli` y `@angular-devkit/build-angular` en `^21.2.24` (no existe `21.2.25` para la toolchain; su última versión en la rama 21.x es `21.2.24`). Se mantiene el bloque `pnpm.overrides` completo.
+
+> Nota: el proyecto no usa SSR, pero el gate `pnpm audit --prod` es estricto y bloquea el run independientemente del vector de explotación.
+
+**Resultado**: `pnpm audit --prod` → **0 vulnerabilidades**; 181 tests verdes, coverage 100% branches, build y lint OK.
