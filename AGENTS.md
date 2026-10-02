@@ -89,7 +89,8 @@ Full rules: `.agents/best-practices.md`. Accessibility (WCAG AA / AXE) is requir
   `pnpm up '<pkg>@^x.y.z'` so `pnpm-lock.yaml` stays in sync. `pnpm up --latest '<pkg>@spec'`
   errors — use `--latest` without specs.
 - CI: `pnpm audit --prod` is a hard gate (0 vulnerabilities); dev-only findings are warnings with an
-  accepted-list in `.github/workflows/security.yml` (`pnpm audit` is currently clean, 0 vulns).
+  accepted-list in `.github/workflows/security.yml`. After the 2026-10-02 override bumps, `pnpm audit`
+  reports only the accepted `extract-zip` (puppeteer→pa11y-ci, no upstream patch).
   Third-party actions must be pinned to 40-char SHAs; secrets are not allowed in `if:` conditions.
 - No git hooks are installed (`.husky-example/` is only a template) — run `pnpm run verify` manually.
 - Docs lag the manifests: `README.md` still says Angular 21.2.19 and `CONTRIBUTING.md` says Node
@@ -111,13 +112,18 @@ Project skills in `.agents/skills/` — load the matching one before the task:
 TestBed, mocks), `angular-architect` (routing/state/RxJS/architecture), `wcag` (accessibility).
 Supplementary: `.agents/best-practices.md` (full style rules).
 
+User-level skill `codely-git-conventional_commit` (`~/.agents/skills/`) — **load it before every
+commit**. It enforces Conventional Commits and adds the required trailer
+`Co-Authored-By: opencode - <model> (<reasoning_effort>) <noreply@opencode.ai>`.
+
 ## Branch policy (MUST)
 
 - **NEVER commit or push directly to `main` or `master`.** Everything goes through a branch + PR
   (squash merge). Prefixes: `feature/`, `fix/`, `docs/`, `ci/`, `chore/`, `security/`, `release/`.
 - **NEVER force-push to `main` or `master`.** Releases use a `release/X.Y.Z` branch, merged via PR,
   then the tag is created from the updated `main`.
-- Commits use Conventional Commits (`feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:` …).
+- Commits use Conventional Commits (`feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:` …) and
+  are created via the `codely-git-conventional_commit` skill (including its `Co-Authored-By` trailer).
 - This applies to AI agents too.
 
 ## Plan mode & execution records (MUST)

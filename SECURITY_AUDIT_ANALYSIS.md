@@ -382,7 +382,7 @@ Tras el tratamiento de `pnpm audit` (30 → 2 vulnerabilidades) mediante actuali
 | `image-size` (≤2.0.2) | CVE-2025-71330 | `@angular-devkit/build-angular > less > image-size` | DoS infinito en parser ICNS |
 | `image-size` (≤2.0.2) | CVE-2025-71329 | `@angular-devkit/build-angular > less > image-size` | DoS infinito en parser JXL/HEIF |
 
-> **Lista de aceptados usada por el CI** (`.github/workflows/security.yml`): `image-size`.
+> **Lista de aceptados usada por el CI** (`.github/workflows/security.yml`): `extract-zip` (sustituye a `image-size` desde el 2 de octubre de 2026, ver última sección).
 
 ### Decisión (histórico)
 **Aceptado.** Justificación:
@@ -434,3 +434,43 @@ Se corrige la **vulnerabilidad high de producción** que bloqueaba el gate duro 
 > Nota: el proyecto no usa SSR, pero el gate `pnpm audit --prod` es estricto y bloquea el run independientemente del vector de explotación.
 
 **Resultado**: `pnpm audit --prod` → **0 vulnerabilidades**; 181 tests verdes, coverage 100% branches, build y lint OK.
+
+---
+
+# 🛡️ Actualización de seguridad del toolchain dev — 2 de octubre de 2026
+
+**Rama**: `security/devtool-vulns-codeql-4.38.2`
+
+Se revisó `pnpm audit` completo y las PR abiertas. El gate de producción ya estaba limpio
+(`pnpm audit --prod` → 0), pero el árbol dev reportaba **15 avisos** (1 critical, 7 high,
+6 moderate, 1 low), todos en dependencias **transitivas de desarrollo** fuera del bundle de
+producción. Se corrigieron **13** subiendo `pnpm.overrides` a las versiones parcheadas:
+
+| Paquete | Antes | Override nuevo | Resuelto |
+|---------|-------|----------------|----------|
+| `piscina` (critical) | 5.2.0 | `>=5.3.2` | 5.3.2 |
+| `webpack-dev-middleware` (high) | 8.1.1 | `>=8.3.0` | 8.3.0 |
+| `brace-expansion` (high/mod) | 5.0.9 | `>=5.0.12` | 5.0.12 |
+| `engine.io` (high) | 6.6.9 | `>=6.6.10` | 6.6.11 |
+| `basic-ftp` (high) | 5.3.1 | `>=6.2.1` | 6.2.1 |
+| `js-yaml` (mod) | 5.4.2 | `>=5.4.1` | 5.4.2 |
+| `fast-uri` (mod) | 4.1.4 | `>=4.1.5` | 4.2.1 |
+| `ip-address` (mod) | 10.7.0 | `>=10.7.1` | 10.7.3 |
+| `serialize-javascript` (low) | 7.1.1 | `>=7.1.2` | 7.1.2 |
+
+**Riesgo aceptado (sin parche upstream).** `extract-zip@2.0.1`, transitivo de
+`pa11y-ci > puppeteer > @puppeteer/browsers` (`patched_versions: <0.0.0`). Es una dependencia
+**solo dev** del escáner de accesibilidad, no entra en el bundle de producción y no procesa
+archivos ZIP de terceros en runtime. Aceptado y añadido a la lista del CI
+(`.github/workflows/security.yml`).
+
+**Resultado**: `pnpm audit --prod` → **0 vulnerabilidades**; `pnpm audit` completo pasa de
+**15 → 2** (únicamente los 2 avisos high de `extract-zip`, aceptados). El workflow de seguridad
+solo emite warning si quedan vulnerabilidades dev **no aceptadas**.
+
+**CodeQL.** Las PR dependabot #265 (`analyze`) y #266 (`init`) fallaban porque cada una subía
+solo una de las dos acciones a 4.38.2, provocando el desajuste
+`Loaded a configuration file for version '4.38.2', but running version '4.38.1'`. Se sustituyen
+por un único cambio que actualiza **init y analyze** al mismo SHA 4.38.2
+(`.github/workflows/codeql.yml`).
+
