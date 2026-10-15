@@ -89,8 +89,10 @@ Full rules: `.agents/best-practices.md`. Accessibility (WCAG AA / AXE) is requir
   `pnpm up '<pkg>@^x.y.z'` so `pnpm-lock.yaml` stays in sync. `pnpm up --latest '<pkg>@spec'`
   errors — use `--latest` without specs.
 - CI: `pnpm audit --prod` is a hard gate (0 vulnerabilities); dev-only findings are warnings with an
-  accepted-list in `.github/workflows/security.yml`. After the 2026-10-02 override bumps, `pnpm audit`
-  reports only the accepted `extract-zip` (puppeteer→pa11y-ci, no upstream patch).
+  accepted-list in `.github/workflows/security.yml`. After the 2026-10-15 batch (overrides +
+  `@angular/cli`/`@angular-devkit/build-angular` 21.2.27 + `pa11y-ci` 5), `pnpm audit` reports only
+  the accepted `braces` (build-angular→http-proxy-middleware→micromatch, no upstream patch).
+  `extract-zip` no longer exists in the tree (`pa11y-ci@5` → puppeteer 25 → `@puppeteer/browsers` 3.x).
   Third-party actions must be pinned to 40-char SHAs; secrets are not allowed in `if:` conditions.
 - No git hooks are installed (`.husky-example/` is only a template) — run `pnpm run verify` manually.
 - Docs lag the manifests: `README.md` still says Angular 21.2.19 and `CONTRIBUTING.md` says Node
