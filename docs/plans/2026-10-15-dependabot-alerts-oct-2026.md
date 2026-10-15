@@ -4,6 +4,7 @@
 **Herramienta**: opencode (opencode-go/deepseek-v4.1-flash)
 **Estado**: done
 **Rama de implementación**: `security/dependabot-alerts-oct-2026`
+**PR**: https://github.com/isidromerayo/TFG_UNIR-angular/pull/276
 
 ## Objetivos
 
