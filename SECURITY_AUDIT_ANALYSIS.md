@@ -382,7 +382,7 @@ Tras el tratamiento de `pnpm audit` (30 → 2 vulnerabilidades) mediante actuali
 | `image-size` (≤2.0.2) | CVE-2025-71330 | `@angular-devkit/build-angular > less > image-size` | DoS infinito en parser ICNS |
 | `image-size` (≤2.0.2) | CVE-2025-71329 | `@angular-devkit/build-angular > less > image-size` | DoS infinito en parser JXL/HEIF |
 
-> **Lista de aceptados usada por el CI** (`.github/workflows/security.yml`): `extract-zip` (sustituye a `image-size` desde el 2 de octubre de 2026, ver última sección).
+> **Lista de aceptados usada por el CI** (`.github/workflows/security.yml`): `braces` (sustituye a `extract-zip` desde el 15 de octubre de 2026, ver última sección).
 
 ### Decisión (histórico)
 **Aceptado.** Justificación:
@@ -473,4 +473,62 @@ solo una de las dos acciones a 4.38.2, provocando el desajuste
 `Loaded a configuration file for version '4.38.2', but running version '4.38.1'`. Se sustituyen
 por un único cambio que actualiza **init y analyze** al mismo SHA 4.38.2
 (`.github/workflows/codeql.yml`).
+
+---
+
+# 🛡️ Alertas de Dependabot y auditoría dev — 15 de octubre de 2026
+
+**Rama**: `security/dependabot-alerts-oct-2026`
+**Alcance**: 5 alertas abiertas de Dependabot (#214, #228, #241, #242, #243) + los avisos extra
+que `pnpm audit` reportaba y Dependabot no había abierto.
+
+El gate duro de producción nunca estuvo en riesgo (`pnpm audit --prod` → 0). Partíamos de
+**12 avisos dev / 7 módulos** (4 critical, 7 high, 1 moderate), todos en dependencias
+**transitivas de desarrollo** fuera del bundle de producción.
+
+## Corregido
+
+| Paquete | Antes | Acción | Resuelto | Alerta |
+|---------|-------|--------|----------|--------|
+| `shell-quote` | 1.10.0 | override `>=1.8.4` → `>=1.11.0` | 1.12.0 | #242 (critical) |
+| `http-cache-semantics` | 4.2.0 | override nuevo `>=4.3.0` | 4.3.0 | #241 (high) |
+| `@modelcontextprotocol/sdk` | 1.30.0 | `@angular/cli` `^21.2.24` → `^21.2.27` (pinea 1.31.0) | 1.31.0 | #243 (high) |
+| `extract-zip` | 2.0.1 | `pa11y-ci` `^4.1.1` → `^5.0.0` (puppeteer 25 + `@puppeteer/browsers` 3.x ya no lo usan) | **eliminado** | #214, #228 (high ×2) |
+| `handlebars` | 4.7.9 | override nuevo `>=4.7.10` | 4.7.10 | — |
+| `source-map-js` | 1.2.1 | override nuevo `>=1.2.2` | 1.2.2 | — |
+| `proxy-addr` | 2.0.7 | override nuevo `>=2.0.8` | 2.0.8 | — |
+| `compression` | 1.8.1 | override nuevo `>=1.8.2` | 1.8.2 | — |
+
+`@angular-devkit/build-angular` se alinea a `^21.2.27` (mismas dependencias y peers que
+`21.2.24`; `@angular/core`/`compiler-cli` se mantienen en `^21.2.25`, que es el techo de la rama
+21.2.x). No se toca ningún pin de seguridad existente de `pnpm.overrides`.
+
+## Riesgo aceptado (sin parche upstream)
+
+`braces@3.0.3`, transitivo de `@angular-devkit/build-angular > http-proxy-middleware > micromatch`
+(`vulnerable: <=3.0.3`, `patched_versions: <0.0.0`; 3.0.3 es la última versión publicada). Es una
+dependencia **solo dev** del toolchain de build, no entra en el bundle de producción y el vector
+(agotamiento de pila por patrones glob anidados controlados por un atacante) no es alcanzable en
+esta aplicación. Aceptado y añadido a la lista del CI (`.github/workflows/security.yml`),
+sustituyendo a `extract-zip`, que ya no está en el árbol.
+
+## Verificación
+
+- `pnpm install` (pnpm 10.17.1, sin migración de lockfile): +36 / −88 paquetes.
+- `pnpm audit --prod` → **0 vulnerabilidades**.
+- `pnpm audit` completo → **12 → 1** (solo `braces`, aceptado).
+- `pnpm run lint` OK · `pnpm run test-headless-cc` 181 tests, branches 100 % · `pnpm run build` OK.
+- `pnpm run a11y` con `pa11y-ci@5.0.0`: configuración `.pa11yci`, runners y reporters
+  (`pa11y-ci-reporter-html`) funcionan igual. Único error (`h1` vacío en `/curso/12`) reproducido
+  también con `pa11y-ci@4.1.1`: es dependiente de datos y se debe a que no había backend en
+  `:8080` durante la prueba, no un cambio de comportamiento de la herramienta.
+
+## Decisión
+
+`pa11y-ci` 5.0.0 es un major que solo sube dependencias (pa11y 10, retirada de `kleur`) sin cambios
+de CLI ni de formato de configuración; es la vía para eliminar `extract-zip` de verdad en lugar de
+convivir con dos avisos sin parche. `@modelcontextprotocol/sdk` se corrige subiendo el CLI (que ya
+pinea la 1.31.0 parcheada) en lugar de forzar un `override`, evitando desalinear el servidor MCP de
+la versión que prueba Angular.
+
 
