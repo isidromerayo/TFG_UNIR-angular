@@ -59,21 +59,41 @@ jobs:
         run: pnpm install --frozen-lockfile
       
       # 1. Auditoría de producción con pnpm (npm Advisory Database) — GATE DURO
+      #    `ACCEPTED` lista paquetes sin parche upstream cuyo riesgo se documenta
+      #    en SECURITY_AUDIT_ANALYSIS.md; cualquier otra vulnerabilidad de
+      #    producción hace fallar el job. Se usa el exit code de pnpm para
+      #    respetar `pnpm.auditConfig.ignoreCves`. Un fallo de la propia
+      #    auditoría (informe no parseable) falla con su propio `::error` y sin
+      #    output `vulnerabilities`, para no confundirlo con advisories reales.
       - name: pnpm audit (production gate)
         id: pnpm-audit-prod
         run: |
           echo "## pnpm audit --prod results" >> $GITHUB_STEP_SUMMARY
-          pnpm audit --prod --json > pnpm-audit-prod.json || true
+          ACCEPTED="braces"
+          AUDIT_EXIT=0
+          pnpm audit --prod --json > pnpm-audit-prod.json || AUDIT_EXIT=$?
 
-          if [ -s pnpm-audit-prod.json ]; then
-            PROD_VULNS=$(jq -r '.metadata.vulnerabilities | add // 0' pnpm-audit-prod.json 2>/dev/null || echo 0)
-            case "$PROD_VULNS" in (*[!0-9]*|'') PROD_VULNS=0;; esac
-            echo "Production vulnerabilities found: $PROD_VULNS" >> $GITHUB_STEP_SUMMARY
+          # Un informe vacío o no parseable significa que la auditoría en sí
+          # falló (red, registro, salida inesperada), no que haya
+          # vulnerabilidades. Se marca con su propio error y sin emitir el
+          # output `vulnerabilities` para que los pasos de issue/comentario no
+          # se disparen por un fallo de infraestructura.
+          if ! jq -e '.actions' pnpm-audit-prod.json >/dev/null 2>&1; then
+            echo "pnpm audit --prod did not produce a parseable report (pnpm exit code: $AUDIT_EXIT)" >> $GITHUB_STEP_SUMMARY
+            echo "::error::pnpm audit --prod failed (exit $AUDIT_EXIT) without a parseable JSON report. The production gate cannot be evaluated; inspect the step log for the underlying cause."
+            exit 1
+          fi
+
+          if [ "$AUDIT_EXIT" -ne 0 ]; then
+            PROD_VULNS=$(jq -r --arg a "$ACCEPTED" '($a | split(" ")) as $acc | [.actions[]? | select(.module as $m | ($acc | index($m) | not))] | length' pnpm-audit-prod.json 2>/dev/null || echo 1)
+            case "$PROD_VULNS" in (*[!0-9]*|'') PROD_VULNS=1;; esac
+            echo "Production vulnerabilities found: $PROD_VULNS (accepted: $ACCEPTED)" >> $GITHUB_STEP_SUMMARY
             echo "vulnerabilities=$PROD_VULNS" >> $GITHUB_OUTPUT
             if [ "$PROD_VULNS" -gt 0 ]; then
               echo "::error::Found $PROD_VULNS production vulnerabilities. Fix them before merging."
               exit 1
             fi
+            echo "::warning::Only accepted production advisories found ($ACCEPTED). See SECURITY_AUDIT_ANALYSIS.md."
           else
             echo "No production vulnerabilities found" >> $GITHUB_STEP_SUMMARY
             echo "vulnerabilities=0" >> $GITHUB_OUTPUT
@@ -127,7 +147,7 @@ jobs:
       - name: Snyk Security Scan
         id: snyk
         if: env.SNYK_TOKEN != ''
-        uses: snyk/actions/node@b075801f26076be9bb50521154cafab73f44da0c # master @ 2026-09-29
+        uses: snyk/actions/node@11b673cfb4b0dc0d860a1323caa199d54950dcce # master @ 2026-10-07
         continue-on-error: true
         with:
           args: --severity-threshold=high --json-file-output=snyk-report.json
