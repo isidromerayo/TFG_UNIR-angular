@@ -94,6 +94,11 @@ Full rules: `.agents/best-practices.md`. Accessibility (WCAG AA / AXE) is requir
   the accepted `braces` (build-angular→http-proxy-middleware→micromatch, no upstream patch).
   `extract-zip` no longer exists in the tree (`pa11y-ci@5` → puppeteer 25 → `@puppeteer/browsers` 3.x).
   Third-party actions must be pinned to 40-char SHAs; secrets are not allowed in `if:` conditions.
+- **Accepted advisories (no upstream patch)**: an advisory is only ever "accepted" when no patched
+  version is published. It must be registered in `docs/security/accepted-advisories.md` and
+  rechecked every iteration with `pnpm security:accepted` (step *Accepted advisories recheck* in
+  `security.yml`), which fails as soon as OSV publishes a fix — then bump the dependency and remove
+  the silencing (`ACCEPTED` list, Dependabot dismissal) in the same PR.
 - No git hooks are installed (`.husky-example/` is only a template) — run `pnpm run verify` manually.
 - Docs lag the manifests: `README.md` still says Angular 21.2.19 and `CONTRIBUTING.md` says Node
   20.x. Trust `package.json` / `pnpm-lock.yaml` and `.github/workflows/` (Node 22.x, pnpm 10).

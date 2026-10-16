@@ -20,6 +20,7 @@
     "cypress:component:coverage:open": "CYPRESS_COVERAGE=true cypress open --component",
     "cypress:e2e:coverage": "CYPRESS_COVERAGE=true cypress run --e2e",
     "security": "./scripts/security-check.sh",
+    "security:accepted": "./scripts/check-accepted-advisories.sh",
     "security:audit": "pnpm audit",
     "security:outdated": "pnpm outdated",
     "a11y": "pa11y-ci",
