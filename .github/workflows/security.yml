@@ -62,14 +62,27 @@ jobs:
       #    `ACCEPTED` lista paquetes sin parche upstream cuyo riesgo se documenta
       #    en SECURITY_AUDIT_ANALYSIS.md; cualquier otra vulnerabilidad de
       #    producción hace fallar el job. Se usa el exit code de pnpm para
-      #    respetar `pnpm.auditConfig.ignoreCves`.
+      #    respetar `pnpm.auditConfig.ignoreCves`. Un fallo de la propia
+      #    auditoría (informe no parseable) falla con su propio `::error` y sin
+      #    output `vulnerabilities`, para no confundirlo con advisories reales.
       - name: pnpm audit (production gate)
         id: pnpm-audit-prod
         run: |
           echo "## pnpm audit --prod results" >> $GITHUB_STEP_SUMMARY
           ACCEPTED="braces"
           AUDIT_EXIT=0
-          pnpm audit --prod --json > pnpm-audit-prod.json 2>/dev/null || AUDIT_EXIT=$?
+          pnpm audit --prod --json > pnpm-audit-prod.json || AUDIT_EXIT=$?
+
+          # Un informe vacío o no parseable significa que la auditoría en sí
+          # falló (red, registro, salida inesperada), no que haya
+          # vulnerabilidades. Se marca con su propio error y sin emitir el
+          # output `vulnerabilities` para que los pasos de issue/comentario no
+          # se disparen por un fallo de infraestructura.
+          if ! jq -e '.actions' pnpm-audit-prod.json >/dev/null 2>&1; then
+            echo "pnpm audit --prod did not produce a parseable report (pnpm exit code: $AUDIT_EXIT)" >> $GITHUB_STEP_SUMMARY
+            echo "::error::pnpm audit --prod failed (exit $AUDIT_EXIT) without a parseable JSON report. The production gate cannot be evaluated; inspect the step log for the underlying cause."
+            exit 1
+          fi
 
           if [ "$AUDIT_EXIT" -ne 0 ]; then
             PROD_VULNS=$(jq -r --arg a "$ACCEPTED" '($a | split(" ")) as $acc | [.actions[]? | select(.module as $m | ($acc | index($m) | not))] | length' pnpm-audit-prod.json 2>/dev/null || echo 1)
