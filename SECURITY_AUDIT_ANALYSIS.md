@@ -528,3 +528,42 @@ pinea la 1.31.0 parcheada) en lugar de forzar un `override`, evitando desalinear
 la versión que prueba Angular.
 
 
+
+---
+
+## Iteración 2026-10-25: Dependabot dev/transitive advisories
+
+### Contexto
+Dependabot abrió 19 alertas (todas *development/transitive*) sobre `pnpm-lock.yaml`:
+`@modelcontextprotocol/sdk`, `launch-editor`, `undici`, `vite`, `fast-uri`, `hono`,
+`serialize-javascript` (además de `body-parser`, `zod`, `ip-address` detectados por `pnpm audit`).
+El gate duro `pnpm audit --prod` ya era 0; el objetivo es dejar también `pnpm audit` completo en 0
+sin mergear los PRs de Dependabot (lockfile incompatible con `pnpm.overrides`).
+
+### Cambios en `package.json` (`pnpm.overrides`)
+Bumps de overrides existentes + 3 nuevos:
+
+| Paquete | Antes | Después | Versión resuelta |
+|---|---|---|---|
+| `undici` | `>=8.9.0` | `>=8.12.2` | 8.12.3 |
+| `serialize-javascript` | `>=7.1.2` | `>=7.1.3` | 7.1.4 |
+| `hono` | `>=4.12.34` | `>=4.13.11` | 4.13.14 |
+| `fast-uri` | `>=4.1.5` | `>=4.2.3` | 4.2.3 |
+| `launch-editor` | `>=2.14.1` | `>=2.14.2` | 2.14.2 |
+| `vite` | `>=8.0.16` | `>=8.3.3` | 8.3.5 |
+| `body-parser` | `>=1.20.6` | `>=2.4.0` | 2.4.0 |
+| `ip-address` | `>=10.7.1` | `>=10.7.4` | 10.7.5 |
+| `@modelcontextprotocol/sdk` | (nuevo) | `>=1.32.0` | 1.32.2 |
+| `zod` | (nuevo) | `>=4.6.6` | 4.6.6 |
+
+`zod` se fuerza de 3.x a 4.6.6 (override) para cubrir el advisory en `chromium-bidi` (Cypress);
+validado con `pnpm run cypress:run` (3/3 specs pasando).
+
+### Verificación
+- `pnpm install` (pnpm 10.17.1) → OK, sin migración de lockfile.
+- `pnpm install --frozen-lockfile` → OK.
+- `pnpm audit --prod` → **0 vulnerabilidades**.
+- `pnpm audit` completo → **0 vulnerabilidades**.
+- `pnpm run lint` → OK · `pnpm run test-headless` → 181 SUCCESS · `pnpm run build` → OK.
+- `pnpm run cypress:run` → 3/3 specs OK.
+- `pnpm security:accepted` → OK (registro sigue vacío).
