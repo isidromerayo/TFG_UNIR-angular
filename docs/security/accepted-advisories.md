@@ -36,18 +36,6 @@ pnpm security:accepted          # o: ./scripts/check-accepted-advisories.sh
 ```json accepted-advisories
 {
   "ecosystem": "npm",
-  "advisories": [
-    {
-      "id": "GHSA-vfj7-8cjw-p6xm",
-      "aliases": ["CVE-2026-93687"],
-      "package": "braces",
-      "version": "3.0.3",
-      "scope": "dev",
-      "route": "@angular-devkit/build-angular > http-proxy-middleware > micromatch > braces",
-      "acceptedOn": "2026-10-16",
-      "mutedBy": "ACCEPTED=\"braces\" in .github/workflows/security.yml (dev-only warning)",
-      "reason": "Todas las versiones publicadas (<= 3.0.3) están afectadas y no hay parche upstream. Tooling de build/lint en dev, sin entrada controlada por atacante."
-    }
-  ]
+  "advisories": []
 }
 ```

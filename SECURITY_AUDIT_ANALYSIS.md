@@ -382,7 +382,7 @@ Tras el tratamiento de `pnpm audit` (30 → 2 vulnerabilidades) mediante actuali
 | `image-size` (≤2.0.2) | CVE-2025-71330 | `@angular-devkit/build-angular > less > image-size` | DoS infinito en parser ICNS |
 | `image-size` (≤2.0.2) | CVE-2025-71329 | `@angular-devkit/build-angular > less > image-size` | DoS infinito en parser JXL/HEIF |
 
-> **Lista de aceptados usada por el CI** (`.github/workflows/security.yml`): `braces` (sustituye a `extract-zip` desde el 15 de octubre de 2026, ver última sección).
+> **Lista de aceptados usada por el CI** (`.github/workflows/security.yml`): (ninguno).
 
 ### Decisión (histórico)
 **Aceptado.** Justificación:
@@ -505,18 +505,14 @@ El gate duro de producción nunca estuvo en riesgo (`pnpm audit --prod` → 0). 
 
 ## Riesgo aceptado (sin parche upstream)
 
-`braces@3.0.3`, transitivo de `@angular-devkit/build-angular > http-proxy-middleware > micromatch`
-(`vulnerable: <=3.0.3`, `patched_versions: <0.0.0`; 3.0.3 es la última versión publicada). Es una
-dependencia **solo dev** del toolchain de build, no entra en el bundle de producción y el vector
-(agotamiento de pila por patrones glob anidados controlados por un atacante) no es alcanzable en
-esta aplicación. Aceptado y añadido a la lista del CI (`.github/workflows/security.yml`),
-sustituyendo a `extract-zip`, que ya no está en el árbol.
+Ninguno: el advisory `braces` (`GHSA-vfj7-8cjw-p6xm`) fue retirado por GitHub el 2026-10-23,
+por lo que ya no aplica y se ha retirado de la lista del CI.
 
 ## Verificación
 
 - `pnpm install` (pnpm 10.17.1, sin migración de lockfile): +36 / −88 paquetes.
 - `pnpm audit --prod` → **0 vulnerabilidades**.
-- `pnpm audit` completo → **12 → 1** (solo `braces`, aceptado).
+- `pnpm audit` completo → **0 vulnerabilidades**.
 - `pnpm run lint` OK · `pnpm run test-headless-cc` 181 tests, branches 100 % · `pnpm run build` OK.
 - `pnpm run a11y` con `pa11y-ci@5.0.0`: configuración `.pa11yci`, runners y reporters
   (`pa11y-ci-reporter-html`) funcionan igual. Único error (`h1` vacío en `/curso/12`) reproducido
