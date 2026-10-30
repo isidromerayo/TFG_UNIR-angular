@@ -567,3 +567,56 @@ validado con `pnpm run cypress:run` (3/3 specs pasando).
 - `pnpm run lint` → OK · `pnpm run test-headless` → 181 SUCCESS · `pnpm run build` → OK.
 - `pnpm run cypress:run` → 3/3 specs OK.
 - `pnpm security:accepted` → OK (registro sigue vacío).
+
+---
+
+## Iteración 2026-10-30: revisión completa de `pnpm.overrides`
+
+### Contexto
+Tras la iteración del 25-oct, OSV publicó entre el 27 y el 29-oct nuevos advisories que afectaban a
+paquetes cuyos overrides se habían quedado en el mínimo anterior. `pnpm audit --prod` seguía en 0
+(todo es *dev/transitive*), pero `pnpm audit` completo volvió a 5 avisos (1 high, 3 moderate, 1 low).
+Dependabot **no** los refleja (sigue con 0 alertas abiertas) porque no resuelve los
+`pnpm.overrides` del lockfile; por eso se auditó localmente y se revisaron los overrides uno a uno.
+
+### Vulnerabilidades detectadas (todas dev/transitive, con parche)
+
+| Sev | Paquete | Ruta | Advisory | Floor anterior |
+|---|---|---|---|---|
+| high | `systeminformation` 5.33.10 | `cypress` | GHSA-3f7j-7jwc-fxfj / CVE-2026-116576 | `>=5.31.6` |
+| moderate | `systeminformation` | `cypress` | GHSA-7648-jmwf-vw7j / CVE-2026-116674 | `>=5.31.6` |
+| low | `systeminformation` | `cypress` | GHSA-4vjg-vx72-qq4g / CVE-2026-116673 | `>=5.31.6` |
+| moderate | `@hono/node-server` 2.1.1 | `@angular/cli` → `@modelcontextprotocol/sdk` | GHSA-rmxm-3fg6-px4f / CVE-2026-118663 | `>=2.0.10` |
+| moderate | `qs` 6.16.0 | `@angular-devkit/build-angular` → `webpack-dev-server` → `express` | GHSA-6pq8-jhm2-2vcw / CVE-2026-110816 | `>=6.16.0` |
+
+### Cambios en `package.json` (`pnpm.overrides`)
+Bumps para cubrir los advisories + alineación de floors que, aun resolviendo ya a versión parcheada,
+seguían declarando una versión mínima vulnerable (defensa en profundidad):
+
+| Paquete | Antes | Después | Versión resuelta |
+|---|---|---|---|
+| `systeminformation` | `>=5.31.6` | `>=5.33.16` | 5.33.19 |
+| `qs` | `>=6.16.0` | `>=6.16.1` | 6.17.1 |
+| `@hono/node-server` | `>=2.0.10` | `>=2.1.3` | 2.1.5 |
+| `flatted` | `>=3.4.0` | `>=3.4.2` | 3.4.2 |
+| `http-proxy-middleware` | `>=3.0.6` | `>=4.1.1` | 4.2.0 |
+| `postcss-selector-parser` | `>=7.1.3` | `>=7.1.6` | 7.1.6 |
+| `tmp` | `>=0.2.6` | `>=0.2.7` | 0.2.7 |
+
+### Revisión del resto de overrides
+Contraste de los 50 overrides contra OSV (`api.osv.dev`, por paquete y versión mínima) y contra las
+versiones realmente resueltas en `pnpm-lock.yaml`:
+
+- **0 overrides con versión instalada vulnerable** tras el cambio.
+- **5 overrides son hoy no-ops** (el paquete ya no está en el árbol): `@isaacs/brace-expansion`,
+  `basic-ftp`, `node-forge`, `rollup`, `websocket-driver`. Se mantienen como defensa en profundidad
+  por si una dependencia futura los reintroduce; no afectan a la resolución actual.
+- `node-forge >=1.4.0` tiene un advisory sin parche (GHSA-86w9-cpqp-85rv) pero el paquete no está
+  en el árbol, por lo que **no** se registra como advisory aceptado.
+- Ningún override queda con un floor por debajo de la versión parcheada de un advisory que le afecte.
+
+### Verificación
+- `pnpm install` (pnpm 10.17.1) → OK; `pnpm install --frozen-lockfile` → OK.
+- `pnpm audit --prod` → **0 vulnerabilidades**; `pnpm audit` completo → **0 vulnerabilidades**.
+- `pnpm run lint` → OK · `pnpm run test-headless` → 181 SUCCESS · `pnpm run build` → OK.
+- `pnpm security:accepted` → OK (registro vacío).
