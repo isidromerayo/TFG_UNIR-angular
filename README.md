@@ -102,7 +102,9 @@ pnpm run a11y           # 2. audit the public routes listed in .pa11yci
 - `/home`, `/categorias` and `/categoria/:id` need the Spring Boot backend on `:8080` to render real course data. `/categoria/2` and `/curso/12` assume those seed rows exist in the local DB; adjust `.pa11yci` if your dataset differs.
 - Chrome: puppeteer cannot download its own browser here (`onlyBuiltDependencies`), so `.pa11yci` points to `/usr/bin/google-chrome-stable`. For one-off `pnpm exec pa11y <url>` runs, export `PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable`.
 - HTML reports come from `pa11y-ci-reporter-html` (the dedicated pa11y-ci reporter). Note: the similar-sounding `pa11y-reporter-html` is a pa11y reporter and does **not** work in pa11y-ci `reporters` (pa11y-ci discards return values).
-- Exit code is non-zero when errors are found; it is currently informational (no CI gate).
+- Stack: `pa11y@10` + `pa11y-ci@5` + `pa11y-ci-reporter-html@9` (unified across the three frontends on 2026-10-31). Node ≥ 22.13 required (package engines).
+- Exit code is non-zero when errors are found; it is **informational** (no a11y gate on the PR pipeline). The `a11y.yml` workflow runs the audit weekly + on `workflow_dispatch` with the Spring Boot backend and the project's PostgreSQL image in containers (PoC: the DB starts empty until a seeded DB image is published — dynamic routes are audited in their "no data" state in CI; full audits with real data stay local), publishes a step-summary table and uploads `reports/a11y/` as an artifact; it only goes red on infrastructure/toolchain failure, not on WCAG findings.
+- Full guide (`.pa11yci` options, pa11y upgrade policy): [docs/accessibility.md](docs/accessibility.md).
 
 ## 🔒 Security
 
