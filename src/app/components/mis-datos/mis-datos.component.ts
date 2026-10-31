@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
     templateUrl: './mis-datos.component.html',
     styleUrls: ['./mis-datos.component.css'],
     standalone: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule]
 })

@@ -8,6 +8,7 @@ import { CategoriaService } from 'src/app/services/categoria.service';
     templateUrl: './categorias.component.html',
     styleUrls: ['./categorias.component.css'],
     standalone: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule]
 })

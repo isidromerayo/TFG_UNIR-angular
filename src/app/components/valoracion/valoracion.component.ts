@@ -8,6 +8,7 @@ import { ValoracionService } from 'src/app/services/valoracion.service';
     templateUrl: './valoracion.component.html',
     styleUrls: ['./valoracion.component.css'],
     standalone: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule]
 })

@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css'],
     standalone: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule]
 })

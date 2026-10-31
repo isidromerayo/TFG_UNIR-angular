@@ -9,6 +9,7 @@ import { SliderComponent } from '../slider/slider.component';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css'],
     standalone: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule, SliderComponent]
 })

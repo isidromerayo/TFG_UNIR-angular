@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
     templateUrl: './carrito.component.html',
     styleUrls: ['./carrito.component.css'],
     standalone: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule]
 })

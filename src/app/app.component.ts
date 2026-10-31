@@ -9,6 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
     standalone: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterModule, HeaderComponent, FooterComponent, CommonModule]
 })
