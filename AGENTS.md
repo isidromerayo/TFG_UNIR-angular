@@ -33,6 +33,13 @@ pnpm run a11y              # pa11y-ci audit (htmlcs+axe, WCAG2AA) — requires d
 Reports land in `reports/a11y/` (gitignored): `index.html` summary + one HTML per URL + `report.json`.
 Use `pa11y-ci-reporter-html` (the pa11y-ci-compatible reporter). `pa11y-reporter-html` does not
 work inside pa11y-ci `reporters` — pa11y-ci discards reporter return values.
+Stack (unified 2026-10-31 with react/vue3): `pa11y@10` + `pa11y-ci@5` + `pa11y-ci-reporter-html@9`
+(Node ≥ 22.13). The reporter's `supports` field is indicative only — pa11y-ci does not validate it;
+the ONLY compatibility proof is running `pnpm run a11y` (no PR pipeline check runs pa11y; the
+`a11y.yml` workflow is weekly/dispatch and informational, never a merge gate). Upgrade policy:
+bump `pa11y-ci` and the reporter in the same branch, re-lock with `pnpm up`, re-check accepted
+advisories whose routes pass through the pa11y tree, run `pnpm run a11y` before merging.
+Full guide: `docs/accessibility.md`.
 
 There is no `typecheck`/`format` script; `pnpm run build` is the gate.
 
@@ -92,6 +99,9 @@ Full rules: `.agents/best-practices.md`. Accessibility (WCAG AA / AXE) is requir
   accepted-list in `.github/workflows/security.yml`. After the 2026-10-15 batch (overrides +
   `@angular/cli`/`@angular-devkit/build-angular` 21.2.27 + `pa11y-ci` 5), `pnpm audit` reports 0 vulnerabilities (the withdrawn `braces` advisory no longer applies).
   `extract-zip` no longer exists in the tree (`pa11y-ci@5` → puppeteer 25 → `@puppeteer/browsers` 3.x).
+  The `a11y.yml` workflow (weekly + dispatch, informational, artifact `a11y-reports`) audits the app
+  with backend + the project's postgres image in containers (PoC: DB starts empty until a seeded DB
+  image is published; full audits with real data are local); it is NOT a merge gate.
   Third-party actions must be pinned to 40-char SHAs; secrets are not allowed in `if:` conditions.
 - **Accepted advisories (no upstream patch)**: an advisory is only ever "accepted" when no patched
   version is published. It must be registered in `docs/security/accepted-advisories.md` and

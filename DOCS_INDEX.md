@@ -103,8 +103,9 @@ TFG_UNIR-angular/
 
 ### ¿Cómo auditar accesibilidad?
 → [README.md](README.md) - Sección "a11y: Accessibility audits (pa11y)"  
-→ Ejecutar: `pnpm run a11y` (con `pnpm start` en marcha)  
-→ Registro del trabajo: [docs/plans/2026-09-13-pa11y-accessibility.md](docs/plans/2026-09-13-pa11y-accessibility.md)
+→ Guía completa (stack, config, job CI, política de upgrade): [docs/accessibility.md](docs/accessibility.md)  
+→ Ejecutar: `pnpm run a11y` (con `pnpm start` en marcha) — CI: workflow `a11y.yml` (semanal/dispatch, informativo)  
+→ Registro del trabajo: [docs/plans/2026-09-13-pa11y-accessibility.md](docs/plans/2026-09-13-pa11y-accessibility.md) y [docs/plans/2026-10-31-pa11y-unificacion-y-docs.md](docs/plans/2026-10-31-pa11y-unificacion-y-docs.md)
 
 ### ¿Qué componentes tiene el proyecto?
 → [AGENTS.md](AGENTS.md) - Sección "Arquitectura del Proyecto"
