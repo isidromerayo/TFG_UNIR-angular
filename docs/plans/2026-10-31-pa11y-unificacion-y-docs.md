@@ -2,7 +2,7 @@
 
 - **Fecha**: 2026-10-31
 - **Herramienta/modelo**: OpenCode · Qwen3.8 Flash
-- **Estado**: in progress
+- **Estado**: done (2026-10-31)
 
 ## Contexto
 
@@ -58,7 +58,7 @@ informativo `a11y.yml` en la misma PR.
 
 ## Pendiente al cerrar
 
-- [ ] Primera corrida `workflow_dispatch` de `a11y.yml` tras el merge.
-- [ ] Actualizar submodule `angular/` del monorepo.
-- [ ] Nota para react/vue3: la subida del reporter a 9 les quitó el `handlebars` CVE-covered por
+- [x] Primera corrida workflow_dispatch (31-oct 14:08 UTC): 8/8 URLs, 0 errores — run 41208738284. Nota PoC: BD del job sin datos (opción B).
+- [x] Monorepo: PR #27 mergeada (de3b19f), angular/ apuntando a main con este cambio.
+- Nota para react/vue3: la subida del reporter a 9 les quitó el `handlebars` CVE-covered por
       su propio bump (react mantiene su override global, inofensivo).
