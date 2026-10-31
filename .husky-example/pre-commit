@@ -1,3 +1,11 @@
+# Bloqueo de commits directos a main/master
+branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+if [ "$branch" = "main" ] || [ "$branch" = "master" ]; then
+  echo "ERROR: commits directos a '$branch' no están permitidos." >&2
+  echo "Crea una rama (feature/, fix/, chore/, ...) y abre un PR." >&2
+  exit 1
+fi
+
 #!/bin/sh
 # Pre-commit hook example
 # To use: npm install husky --save-dev && npx husky install
