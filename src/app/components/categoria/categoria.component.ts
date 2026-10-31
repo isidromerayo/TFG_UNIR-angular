@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Params, Router } from '@angular/router';
 import { CategoriaService } from 'src/app/services/categoria.service';
@@ -8,6 +8,7 @@ import { CategoriaService } from 'src/app/services/categoria.service';
     templateUrl: './categoria.component.html',
     styleUrls: ['./categoria.component.css'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule]
 })
 export class CategoriaComponent implements OnInit {

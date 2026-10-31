@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HomeService } from 'src/app/services/home.service';
@@ -9,6 +9,7 @@ import { SliderComponent } from '../slider/slider.component';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule, SliderComponent]
 })
 

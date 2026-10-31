@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
@@ -9,6 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterModule, HeaderComponent, FooterComponent, CommonModule]
 })
 export class AppComponent {

@@ -36,6 +36,7 @@ export default tseslint.config(
         { argsIgnorePattern: '^_' },
       ],
       'prefer-const': 'warn',
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
     },
   },
   {

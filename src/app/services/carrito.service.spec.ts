@@ -4,7 +4,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { CarritoService } from './carrito.service';
 import { AuthService } from './auth.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { API_URL } from '../utils/constants';
 
 describe('CarritoService', () => {
@@ -22,7 +22,7 @@ describe('CarritoService', () => {
       providers: [
         CarritoService,
         AuthService,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });

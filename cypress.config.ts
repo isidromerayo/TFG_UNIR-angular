@@ -22,7 +22,7 @@ export default defineConfig({
       require('@cypress/code-coverage/task')(on, config)
       return config
     },
-    env: {
+    expose: {
       // Pass coverage flag to tests
       coverage: process.env['CYPRESS_COVERAGE'] === 'true'
     },

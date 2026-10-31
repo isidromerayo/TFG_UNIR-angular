@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Params, Router } from '@angular/router';
 import { ValoracionService } from 'src/app/services/valoracion.service';
@@ -8,6 +8,7 @@ import { ValoracionService } from 'src/app/services/valoracion.service';
     templateUrl: './valoracion.component.html',
     styleUrls: ['./valoracion.component.css'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule]
 })
 

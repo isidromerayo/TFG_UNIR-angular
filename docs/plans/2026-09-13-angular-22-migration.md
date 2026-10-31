@@ -129,3 +129,11 @@ F6 (CI/docs) cierra todo
 - Ejecutar Fases 2/3 en paralelo en ramas separadas vs. secuencial (recomendado: secuencial; la Fase 3 puede empezarse justo tras la Fase 1 sin esperar al spike de Vitest).
 - Fetch vs XHR en Fase 1 (preferencia: Fetch).
 - ¿Mantener Cypress component testing roto tal cual, o retirar los scripts/jobs al ejecutar esta migración? (decisión ya establecida: solo E2E; retirar esa deuda en la Fase 6).
+
+## Nota (2026-10-31) — Fase 1 ejecutada vía OpenSpec
+
+La Fase 1 (upgrade mecánico) se ejecuta mediante el cambio
+`openspec/changes/angular-22-upgrade-route-a` (rama `feature/angular-22`): Angular 22.2.x +
+TypeScript 6.0.3, builders a `@angular/build`, Cypress 16, ngx-sweetalert2 15, HttpClient implícito
+(Fetch), `ChangeDetectionStrategy.Eager` en los 15 componentes y suppress de diagnósticos de
+optional chaining. Las fases 2–6 del plan siguen pendientes.
