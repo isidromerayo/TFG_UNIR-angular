@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
     templateUrl: './slider.component.html',
     styleUrls: ['./slider.component.css'],
     standalone: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule]
 })
 export class SliderComponent {

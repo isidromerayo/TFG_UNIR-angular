@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CategoriaService } from 'src/app/services/categoria.service';
@@ -8,6 +8,8 @@ import { CategoriaService } from 'src/app/services/categoria.service';
     templateUrl: './categorias.component.html',
     styleUrls: ['./categorias.component.css'],
     standalone: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule]
 })
 export class CategoriasComponent {

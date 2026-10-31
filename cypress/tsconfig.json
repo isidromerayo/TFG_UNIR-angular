@@ -5,6 +5,7 @@
     "../src/**/*.ts"
   ],
   "compilerOptions": {
+    "rootDir": "../",
     "sourceMap": false,
     "types": [
       "cypress",

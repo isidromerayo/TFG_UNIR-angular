@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Params, Router } from '@angular/router';
 import { CursoService } from 'src/app/services/curso.service';
@@ -8,6 +8,8 @@ import { CursoService } from 'src/app/services/curso.service';
     templateUrl: './busqueda.component.html',
     styleUrls: ['./busqueda.component.css'],
     standalone: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule]
 })
 export class BusquedaComponent implements OnInit {

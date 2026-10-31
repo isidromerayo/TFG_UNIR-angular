@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './mis-cursos.component.html',
   styleUrls: ['./mis-cursos.component.css'],
   standalone: true,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule]
 })
 export class MisCursosComponent implements OnInit {

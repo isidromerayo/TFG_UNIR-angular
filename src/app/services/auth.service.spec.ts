@@ -3,7 +3,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { AuthService } from './auth.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { LoginUsuario } from '../model/login-usuario';
 import { UsuarioAuth } from '../model/usuario-auth';
 import { API_URL, TOKEN, USER } from '../utils/constants';
@@ -18,7 +18,7 @@ describe('AuthenticationService', () => {
       imports: [],
       providers: [
         AuthService,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });

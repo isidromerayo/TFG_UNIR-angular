@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
     templateUrl: './acceso.component.html',
     styleUrls: ['./acceso.component.css'],
     standalone: true,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, RouterModule, FormsModule]
 })
 export class AccesoComponent {
