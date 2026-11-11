@@ -6,7 +6,7 @@ This is one of several implementations of the same TFG app. Siblings live in the
 
 ## Stack & tooling (verified 2026-09-12)
 
-- Angular **22.2.4** + TypeScript 6.0.3; Karma/Jasmine (181 unit tests) + Cypress for E2E.
+- Angular **22.2.4** + TypeScript 6.0.3; Karma/Jasmine (181 unit tests) + Cypress 16.2.1 for E2E.
 - **pnpm only, never npm.** CI runs pnpm 10 / Node 22.x.
 - ESLint 9 flat config (`eslint.config.js`, angular-eslint 22). No Prettier is installed.
 - SonarCloud gate: coverage ≥ 80%, branches ≥ 80%. Current: 96.98% lines / 100% branches
@@ -26,6 +26,7 @@ pnpm run lint              # src/**/*.ts + src/**/*.html only (warnings allowed)
 pnpm run verify            # test-headless && build && audit  (same as ./verify.sh)
 pnpm security              # multi-tool audit: scripts/security-check.sh
 pnpm run cypress:run       # E2E — requires `pnpm start` already serving :4200
+pnpm run cypress:run:coverage # E2E with coverage
 pnpm run cypress:open      # Cypress UI (e2e baseUrl = http://localhost:4200)
 pnpm run a11y              # pa11y-ci audit (htmlcs+axe, WCAG2AA) — requires dev server on :4200
 ```
@@ -42,6 +43,11 @@ advisories whose routes pass through the pa11y tree, run `pnpm run a11y` before 
 Full guide: `docs/accessibility.md`.
 
 There is no `typecheck`/`format` script; `pnpm run build` is the gate.
+
+## Testing Note
+- **Cypress component testing is DISABLED** with Angular 22 due to incompatibility with @cypress/webpack-dev-server
+- **E2E testing works** with `cy.intercept` (mocking backend) - requires dev server on :4200
+- Coverage is handled by Karma for unit tests
 
 ## Architecture notes (not obvious from filenames)
 
@@ -73,10 +79,9 @@ Full rules: `.agents/best-practices.md`. Accessibility (WCAG AA / AXE) is requir
 
 ## Gotchas
 
-- **Cypress component testing is broken** with the Angular 21 application builder. The CI
-  `component-tests` job swallows its failure (`|| exit 0`) and the coverage job only merges Karma
-  output. Prefer E2E (`cypress/e2e/spec.cy.ts`), which mocks `localhost:8080` via `cy.intercept`
-  (no backend needed) — but the dev server must be running first.
+- **Cypress component testing is DISABLED** with Angular 22 due to incompatibility with 
+  @cypress/webpack-dev-server (cannot resolve @angular-devkit/build-angular paths). 
+  Only E2E testing is available and works with `cy.intercept` (mocking backend) — requires dev server on :4200.
 - **Local env (pnpm 12) breaks `build` and `lint`**: `TS2688: Cannot find type definition file for
   'node'` and `Cannot find package '@eslint/js'`. `tsconfig.app.json` (`types: ["node"]`) and
   `eslint.config.js` reference packages that are only transitive deps; the repo relies on
