@@ -116,8 +116,7 @@ Full rules: `.agents/best-practices.md`. Accessibility (WCAG AA / AXE) is requir
   `security.yml`), which fails as soon as OSV publishes a fix — then bump the dependency and remove
   the silencing (`ACCEPTED` list, Dependabot dismissal) in the same PR.
 - No git hooks are installed (`.husky-example/` is only a template) — run `pnpm run verify` manually.
-- Docs lag the manifests: `README.md` still says Angular 21.2.19. Trust
-  `package.json` / `pnpm-lock.yaml` and `.github/workflows/` (Node 24.x, pnpm 10).
+- Trust `package.json` / `pnpm-lock.yaml` and `.github/workflows/` (Node 24.x, pnpm 10) over prose docs.
 
 ## Pre-commit checklist
 

@@ -3,7 +3,7 @@
 **Fecha:** 2026-11-20
 **Proyecto:** TFG_UNIR-angular
 **Herramienta/modelo:** OpenCode (DeepSeek V4.1 Flash)
-**Estado:** En curso
+**Estado:** Completado en el repo (despliegue pendiente: recurso Coolify + primera release)
 **Prioridad:** Alta (fase 5 del homelab: CI/CD para el resto de apps)
 
 ---
@@ -58,6 +58,17 @@
 - `pnpm run test-headless` (Karma, entorno de desarrollo)
 - `docker build` local y smoke test del contenedor (`/` y una ruta profunda como `/home`) en el
   puerto 8080, comprobando que el proceso corre como `nginx` (no root).
+
+### Resultado (2026-11-20)
+
+- `pnpm run lint`: 0 errores (1 warning preexistente de `app.component.ts`).
+- `pnpm run build`: OK; `main-*.js` contiene `https://tfg-api.estilolibre.eu/api` y ninguna
+  referencia a `localhost`.
+- `pnpm run test-headless`: 181/181.
+- Imagen construida con podman: `/` y `/home` responden 200, `uid=101(nginx)`, `nginx -t` OK,
+  healthcheck correcto. Cabeceras verificadas: `index.html` sin caché; assets sin hash
+  (`/assets/...`, favicon) con caché corta; artefactos con hash inmutables.
+- CI del PR #301 en verde (build, lint, unit, E2E, Codacy).
 
 ---
 
