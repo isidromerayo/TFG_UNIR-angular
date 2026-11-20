@@ -1,75 +1,70 @@
 # 🔖 Guía de Gestión de Versiones
 
-Este documento describe las opciones y el flujo de trabajo recomendado para gestionar el versionado del proyecto **TFG UNIR - Frontend Angular**.
+Este documento describe el versionado del proyecto **TFG UNIR - Frontend Angular** y el proceso
+de release que publica la imagen en Docker Hub.
 
 ## 📊 Estado Actual
-- **Versión Actual**: `0.2.3` (definida en `package.json`)
-- **Convención de Mensajes**: Se recomienda seguir [Conventional Commits](https://www.conventionalcommits.org/).
+- **Versión Actual**: `0.4.0` (definida en `package.json`; `main` queda siempre en la última
+  versión publicada, sin versiones de desarrollo intermedias).
+- **Convención de Mensajes**: [Conventional Commits](https://www.conventionalcommits.org/).
+- **Versión desplegada**: la última GitHub Release se publica automáticamente en
+  `https://tfg-angular.estilolibre.eu`.
 
 ---
 
-## 🛠️ Opciones de Gestión
+## 🚀 Proceso recomendado: workflow `Release` (automatizado)
 
-### 1. Gestión Manual (Básica)
-Ideal para control total sin dependencias extra.
+En GitHub Actions → **Release** → *Run workflow* con `release_version` (X.Y.Z). El workflow:
 
-*   **Comandos**:
-    ```bash
-    pnpm version patch  # 0.1.0 -> 0.1.1 (Correcciones)
-    pnpm version minor  # 0.1.0 -> 0.2.0 (Nuevas funcionalidades)
-    pnpm version major  # 0.1.0 -> 1.0.0 (Breaking changes)
-    ```
-*   **Qué hace**: Actualiza `package.json`, crea un commit de versión y un tag de Git.
-*   **Pros**: Simple, sin configuración.
-*   **Contras**: No hay CHANGELOG automático.
+1. Valida que la versión sea semver (`X.Y.Z`).
+2. Si `package.json` **no** está ya en esa versión, crea la rama `release/X.Y.Z`, sube el
+   `package.json`, abre un PR y lo mergea con squash (main nunca recibe pushes directos).
+   Si ya coincide (la funcionalidad subió la versión en su propio PR), se salta este paso.
+3. Crea y empuja el tag anotado `vX.Y.Z` sobre `main`.
+4. Construye y publica `isidromerayo/frontend-angular-tfg:X.Y.Z` y `:latest` en Docker Hub.
+5. Crea la GitHub Release con notas generadas.
+6. El despliegue automático detecta la release y la publica en
+   `https://tfg-angular.estilolibre.eu`.
 
-### 2. Automatización Local (Recomendado)
-Uso de `standard-version` para automatizar el versionado y el historial de cambios.
+También admite `dry_run` (valida, pero no hace PR, push, Docker ni release).
 
-*   **Instalación**: `pnpm add -D standard-version`
-*   **Script en package.json**: `"release": "standard-version"`
-*   **Uso**:
-    ```bash
-    pnpm run release
-    ```
-*   **Qué hace**: 
-    1. Analiza commits desde el último tag.
-    2. Sube la versión según el tipo de cambios (`feat`, `fix`).
-    3. Genera/Actualiza `CHANGELOG.md`.
-    4. Crea commit y tag de Git.
-*   **Pros**: Historial profesional y automático.
+### Secretos necesarios en el repositorio
 
-### 3. Automatización Total (CI/CD)
-Uso de `semantic-release` en GitHub Actions.
-
-*   **Flujo**: Al hacer merge en `main`, un runner de GitHub gestiona todo.
-*   **Pros**: Elimina la necesidad de gestionar versiones localmente. Totalmente desatendido.
-*   **Contras**: Configuración inicial más compleja.
+| Secreto | Uso |
+|---|---|
+| `RELEASE_TOKEN` | PAT con `Contents: Read and write` y `Pull requests: Read and write` (crear/mergear el PR de release y crear la GitHub Release) |
+| `DOCKER_HUB_USERNAME` | Usuario de Docker Hub |
+| `DOCKER_HUB_TOKEN` | Token de Docker Hub |
 
 ---
 
-## 🚀 Flujo de Trabajo Sugerido
+## 🛠️ Flujo manual (fallback)
 
-Para este proyecto, se recomienda la **Opción 2** combinada con **Conventional Commits**:
+Si el workflow no está disponible:
 
-1.  **Desarrollo**: Realizar commits descriptivos:
-    - `feat: añadir sistema de valoraciones`
-    - `fix: corregir error en el carrito`
-2.  **Release**: Cuando el código esté listo en `main`:
-    ```bash
-    git checkout -b release/X.Y.Z
-    pnpm version X.Y.Z --no-git-tag-version
-    git add package.json
-    git commit -m "chore(release): X.Y.Z"
-    git push origin release/X.Y.Z
-    # Open and merge the Pull Request, then from the updated main branch:
-    git checkout main
-    git pull origin main
-    git tag -a vX.Y.Z -m "vX.Y.Z"
-    git push origin vX.Y.Z
-    gh release create vX.Y.Z --title "vX.Y.Z" --generate-notes
-    ```
-    **Note:** Direct commits or pushes to `main` are not allowed, including release commits.
+```bash
+# 1. Rama de release (main no se toca directamente)
+git checkout -b release/X.Y.Z
+pnpm pkg set version=X.Y.Z
+git add package.json
+git commit -m "chore(release): X.Y.Z"
+git push origin release/X.Y.Z
+# 2. Abrir y mergear el PR (squash) y, desde main actualizado:
+git checkout main
+git pull origin main
+git tag -a vX.Y.Z -m "vX.Y.Z"
+git push origin vX.Y.Z
+
+# 3. Imagen y GitHub Release
+docker build --build-arg VERSION=X.Y.Z \
+  -t isidromerayo/frontend-angular-tfg:X.Y.Z \
+  -t isidromerayo/frontend-angular-tfg:latest .
+docker push isidromerayo/frontend-angular-tfg:X.Y.Z
+docker push isidromerayo/frontend-angular-tfg:latest
+gh release create vX.Y.Z --title "vX.Y.Z" --generate-notes
+```
+
+**Note:** Direct commits or pushes to `main` are not allowed, including release commits.
 
 ---
 
@@ -78,3 +73,4 @@ Para este proyecto, se recomienda la **Opción 2** combinada con **Conventional 
 - [ ] El build es exitoso (`pnpm run build`)
 - [ ] No hay vulnerabilidades críticas (`pnpm audit`)
 - [ ] El código está actualizado en la rama principal
+- [ ] La release queda desplegada (`https://tfg-angular.estilolibre.eu` responde).

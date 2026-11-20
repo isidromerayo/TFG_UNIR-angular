@@ -3,7 +3,7 @@
 ## 🚀 Inicio Rápido
 
 ### Requisitos Previos
-- Node.js 20.x
+- Node.js 24.x
 - pnpm 9.x o superior
 
 ### Setup Inicial
