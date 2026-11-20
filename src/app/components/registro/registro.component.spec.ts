@@ -100,14 +100,6 @@ describe('RegistroComponent', () => {
     });
   });
 
-  it('should enforce the backend password bounds in the form', () => {
-    // ComponentFixture no resuelve en el analizador estatico; se acota el tipo.
-    const fixtureElement = fixture as unknown as { nativeElement: HTMLElement };
-    const input = fixtureElement.nativeElement.querySelector<HTMLInputElement>('#pass');
-    expect(input?.minLength).toBe(8);
-    expect(input?.maxLength).toBe(72);
-  });
-
   it('should reset form', () => {
     const form = { form: { reset: jasmine.createSpy('reset') } };
     component.onReset(form);

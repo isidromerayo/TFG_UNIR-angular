@@ -113,3 +113,22 @@ describe('Render de datos asíncronos (regresión NoopNgZone)', () => {
     cy.get('.detalle-curso', { timeout: 10000 }).should('contain.text', 'Ana');
   });
 });
+
+describe('Registro: política de contraseña del backend', () => {
+  it('aplica los límites 8-72 y bloquea el envío con 7 caracteres', () => {
+    cy.visit('/registro');
+
+    cy.get('#pass')
+      .should('have.attr', 'minlength', '8')
+      .and('have.attr', 'maxlength', '72');
+
+    cy.get('#nombre').type('Test');
+    cy.get('#apellidos').type('User');
+    cy.get('#email').type('test@example.com');
+    cy.get('#pass').type('1234567');
+    cy.get('button[type="submit"]').should('be.disabled');
+
+    cy.get('#pass').type('8');
+    cy.get('button[type="submit"]').should('not.be.disabled');
+  });
+});
