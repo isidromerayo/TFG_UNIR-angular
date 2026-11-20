@@ -31,13 +31,16 @@
                     <label for="pass" class="label">Contraseña (*)</label>
                     <input type="password" class="form-control" id="pass" name="pass" #pass="ngModel"
                         [(ngModel)]="usuario.password" placeholder="indique su contraseña"
+                        autocomplete="new-password" aria-describedby="pass-hint"
                         required [minlength]="passwordMinLength" [maxlength]="passwordMaxLength" />
+                    <small id="pass-hint" class="form-text text-muted">Entre {{ passwordMinLength }} y
+                        {{ passwordMaxLength }} caracteres.</small>
                     <span *ngIf="pass.errors?.['required'] && pass?.touched" class="error-form">la contraseña es
                         obligatoria</span>
                     <span *ngIf="pass.errors?.['minlength'] && pass?.touched" class="error-form">la contraseña debe
-                        tener al menos 8 caracteres</span>
+                        tener al menos {{ passwordMinLength }} caracteres</span>
                     <span *ngIf="pass.errors?.['maxlength'] && pass?.touched" class="error-form">la contraseña no puede
-                        superar los 72 caracteres</span>
+                        superar los {{ passwordMaxLength }} caracteres</span>
 
                 </div>
                 <div class="col-md-8 form-group info-form">
