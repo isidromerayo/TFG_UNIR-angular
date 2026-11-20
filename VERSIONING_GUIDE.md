@@ -1,14 +1,14 @@
 # 🔖 Guía de Gestión de Versiones
 
 Este documento describe el versionado del proyecto **TFG UNIR - Frontend Angular** y el proceso
-de release que despliega la imagen en el homelab.
+de release que publica la imagen en Docker Hub.
 
 ## 📊 Estado Actual
 - **Versión Actual**: `0.4.0` (definida en `package.json`; `main` queda siempre en la última
   versión publicada, sin versiones de desarrollo intermedias).
 - **Convención de Mensajes**: [Conventional Commits](https://www.conventionalcommits.org/).
-- **Versión desplegada**: la última GitHub Release. El poller del CT 110
-  (`tfg-angular-deploy-poller.timer`) la despliega en `https://tfg-angular.estilolibre.eu`.
+- **Versión desplegada**: la última GitHub Release se publica automáticamente en
+  `https://tfg-angular.estilolibre.eu`.
 
 ---
 
@@ -23,7 +23,8 @@ En GitHub Actions → **Release** → *Run workflow* con `release_version` (X.Y.
 3. Crea y empuja el tag anotado `vX.Y.Z` sobre `main`.
 4. Construye y publica `isidromerayo/frontend-angular-tfg:X.Y.Z` y `:latest` en Docker Hub.
 5. Crea la GitHub Release con notas generadas.
-6. El poller del homelab detecta la release (≤10 min) y despliega en Coolify.
+6. El despliegue automático detecta la release y la publica en
+   `https://tfg-angular.estilolibre.eu`.
 
 También admite `dry_run` (valida, pero no hace PR, push, Docker ni release).
 
@@ -72,5 +73,4 @@ gh release create vX.Y.Z --title "vX.Y.Z" --generate-notes
 - [ ] El build es exitoso (`pnpm run build`)
 - [ ] No hay vulnerabilidades críticas (`pnpm audit`)
 - [ ] El código está actualizado en la rama principal
-- [ ] La release queda desplegada (`https://tfg-angular.estilolibre.eu` responde y el poller
-      registra `latest=current=confirmed`)
+- [ ] La release queda desplegada (`https://tfg-angular.estilolibre.eu` responde).

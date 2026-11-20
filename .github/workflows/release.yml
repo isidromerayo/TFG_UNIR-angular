@@ -4,10 +4,8 @@ name: Release
 # un PR de release (main no se toca por push directo), crea el tag, publica la
 # imagen en Docker Hub y crea la GitHub Release.
 #
-# El despliegue en Coolify lo gobierna la release: el poller del CT 110
-# (tfg-angular-deploy-poller.timer) compara la ultima GitHub Release con el tag
-# de la aplicacion y despliega. Documentado en el repo homelab-proxmox:
-# docs/apps/tfg-angular-frontend.md.
+# El despliegue en Coolify lo gobierna la release: un despliegue automatico
+# detecta la ultima GitHub Release y actualiza la aplicacion.
 #
 # Si package.json ya esta en release_version (por ejemplo, porque el PR de la
 # funcionalidad subio la version), se omite el PR de release y se etiqueta el

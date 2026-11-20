@@ -4,7 +4,7 @@
 **Proyecto:** TFG_UNIR-angular
 **Herramienta/modelo:** OpenCode (DeepSeek V4.1 Flash)
 **Estado:** Completado en el repo (despliegue pendiente: recurso Coolify + primera release)
-**Prioridad:** Alta (fase 5 del homelab: CI/CD para el resto de apps)
+**Prioridad:** Alta (CI/CD para el resto de frontends del TFG)
 
 ---
 
@@ -13,8 +13,7 @@
 1. **Externalizar la URL de la API** con entornos de Angular (`environment.ts` / `environment.prod.ts`).
 2. **Construir una imagen Docker** de producción (build con pnpm + nginx con fallback SPA).
 3. **Publicar releases** (`release.yml`): versión, tag, imagen en Docker Hub y GitHub Release.
-4. **Desplegar en Coolify** en `https://tfg-angular.estilolibre.eu` mediante el poller de releases
-   del homelab (repo `homelab-proxmox`).
+4. **Desplegar en Coolify** en `https://tfg-angular.estilolibre.eu` al publicar la release.
 5. **Subir el toolchain a Node 24 LTS** (Node 22 acaba soporte en abril de 2027).
 
 ---
@@ -43,8 +42,8 @@
 - `.dockerignore`.
 - `.github/workflows/release.yml`: si la versión no coincide, crea `release/X.Y.Z` + PR + squash
   (sin push directo a `main`), etiqueta `vX.Y.Z`, publica
-  `isidromerayo/frontend-angular-tfg:<versión>` + `latest`, crea la GitHub Release y el poller la
-  despliega.
+  `isidromerayo/frontend-angular-tfg:<versión>` + `latest`, crea la GitHub Release y el
+  despliegue automático la publica.
 - `package.json` a **0.4.0** (nueva funcionalidad: despliegue) y `VERSIONING_GUIDE.md` actualizado
   con el proceso automatizado.
 
@@ -81,14 +80,15 @@
   `nginxinc/nginx-unprivileged` con `USER nginx` (uid 101) y puerto 8080 para no ejecutar root.
 - **Release mediante PR** (`release/X.Y.Z`) y no push directo a `main`, siguiendo la política de
   ramas del repo; el workflow mergea con squash y después etiqueta.
-- **Build en GitHub Actions → Docker Hub → Coolify**: recomendado en el runbook del homelab; evita
-  compilar en el CT 110 (4 vCPU / 8 GB compartidos).
-- **Deployment por release** (poller cada 10 min) para mantener el mismo mecanismo idempotente que
-  el backend; el CD push por Tailscale queda pendiente de los secretos `TS_OAUTH_*`.
+- **Build en GitHub Actions → Docker Hub → Coolify**: evita compilar en el servidor de
+  aplicaciones, que comparte recursos con otros servicios.
+- **Deployment por release** (comprobación periódica) para mantener el mismo mecanismo
+  idempotente que el backend; el despliegue push desde GitHub Actions queda pendiente de
+  configurar sus secretos.
 
 ---
 
 ## 📌 Fuera de alcance
 
-- Crear el recurso en la UI de Coolify y el `.env` del poller: se documenta en
-  `homelab-proxmox/docs/apps/tfg-angular-frontend.md` (requiere acceso al CT 110).
+- Crear el recurso en Coolify y la configuración del despliegue automático: se documenta en la
+  documentación privada de infraestructura (requiere acceso al servidor).

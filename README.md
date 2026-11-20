@@ -178,13 +178,13 @@ Auditoría de seguridad multi-herramienta (diaria 2 AM UTC, push y PRs a `main`)
 
 Publica una versión del frontend bajo demanda (`workflow_dispatch`): si `package.json` no está ya en esa versión, crea la rama `release/X.Y.Z`, abre un PR y lo mergea con squash (nunca hay push directo a `main`); después crea el tag `vX.Y.Z`, publica la imagen `isidromerayo/frontend-angular-tfg:<versión>` (y `latest`) en Docker Hub y crea la GitHub Release. Requiere los secretos `RELEASE_TOKEN` (PAT con `Contents` y `Pull requests: Read and write`), `DOCKER_HUB_USERNAME` y `DOCKER_HUB_TOKEN`.
 
-El despliegue en Coolify lo ejecuta el **poller de releases** del homelab (CT 110) al detectar la release: actualiza el tag de la aplicación y lanza el deploy. Procedimiento y operación en `homelab-proxmox/docs/apps/tfg-angular-frontend.md`.
+El despliegue en Coolify se dispara automáticamente al publicar la release: actualiza el tag de la aplicación y lanza el deploy.
 
 ## 🐳 Imagen Docker y despliegue
 
 - `Dockerfile` multi-stage: `node:24-alpine` + pnpm (`corepack`) compila la app y `nginx-unprivileged` sirve los estáticos como usuario `nginx` (uid 101, puerto 8080), sin root en runtime.
 - `nginx.conf`: fallback SPA a `index.html` (rutas del router), caché inmutable para los assets con hash e `index.html` sin caché.
-- Producción: `https://tfg-angular.estilolibre.eu` (Coolify, CT 110 del homelab) consumiendo la API de `https://tfg-api.estilolibre.eu`.
+- Producción: `https://tfg-angular.estilolibre.eu` (desplegada en Coolify) consumiendo la API de `https://tfg-api.estilolibre.eu`.
 - Build local: `docker build -t frontend-angular-tfg .` y `docker run --rm -p 8081:8080 frontend-angular-tfg`.
 
 ## Contributing
