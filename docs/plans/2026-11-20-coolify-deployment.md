@@ -3,7 +3,7 @@
 **Fecha:** 2026-11-20
 **Proyecto:** TFG_UNIR-angular
 **Herramienta/modelo:** OpenCode (DeepSeek V4.1 Flash)
-**Estado:** Completado en el repo (despliegue pendiente: recurso Coolify + primera release)
+**Estado:** Completado (desplegado v0.4.0 el 2026-11-20)
 **Prioridad:** Alta (CI/CD para el resto de frontends del TFG)
 
 ---
@@ -68,6 +68,14 @@
   healthcheck correcto. Cabeceras verificadas: `index.html` sin caché; assets sin hash
   (`/assets/...`, favicon) con caché corta; artefactos con hash inmutables.
 - CI del PR #301 en verde (build, lint, unit, E2E, Codacy).
+
+### Despliegue
+
+- Release **v0.4.0** publicada por el workflow `Release` (imagen `0.4.0` y `latest` en Docker Hub).
+- Publicada en `https://tfg-angular.estilolibre.eu` y verificada el 2026-11-20: HTML y rutas
+  del router (200), bundle de producción apuntando a `https://tfg-api.estilolibre.eu/api`,
+  CORS correcto desde el origen del frontend y login con el usuario de seed.
+- El despliegue automático por release queda activo.
 
 ---
 
