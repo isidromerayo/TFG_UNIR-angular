@@ -6,6 +6,12 @@ import { Usuario } from 'src/app/model/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 
+/** Error devuelto por la API (GlobalExceptionHandler). */
+export interface ApiError {
+  message?: string;
+  errors?: Record<string, string>;
+}
+
 @Component({
     selector: 'app-registro',
     templateUrl: './registro.component.html',
@@ -30,6 +36,18 @@ export class RegistroComponent {
     formulario.form.reset();
   }
 
+  /** Mensaje legible a partir del error de la API. */
+  formatError(err?: ApiError): string {
+    const validationErrors = err?.errors;
+    if (validationErrors) {
+      const messages = Object.values(validationErrors);
+      if (messages.length > 0) {
+        return messages.join('. ');
+      }
+    }
+    return err?.message ?? 'Error desconocido';
+  }
+
   crearUsuario(formulario: any) {
     if (formulario.form.status!="VALID") {
       alert('formulario no válido')
@@ -42,14 +60,10 @@ export class RegistroComponent {
         Swal.fire('Alta', 'Se ha registrado su usuario correctamente, recibirá un correo para confirmar el alta');                      
         formulario.form.reset();
         this.router.navigate(["/acceso"])
-      }, error: (err: any) => {
-        const validationErrors = err?.error?.errors;
-        const details = validationErrors && typeof validationErrors === 'object'
-          ? Object.values(validationErrors).join('. ')
-          : (err?.error?.message ?? 'Error desconocido');
+      }, error: (err: ApiError) => {
         Swal.fire(
           'Alta de usuario',
-          'Ha habido problemas con su registro: ' + details,
+          'Ha habido problemas con su registro: ' + this.formatError(err),
           'error'
       )
       }

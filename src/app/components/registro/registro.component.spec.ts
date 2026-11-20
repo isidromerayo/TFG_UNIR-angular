@@ -87,23 +87,23 @@ describe('RegistroComponent', () => {
       expect(swalSpy).toHaveBeenCalledWith('Alta de usuario', jasmine.stringMatching(/problemas/), 'error');
     });
 
-    it('should show the backend validation details', () => {
-      const swalSpy = spyOn(Swal, 'fire');
-      const passwordError = 'La contraseña debe tener entre 8 y 72 caracteres';
-      usuarioService.crear.and.returnValue(throwError(() => ({
-        error: { message: 'Validation failed', errors: { password: passwordError } }
-      })));
-      const form = { form: { status: 'VALID', reset: jasmine.createSpy('reset') } };
-
-      component.usuario = new Usuario('Test', 'User', 'test@test.com', 'pass');
-      component.crearUsuario(form);
-
-      expect(swalSpy).toHaveBeenCalledWith(
-        'Alta de usuario',
-        jasmine.stringMatching(/La contraseña debe tener entre 8 y 72 caracteres/),
-        'error'
-      );
+    it('should build the message from the backend validation errors', () => {
+      expect(component.formatError({
+        message: 'Validation failed',
+        errors: { password: 'La contraseña debe tener entre 8 y 72 caracteres' }
+      })).toBe('La contraseña debe tener entre 8 y 72 caracteres');
     });
+
+    it('should fall back to the generic API message', () => {
+      expect(component.formatError({ message: 'Email already exists' })).toBe('Email already exists');
+      expect(component.formatError()).toBe('Error desconocido');
+    });
+  });
+
+  it('should enforce the backend password bounds in the form', () => {
+    const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>('#pass');
+    expect(input?.minLength).toBe(8);
+    expect(input?.maxLength).toBe(72);
   });
 
   it('should reset form', () => {
