@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 describe('My First Test', () => {
   it('Visits the initial project page', () => {
     // Mock API responses to avoid depending on real backend
