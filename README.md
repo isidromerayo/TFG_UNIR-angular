@@ -147,13 +147,13 @@ Ver documentación completa:
 
 ### GitHub Actions
 
-El proyecto incluye los siguientes workflows en `.github/workflows/`. Todos usan **Node.js 22.x** (vía `actions/setup-node@v7`) y `pnpm` 10.x, y fijan las actions a commits SHA completos para builds inmutables.
+El proyecto incluye los siguientes workflows en `.github/workflows/`. Todos usan **Node.js 24.x** (vía `actions/setup-node@v7`) y `pnpm` 10.x, y fijan las actions a commits SHA completos para builds inmutables.
 
 #### Pipeline (node.js.yml)
 
 Se ejecuta en push a `main` y pull requests a `main`. Dos jobs **paralelos**:
-- **`lint`** - Checkout, setup Node.js 22.x, pnpm 10.x con caché, instalación con `--frozen-lockfile` y `pnpm run lint` (ESLint).
-- **`build`** - Checkout (con `fetch-depth: 0`), setup Node.js 22.x, pnpm 10.x con caché, instalación con `--frozen-lockfile`, `pnpm run build` y **SonarQube** (SonarCloud, gate ≥ 80%, solo si `SONAR_TOKEN` está configurado).
+- **`lint`** - Checkout, setup Node.js 24.x, pnpm 10.x con caché, instalación con `--frozen-lockfile` y `pnpm run lint` (ESLint).
+- **`build`** - Checkout (con `fetch-depth: 0`), setup Node.js 24.x, pnpm 10.x con caché, instalación con `--frozen-lockfile`, `pnpm run build` y **SonarQube** (SonarCloud, gate ≥ 80%, solo si `SONAR_TOKEN` está configurado).
 
 #### Tests (tests.yml)
 
@@ -173,6 +173,19 @@ Auditoría de seguridad multi-herramienta (diaria 2 AM UTC, push y PRs a `main`)
 5. **OSV Scanner** (`google/osv-scanner-action/osv-scanner-action@<sha>`, serie v2.5.0) sobre `pnpm-lock.yaml`.
 - Sube reportes como artifacts y crea issues/comentarios automáticos solo para **vulnerabilidades de producción** (permisos `issues: write` y `pull-requests: write`)
 - Pasos con secretos protegidos con `if: env.X != ''` (los secretos no son válidos en condiciones `if:`)
+
+#### Release (release.yml)
+
+Publica una versión del frontend bajo demanda (`workflow_dispatch`): sube la versión de `package.json`, crea el tag `vX.Y.Z`, publica la imagen `isidromerayo/frontend-angular-tfg:<versión>` (y `latest`) en Docker Hub y crea la GitHub Release. Al terminar deja `main` en la siguiente versión de desarrollo. Requiere los secretos `RELEASE_TOKEN` (PAT con `Contents: Read and write`; `main` está protegido), `DOCKER_HUB_USERNAME` y `DOCKER_HUB_TOKEN`.
+
+El despliegue en Coolify lo ejecuta el **poller de releases** del homelab (CT 110) al detectar la release: actualiza el tag de la aplicación y lanza el deploy. Procedimiento y operación en `homelab-proxmox/docs/apps/tfg-angular-frontend.md`.
+
+## 🐳 Imagen Docker y despliegue
+
+- `Dockerfile` multi-stage: `node:24-alpine` + pnpm (`corepack`) compila la app y `nginx:alpine` sirve los estáticos.
+- `nginx.conf`: fallback SPA a `index.html` (rutas del router), caché inmutable para los assets con hash e `index.html` sin caché.
+- Producción: `https://tfg-angular.estilolibre.eu` (Coolify, CT 110 del homelab) consumiendo la API de `https://tfg-api.estilolibre.eu`.
+- Build local: `docker build -t frontend-angular-tfg .` y `docker run --rm -p 8081:80 frontend-angular-tfg`.
 
 ## Contributing
 

@@ -7,7 +7,7 @@ This is one of several implementations of the same TFG app. Siblings live in the
 ## Stack & tooling (verified 2026-09-12)
 
 - Angular **22.2.4** + TypeScript 6.0.3; Karma/Jasmine (181 unit tests) + Cypress 16.2.1 for E2E.
-- **pnpm only, never npm.** CI runs pnpm 10 / Node 22.x.
+- **pnpm only, never npm.** CI runs pnpm 10 / Node 24.x.
 - ESLint 9 flat config (`eslint.config.js`, angular-eslint 22). No Prettier is installed.
 - SonarCloud gate: coverage ≥ 80%, branches ≥ 80%. Current: 96.98% lines / 100% branches
   (181 tests, measured 2026-09-12).
@@ -55,9 +55,11 @@ There is no `typecheck`/`format` script; `pnpm run build` is the gate.
   **`src/app/app.module.ts` is dead code** — nothing imports `AppModule`. Do not add
   declarations/imports there; only the exported `routes` array in `app-routing.module.ts` is live.
 - Routes are all eager (no lazy loading). `AutenticacionGuard` protects `mis-datos` and `mis-cursos`.
-- Backend URL is hardcoded: `API_URL = 'http://localhost:8080/api'` in `src/app/utils/constants.ts`.
-  There is **no `src/environments/` and no dev-server proxy**; the Spring Boot backend must run on
-  :8080 for real data. Change that constant (or add a proxy) to retarget it.
+- Backend URL comes from `src/environments/`: `environment.ts` (dev, `http://localhost:8080/api`)
+  and `environment.prod.ts` (`https://tfg-api.estilolibre.eu/api`, applied via `fileReplacements`
+  in the production build). `src/app/utils/constants.ts` re-exports `API_URL = environment.apiUrl`.
+  There is **no dev-server proxy**: the Spring Boot backend must run on :8080 for real data.
+  Cypress E2E intercepts still target `localhost:8080` because `pnpm start` uses the dev environment.
 - Auth: JWT kept in `localStorage` under keys `token`, `usuario`, `isLoggedIn` (see `constants.ts`,
   `AuthService`). Services use `HttpClient` + RxJS; user-facing errors go through SweetAlert2
   (`sweetalert2` is listed in `allowedCommonJsDependencies` in `angular.json`).
@@ -114,8 +116,8 @@ Full rules: `.agents/best-practices.md`. Accessibility (WCAG AA / AXE) is requir
   `security.yml`), which fails as soon as OSV publishes a fix — then bump the dependency and remove
   the silencing (`ACCEPTED` list, Dependabot dismissal) in the same PR.
 - No git hooks are installed (`.husky-example/` is only a template) — run `pnpm run verify` manually.
-- Docs lag the manifests: `README.md` still says Angular 21.2.19 and `CONTRIBUTING.md` says Node
-  20.x. Trust `package.json` / `pnpm-lock.yaml` and `.github/workflows/` (Node 22.x, pnpm 10).
+- Docs lag the manifests: `README.md` still says Angular 21.2.19. Trust
+  `package.json` / `pnpm-lock.yaml` and `.github/workflows/` (Node 24.x, pnpm 10).
 
 ## Pre-commit checklist
 

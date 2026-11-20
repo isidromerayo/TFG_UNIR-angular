@@ -1,0 +1,152 @@
+name: Release
+
+# Publica una version del frontend: sube la version de package.json, crea el
+# tag, publica la imagen en Docker Hub y crea la GitHub Release. Despues deja
+# main en la siguiente version de desarrollo.
+#
+# El despliegue en Coolify lo gobierna la release: el poller del CT 110
+# (tfg-angular-deploy-poller.timer) compara la ultima GitHub Release con el tag
+# de la aplicacion y despliega. Documentado en el repo homelab-proxmox:
+# docs/apps/tfg-angular-frontend.md.
+#
+# Requiere el secret RELEASE_TOKEN: un PAT con Contents: Read and write sobre
+# este repo. main tiene branch protection, asi que el GITHUB_TOKEN del workflow
+# no puede hacer push directo; el PAT de un admin si (enforce_admins=false).
+#
+# Secretos usados:
+#   RELEASE_TOKEN        PAT para push de commits/tags y para crear la release
+#   DOCKER_HUB_USERNAME  usuario de Docker Hub
+#   DOCKER_HUB_TOKEN     token de Docker Hub
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Version a publicar (X.Y.Z, sin prefijo v)'
+        required: true
+        type: string
+      next_version:
+        description: 'Siguiente version de desarrollo (X.Y.Z)'
+        required: true
+        type: string
+      dry_run:
+        description: 'Dry run: prepara la release sin push, sin Docker y sin GitHub Release'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release v${{ inputs.release_version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Validate inputs
+        run: |
+          for v in "${{ inputs.release_version }}" "${{ inputs.next_version }}"; do
+            if ! echo "$v" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+              echo "::error::Version invalida: '$v' (formato esperado X.Y.Z, sin prefijo v)"
+              exit 1
+            fi
+          done
+          if [ "${{ inputs.release_version }}" = "${{ inputs.next_version }}" ]; then
+            echo "::error::release_version y next_version deben ser distintas"
+            exit 1
+          fi
+
+      - name: Check RELEASE_TOKEN
+        if: inputs.dry_run == false
+        env:
+          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          if [ -z "$RELEASE_TOKEN" ]; then
+            echo "::error::Falta el secret RELEASE_TOKEN (PAT con Contents: Read and write; main tiene branch protection)."
+            exit 1
+          fi
+
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24.22.3'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          version: 10.17.1
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Prepare release commit and tag
+        run: |
+          pnpm pkg set version="${{ inputs.release_version }}"
+          git add package.json
+          git commit -m "chore(release): ${{ inputs.release_version }}"
+          git tag "v${{ inputs.release_version }}"
+
+      - name: Push release commit and tag
+        if: inputs.dry_run == false
+        run: |
+          git push origin main
+          git push origin "v${{ inputs.release_version }}"
+
+      - name: Log in to Docker Hub
+        if: inputs.dry_run == false
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Build frontend image (dry run)
+        if: inputs.dry_run == true
+        run: |
+          docker build \
+            --build-arg VERSION="${{ inputs.release_version }}" \
+            -t "isidromerayo/frontend-angular-tfg:${{ inputs.release_version }}" .
+
+      - name: Publish Docker image
+        if: inputs.dry_run == false
+        run: |
+          docker build \
+            --build-arg VERSION="${{ inputs.release_version }}" \
+            -t "isidromerayo/frontend-angular-tfg:${{ inputs.release_version }}" \
+            -t "isidromerayo/frontend-angular-tfg:latest" .
+          docker push "isidromerayo/frontend-angular-tfg:${{ inputs.release_version }}"
+          docker push "isidromerayo/frontend-angular-tfg:latest"
+
+      - name: Create GitHub release
+        if: inputs.dry_run == false
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          gh release create "v${{ inputs.release_version }}" \
+            --title "v${{ inputs.release_version }}" \
+            --generate-notes
+
+      - name: Prepare next development version
+        if: inputs.dry_run == false
+        run: |
+          pnpm pkg set version="${{ inputs.next_version }}"
+          git add package.json
+          git commit -m "chore: start ${{ inputs.next_version }} development"
+          git push origin main
