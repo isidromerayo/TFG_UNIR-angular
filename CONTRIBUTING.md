@@ -72,6 +72,8 @@ git commit -m "tipo: descripción"
 
 **Important:** Never push commits directly to `main` or `master`. All changes must be reviewed through a Pull Request.
 
+**No mergees el PR hasta que el CI esté en verde** (build, lint, tests, E2E, Codacy, CodeQL, SonarCloud, security). La ruleset del repositorio solo bloquea borrado y force-push, no los checks, así que esta puerta es responsabilidad de quien mergea.
+
 ```bash
 git checkout -b feature/nombre-feature
 # develop and commit locally
