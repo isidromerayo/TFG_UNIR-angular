@@ -142,6 +142,11 @@ commit**. It enforces Conventional Commits and adds the required trailer
 
 - **NEVER commit or push directly to `main` or `master`.** Everything goes through a branch + PR
   (squash merge). Prefixes: `feature/`, `fix/`, `docs/`, `ci/`, `chore/`, `security/`, `release/`.
+- **NEVER merge a PR with pending or failing checks.** Wait until every check is green (build,
+  lint, unit/E2E, Codacy, CodeQL, SonarCloud, security). The repository ruleset only blocks
+  deletions and force-pushes, so GitHub does not enforce this gate: the responsibility is on the
+  person or agent merging.
+- **After merging, pull `main` and confirm the merge commit's CI is green.**
 - **NEVER force-push to `main` or `master`.** Releases use a `release/X.Y.Z` branch, merged via PR,
   then the tag is created from the updated `main`.
 - Commits use Conventional Commits (`feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:` …) and

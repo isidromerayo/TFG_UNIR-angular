@@ -86,6 +86,23 @@ describe('RegistroComponent', () => {
       expect(usuarioService.crear).toHaveBeenCalled();
       expect(swalSpy).toHaveBeenCalledWith('Alta de usuario', jasmine.stringMatching(/problemas/), 'error');
     });
+
+    it('should build the message from the backend validation errors', () => {
+      expect(component.formatError({
+        message: 'Validation failed',
+        errors: { password: 'La contraseña debe tener entre 8 y 72 caracteres' }
+      })).toBe('La contraseña debe tener entre 8 y 72 caracteres');
+    });
+
+    it('should fall back to the generic API message', () => {
+      expect(component.formatError({ message: 'Email already exists' })).toBe('Email already exists');
+      expect(component.formatError()).toBe('Error desconocido');
+    });
+  });
+
+  it('should expose the backend password bounds', () => {
+    expect(component.passwordMinLength).toBe(8);
+    expect(component.passwordMaxLength).toBe(72);
   });
 
   it('should reset form', () => {

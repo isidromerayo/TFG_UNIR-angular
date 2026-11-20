@@ -113,3 +113,4 @@ describe('Render de datos asíncronos (regresión NoopNgZone)', () => {
     cy.get('.detalle-curso', { timeout: 10000 }).should('contain.text', 'Ana');
   });
 });
+
