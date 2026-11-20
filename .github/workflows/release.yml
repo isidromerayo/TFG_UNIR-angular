@@ -90,6 +90,21 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      - name: Check version is newer than the last tag
+        env:
+          RELEASE_VERSION: ${{ inputs.release_version }}
+        run: |
+          latest=$(git tag --list 'v[0-9]*' --sort=-v:refname | head -1)
+          latest=${latest#v}
+          if [ -n "${latest}" ]; then
+            higher=$(printf '%s\n%s\n' "${latest}" "${RELEASE_VERSION}" | sort -V | tail -1)
+            if [ "${higher}" != "${RELEASE_VERSION}" ]; then
+              echo "::error::release_version (${RELEASE_VERSION}) debe ser mayor que la ultima version (${latest})"
+              exit 1
+            fi
+            echo "Ultima version publicada: ${latest}"
+          fi
+
       - name: Prepare release version
         id: version
         env:
@@ -112,16 +127,25 @@ jobs:
           BRANCH: release/${{ inputs.release_version }}
         run: |
           pnpm pkg set version="${RELEASE_VERSION}"
-          git checkout -b "${BRANCH}"
+          git checkout -B "${BRANCH}"
           git add package.json
           git commit -m "chore(release): ${RELEASE_VERSION}"
-          git push origin "${BRANCH}"
+          # force-with-lease: un reintento tras un fallo a medias reaprovecha la
+          # rama remota que dejo el run anterior en vez de fallar.
+          git push --force-with-lease origin "${BRANCH}"
 
-          gh pr create \
-            --base main \
-            --head "${BRANCH}" \
-            --title "chore(release): ${RELEASE_VERSION}" \
-            --body "Release automatizada de v${RELEASE_VERSION}. El workflow Release crea este PR y lo mergea para que main no reciba pushes directos."
+          # Reutilizar el PR si un run anterior lo creo y no llego a mergearlo.
+          pr_number=$(gh pr list --head "${BRANCH}" --state open \
+            --json number --jq '.[0].number // empty')
+          if [ -n "${pr_number}" ]; then
+            echo "Reutilizando el PR #${pr_number} de ${BRANCH}"
+          else
+            gh pr create \
+              --base main \
+              --head "${BRANCH}" \
+              --title "chore(release): ${RELEASE_VERSION}" \
+              --body "Release automatizada de v${RELEASE_VERSION}. El workflow Release crea este PR y lo mergea para que main no reciba pushes directos."
+          fi
 
           gh pr merge "${BRANCH}" --squash --delete-branch
 
@@ -136,11 +160,19 @@ jobs:
         run: |
           test "$(node -p "require('./package.json').version")" = "${RELEASE_VERSION}"
           if git rev-parse "v${RELEASE_VERSION}" >/dev/null 2>&1; then
-            echo "::error::El tag v${RELEASE_VERSION} ya existe"
-            exit 1
+            # Un reintento tras fallar Docker o la GitHub Release no debe
+            # quedar bloqueado por el tag que ya creo el run anterior.
+            tag_commit=$(git rev-parse "v${RELEASE_VERSION}^{commit}")
+            head_commit=$(git rev-parse HEAD)
+            if [ "${tag_commit}" != "${head_commit}" ]; then
+              echo "::error::El tag v${RELEASE_VERSION} ya existe y apunta a otro commit (${tag_commit})"
+              exit 1
+            fi
+            echo "El tag v${RELEASE_VERSION} ya existe en HEAD; continuo"
+          else
+            git tag -a "v${RELEASE_VERSION}" -m "v${RELEASE_VERSION}"
+            git push origin "v${RELEASE_VERSION}"
           fi
-          git tag -a "v${RELEASE_VERSION}" -m "v${RELEASE_VERSION}"
-          git push origin "v${RELEASE_VERSION}"
 
       - name: Log in to Docker Hub
         if: inputs.dry_run == false
@@ -171,6 +203,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
-          gh release create "v${{ inputs.release_version }}" \
-            --title "v${{ inputs.release_version }}" \
-            --generate-notes
+          tag="v${{ inputs.release_version }}"
+          if gh release view "${tag}" >/dev/null 2>&1; then
+            echo "La GitHub Release ${tag} ya existe; continuo"
+          else
+            gh release create "${tag}" --title "${tag}" --generate-notes
+          fi
