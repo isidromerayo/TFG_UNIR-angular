@@ -31,7 +31,7 @@
                     <label for="pass" class="label">Contraseña (*)</label>
                     <input type="password" class="form-control" id="pass" name="pass" #pass="ngModel"
                         [(ngModel)]="usuario.password" placeholder="indique su contraseña"
-                        required minlength="8" maxlength="72" />
+                        required [minlength]="passwordMinLength" [maxlength]="passwordMaxLength" />
                     <span *ngIf="pass.errors?.['required'] && pass?.touched" class="error-form">la contraseña es
                         obligatoria</span>
                     <span *ngIf="pass.errors?.['minlength'] && pass?.touched" class="error-form">la contraseña debe

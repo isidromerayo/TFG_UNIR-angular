@@ -100,6 +100,11 @@ describe('RegistroComponent', () => {
     });
   });
 
+  it('should expose the backend password bounds', () => {
+    expect(component.passwordMinLength).toBe(8);
+    expect(component.passwordMaxLength).toBe(72);
+  });
+
   it('should reset form', () => {
     const form = { form: { reset: jasmine.createSpy('reset') } };
     component.onReset(form);

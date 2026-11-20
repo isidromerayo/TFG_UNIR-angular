@@ -24,6 +24,10 @@ export interface ApiError {
 
 export class RegistroComponent {
 
+  /** Límites de contraseña del backend (UsuarioRegistroRequest: @Size(min=8, max=72)). */
+  readonly passwordMinLength = 8;
+  readonly passwordMaxLength = 72;
+
   usuario: Usuario = {} as Usuario;
   submitted: boolean = false;
   message_process: string = "";
