@@ -101,7 +101,9 @@ describe('RegistroComponent', () => {
   });
 
   it('should enforce the backend password bounds in the form', () => {
-    const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>('#pass');
+    // ComponentFixture no resuelve en el analizador estatico; se acota el tipo.
+    const host = fixture as unknown as { nativeElement: HTMLElement };
+    const input = host.nativeElement.querySelector<HTMLInputElement>('#pass');
     expect(input?.minLength).toBe(8);
     expect(input?.maxLength).toBe(72);
   });
