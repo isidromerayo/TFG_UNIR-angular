@@ -37,12 +37,16 @@
 
 ### Empaquetado y despliegue
 
-- `Dockerfile` multi-stage (`node:24-alpine` + corepack/pnpm → `nginx:1.30-alpine`).
+- `Dockerfile` multi-stage (`node:24-alpine` + corepack/pnpm → `nginx-unprivileged:1.30-alpine`),
+  con `USER nginx` explícito y puerto 8080 (sin root en runtime).
 - `nginx.conf`: fallback SPA, caché de assets con hash, `index.html` sin caché.
 - `.dockerignore`.
-- `.github/workflows/release.yml`: bump de versión, tag, imagen
-  `isidromerayo/frontend-angular-tfg:<versión>` + `latest`, GitHub Release y bump a la siguiente
-  versión de desarrollo.
+- `.github/workflows/release.yml`: si la versión no coincide, crea `release/X.Y.Z` + PR + squash
+  (sin push directo a `main`), etiqueta `vX.Y.Z`, publica
+  `isidromerayo/frontend-angular-tfg:<versión>` + `latest`, crea la GitHub Release y el poller la
+  despliega.
+- `package.json` a **0.4.0** (nueva funcionalidad: despliegue) y `VERSIONING_GUIDE.md` actualizado
+  con el proceso automatizado.
 
 ---
 
@@ -52,7 +56,8 @@
 - `pnpm run lint`
 - `pnpm run build` (comprueba que la build usa `environment.prod.ts`)
 - `pnpm run test-headless` (Karma, entorno de desarrollo)
-- `docker build` local y smoke test del contenedor (`/` y una ruta profunda como `/home`).
+- `docker build` local y smoke test del contenedor (`/` y una ruta profunda como `/home`) en el
+  puerto 8080, comprobando que el proceso corre como `nginx` (no root).
 
 ---
 
@@ -60,8 +65,11 @@
 
 - **Entornos de Angular en build time** (en vez de `config.json` en runtime): el requisito es un
   backend fijo por despliegue y así no hay cambios en `main.ts` ni en el arranque de la app.
-- **Imagen estática con nginx** en vez de SSR: la app es una SPA; nginx pesa ~10 MB y encaja con el
-  patrón de Coolify (Docker image + dominio + healthcheck).
+- **Imagen estática con nginx no privilegiado** en vez de SSR: la app es una SPA; nginx pesa
+  ~10 MB y encaja con el patrón de Coolify (Docker image + dominio + healthcheck). Se usa
+  `nginxinc/nginx-unprivileged` con `USER nginx` (uid 101) y puerto 8080 para no ejecutar root.
+- **Release mediante PR** (`release/X.Y.Z`) y no push directo a `main`, siguiendo la política de
+  ramas del repo; el workflow mergea con squash y después etiqueta.
 - **Build en GitHub Actions → Docker Hub → Coolify**: recomendado en el runbook del homelab; evita
   compilar en el CT 110 (4 vCPU / 8 GB compartidos).
 - **Deployment por release** (poller cada 10 min) para mantener el mismo mecanismo idempotente que

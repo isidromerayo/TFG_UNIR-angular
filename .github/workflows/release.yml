@@ -1,20 +1,25 @@
 name: Release
 
-# Publica una version del frontend: sube la version de package.json, crea el
-# tag, publica la imagen en Docker Hub y crea la GitHub Release. Despues deja
-# main en la siguiente version de desarrollo.
+# Publica una version del frontend: asegura la version en package.json mediante
+# un PR de release (main no se toca por push directo), crea el tag, publica la
+# imagen en Docker Hub y crea la GitHub Release.
 #
 # El despliegue en Coolify lo gobierna la release: el poller del CT 110
 # (tfg-angular-deploy-poller.timer) compara la ultima GitHub Release con el tag
 # de la aplicacion y despliega. Documentado en el repo homelab-proxmox:
 # docs/apps/tfg-angular-frontend.md.
 #
-# Requiere el secret RELEASE_TOKEN: un PAT con Contents: Read and write sobre
-# este repo. main tiene branch protection, asi que el GITHUB_TOKEN del workflow
-# no puede hacer push directo; el PAT de un admin si (enforce_admins=false).
+# Si package.json ya esta en release_version (por ejemplo, porque el PR de la
+# funcionalidad subio la version), se omite el PR de release y se etiqueta el
+# commit actual de main.
+#
+# Requiere el secret RELEASE_TOKEN: un PAT con Contents: Read and write y
+# Pull requests: Read and write sobre este repo (crear y mergear el PR de
+# release). GITHUB_TOKEN bastaria para leer, pero no para crear PRs desde una
+# ejecucion con permisos de push en main.
 #
 # Secretos usados:
-#   RELEASE_TOKEN        PAT para push de commits/tags y para crear la release
+#   RELEASE_TOKEN        PAT para push de la rama de release, PR y GitHub Release
 #   DOCKER_HUB_USERNAME  usuario de Docker Hub
 #   DOCKER_HUB_TOKEN     token de Docker Hub
 
@@ -25,12 +30,8 @@ on:
         description: 'Version a publicar (X.Y.Z, sin prefijo v)'
         required: true
         type: string
-      next_version:
-        description: 'Siguiente version de desarrollo (X.Y.Z)'
-        required: true
-        type: string
       dry_run:
-        description: 'Dry run: prepara la release sin push, sin Docker y sin GitHub Release'
+        description: 'Dry run: prepara la release sin PR, sin push, sin Docker y sin GitHub Release'
         required: false
         type: boolean
         default: false
@@ -41,6 +42,7 @@ concurrency:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   release:
@@ -51,14 +53,8 @@ jobs:
     steps:
       - name: Validate inputs
         run: |
-          for v in "${{ inputs.release_version }}" "${{ inputs.next_version }}"; do
-            if ! echo "$v" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
-              echo "::error::Version invalida: '$v' (formato esperado X.Y.Z, sin prefijo v)"
-              exit 1
-            fi
-          done
-          if [ "${{ inputs.release_version }}" = "${{ inputs.next_version }}" ]; then
-            echo "::error::release_version y next_version deben ser distintas"
+          if ! echo "${{ inputs.release_version }}" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::Version invalida: '${{ inputs.release_version }}' (formato esperado X.Y.Z, sin prefijo v)"
             exit 1
           fi
 
@@ -68,11 +64,11 @@ jobs:
           RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
           if [ -z "$RELEASE_TOKEN" ]; then
-            echo "::error::Falta el secret RELEASE_TOKEN (PAT con Contents: Read and write; main tiene branch protection)."
+            echo "::error::Falta el secret RELEASE_TOKEN (PAT con Contents y Pull requests: Read and write)."
             exit 1
           fi
 
-      - name: Checkout code
+      - name: Checkout main
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: main
@@ -89,26 +85,62 @@ jobs:
         with:
           version: 10.17.1
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
       - name: Configure git identity
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Prepare release commit and tag
+      - name: Prepare release version
+        id: version
+        env:
+          RELEASE_VERSION: ${{ inputs.release_version }}
         run: |
-          pnpm pkg set version="${{ inputs.release_version }}"
-          git add package.json
-          git commit -m "chore(release): ${{ inputs.release_version }}"
-          git tag "v${{ inputs.release_version }}"
+          current=$(node -p "require('./package.json').version")
+          echo "current=${current}" >> "$GITHUB_OUTPUT"
+          if [ "$current" = "$RELEASE_VERSION" ]; then
+            echo "package.json ya esta en ${RELEASE_VERSION}; no hace falta PR de release"
+            echo "needs_pr=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "needs_pr=true" >> "$GITHUB_OUTPUT"
+          fi
 
-      - name: Push release commit and tag
-        if: inputs.dry_run == false
+      - name: Create release PR and merge it
+        if: steps.version.outputs.needs_pr == 'true' && inputs.dry_run == false
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          RELEASE_VERSION: ${{ inputs.release_version }}
+          BRANCH: release/${{ inputs.release_version }}
         run: |
-          git push origin main
-          git push origin "v${{ inputs.release_version }}"
+          pnpm pkg set version="${RELEASE_VERSION}"
+          git checkout -b "${BRANCH}"
+          git add package.json
+          git commit -m "chore(release): ${RELEASE_VERSION}"
+          git push origin "${BRANCH}"
+
+          gh pr create \
+            --base main \
+            --head "${BRANCH}" \
+            --title "chore(release): ${RELEASE_VERSION}" \
+            --body "Release automatizada de v${RELEASE_VERSION}. El workflow Release crea este PR y lo mergea para que main no reciba pushes directos."
+
+          gh pr merge "${BRANCH}" --squash --delete-branch
+
+          git checkout main
+          git pull origin main
+          test "$(node -p "require('./package.json').version")" = "${RELEASE_VERSION}"
+
+      - name: Tag release
+        if: inputs.dry_run == false
+        env:
+          RELEASE_VERSION: ${{ inputs.release_version }}
+        run: |
+          test "$(node -p "require('./package.json').version")" = "${RELEASE_VERSION}"
+          if git rev-parse "v${RELEASE_VERSION}" >/dev/null 2>&1; then
+            echo "::error::El tag v${RELEASE_VERSION} ya existe"
+            exit 1
+          fi
+          git tag -a "v${RELEASE_VERSION}" -m "v${RELEASE_VERSION}"
+          git push origin "v${RELEASE_VERSION}"
 
       - name: Log in to Docker Hub
         if: inputs.dry_run == false
@@ -142,11 +174,3 @@ jobs:
           gh release create "v${{ inputs.release_version }}" \
             --title "v${{ inputs.release_version }}" \
             --generate-notes
-
-      - name: Prepare next development version
-        if: inputs.dry_run == false
-        run: |
-          pnpm pkg set version="${{ inputs.next_version }}"
-          git add package.json
-          git commit -m "chore: start ${{ inputs.next_version }} development"
-          git push origin main
