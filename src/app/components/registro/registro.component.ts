@@ -43,10 +43,13 @@ export class RegistroComponent {
         formulario.form.reset();
         this.router.navigate(["/acceso"])
       }, error: (err: any) => {
-        console.dir(err.error.message)
+        const validationErrors = err?.error?.errors;
+        const details = validationErrors && typeof validationErrors === 'object'
+          ? Object.values(validationErrors).join('. ')
+          : (err?.error?.message ?? 'Error desconocido');
         Swal.fire(
           'Alta de usuario',
-          'Ha habido problemas con su registro: ' +err.error.message,
+          'Ha habido problemas con su registro: ' + details,
           'error'
       )
       }
