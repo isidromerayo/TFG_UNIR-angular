@@ -21,7 +21,7 @@ RUN pnpm run build
 # -----------------------------------------------------------------------------
 # Etapa 2: runtime estatico con nginx
 # -----------------------------------------------------------------------------
-FROM docker.io/library/nginx:1.30-alpine AS runtime
+FROM docker.io/nginxinc/nginx-unprivileged:1.30-alpine AS runtime
 
 ARG VERSION=0.0.0
 LABEL org.opencontainers.image.title="TFG UNIR Angular frontend"
@@ -33,9 +33,13 @@ LABEL org.opencontainers.image.licenses="MIT"
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/frontend-angular/browser /usr/share/nginx/html
 
-EXPOSE 80
+# La imagen base nginx-unprivileged ya corre como nginx (uid 101); se declara
+# explícitamente para que el runtime nunca sea root.
+USER nginx
+
+EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -q --spider http://localhost/ || exit 1
+  CMD wget -q --spider http://localhost:8080/ || exit 1
 
 # La imagen base ya arranca nginx en foreground con el usuario nginx.
