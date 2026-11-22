@@ -2,7 +2,7 @@
 
 **Fecha**: 2026-08-15
 **Herramienta**: opencode (opencode/big-pickle)
-**Estado**: En ejecución (PR `ci/improve-checks-main`)
+**Estado**: done (cerrado 2026-11-22; verificado contra los workflows y CI de `main`)
 **Rama de implementación**: `ci/improve-checks-main`
 
 ## Objetivos
@@ -79,3 +79,9 @@ pnpm audit --prod
 ## Registro de ejecución
 
 - **2026-08-15**: Implementación en rama `ci/improve-checks-main`. PR #215 (docs) se cerró sin merge; el plan y la regla se re-crean en esta rama para dejar constancia.
+- **2026-11-22**: estado cerrado. Verificado en `main`: `node.js.yml` tiene los jobs `lint` (línea 12) y
+  `build` (línea 48); `security.yml` mantiene `pnpm audit --prod` como gate duro y el audit completo
+  como warning; no queda ningún paso `npm audit`; `codeql.yml` usa el mismo SHA en `init` y `analyze`.
+  `tests.yml` y `security.yml` en verde sobre `main` (runs del 2026-11-20 y 2026-11-22). Los riesgos
+  dev-only de la época (`image-size`) ya no aplican: `pnpm audit --prod` está a 0 y la lista de
+  advisories aceptados está vacía.

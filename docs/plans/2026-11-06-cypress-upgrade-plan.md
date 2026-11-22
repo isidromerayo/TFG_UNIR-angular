@@ -107,15 +107,19 @@ component: {
 - [x] `pnpm install --frozen-lockfile` funciona sin errores
 - [x] `pnpm exec cypress --version` muestra 16.2.1
 - [x] `pnpm run cypress:open` abre la UI de Cypress
-- [ ] `pnpm run cypress:run` ejecuta tests E2E (requiere dev server)
-- [ ] `pnpm run cypress:run:coverage` genera coverage (requiere dev server)
+- [x] `pnpm run cypress:run` ejecuta tests E2E (requiere dev server)
+- [x] `pnpm run cypress:run:coverage` genera coverage (requiere dev server)
 - [x] `pnpm run test-headless` (Karma) pasa
 - [x] `pnpm run build` funciona
 
 ### CI/CD
-- [ ] Workflow `tests.yml` pasa completamente
-- [ ] `pnpm audit --prod` reporta 0 vulnerabilidades
-- [ ] SonarCloud gate pasa (coverage ≥ 80%)
+- [x] Workflow `tests.yml` pasa completamente
+- [x] `pnpm audit --prod` reporta 0 vulnerabilidades
+- [x] SonarCloud gate pasa (coverage ≥ 80%)
+
+> Verificado el 2026-11-22 sobre el HEAD de `main`: check-runs en verde para `E2E Tests (Cypress)`
+> (que ejecuta `CYPRESS_COVERAGE=true pnpm run cypress:run`), `Security Vulnerability Scan` (gate
+> `pnpm audit --prod`), `SonarCloud Code Analysis` y `SonarCloud Analysis`.
 
 ---
 
