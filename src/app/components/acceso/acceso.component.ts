@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginUsuario } from 'src/app/model/login-usuario';
 import { UsuarioAuth } from 'src/app/model/usuario-auth';
 import { AuthService } from 'src/app/services/auth.service';
+import { authErrorMessage } from 'src/app/utils/api-error';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -36,8 +37,8 @@ export class AccesoComponent {
         void this.router.navigate(["/mis-cursos"])
       },
       error: (err) => {
-        // mensaje de ERROR
-        void Swal.fire('Problemas acceso','No se ha podido logear, revise usuario/contraseña','error');
+        // mensaje de ERROR según el estado HTTP (401 credenciales, 429 límite de intentos…)
+        void Swal.fire('Problemas acceso', authErrorMessage(err), 'error');
       }
     })
     

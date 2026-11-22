@@ -100,6 +100,22 @@ export default tseslint.config(
     },
   },
   {
+    // Specs and Cypress drive Angular's testing API and Jasmine globals through
+    // untyped surfaces (TestBed.inject results, jasmine.SpyObj<>, spies). The
+    // *any* comes from the harness, not from app design: unsafe-* and friends
+    // stay off here (the app code keeps them enabled below).
+    files: ['cypress/**/*.ts', 'cypress.config.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/unbound-method': 'off',
+      '@typescript-eslint/no-namespace': 'off',
+    },
+  },
+  {
     files: ['src/main.ts'],
     rules: {
       'no-console': 'off',

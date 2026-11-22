@@ -37,25 +37,19 @@ describe('AuthenticationService', () => {
   });
 
   describe('login', () => {
-    it('should send login credentials and store token', (done) => {
+    it('should store the token from the response body', (done) => {
       const credentials: LoginUsuario = new LoginUsuario('test@test.com', 'password123');
-      const mockToken = 'mock-jwt-token';
-      const mockResponse = { id: 1, username: 'test@test.com' };
+      const mockAuth: UsuarioAuth = new UsuarioAuth('test@test.com', 'mock-jwt-token', 'Test User', 1);
 
-      service.login(credentials).subscribe((response) => {
-        expect(response).toEqual(mockResponse);
-        expect(localStorage.getItem(TOKEN)).toBe(mockToken);
+      service.login(credentials).subscribe((auth) => {
+        expect(auth).toEqual(mockAuth);
+        expect(localStorage.getItem(TOKEN)).toBe('mock-jwt-token');
         done();
       });
 
       const req = httpMock.expectOne(`${API_URL}/auth`);
       expect(req.request.method).toBe('POST');
-      
-      req.flush(mockResponse, {
-        status: 200,
-        statusText: 'OK',
-        headers: { 'Authorization': `Bearer ${mockToken}` }
-      });
+      req.flush(mockAuth);
     });
 
     it('should handle login error', (done) => {
@@ -73,57 +67,16 @@ describe('AuthenticationService', () => {
       req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
     });
 
-    it('should handle missing Authorization header', (done) => {
+    it('should not store a token when the response body has none', (done) => {
       const credentials: LoginUsuario = new LoginUsuario('test@test.com', 'password123');
-      const mockResponse = { id: 1, username: 'test@test.com' };
 
-      service.login(credentials).subscribe((response) => {
-        expect(response).toEqual(mockResponse);
-        expect(localStorage.getItem(TOKEN)).toBe('undefined');
+      service.login(credentials).subscribe((auth) => {
+        expect(localStorage.getItem(TOKEN)).toBeNull();
         done();
       });
 
       const req = httpMock.expectOne(`${API_URL}/auth`);
-      req.flush(mockResponse, {
-        status: 200,
-        statusText: 'OK',
-        headers: {}
-      });
-    });
-
-    it('should handle null Authorization header', (done) => {
-      const credentials: LoginUsuario = new LoginUsuario('test@test.com', 'password123');
-      const mockResponse = { id: 1, username: 'test@test.com' };
-
-      service.login(credentials).subscribe((response) => {
-        expect(response).toEqual(mockResponse);
-        expect(localStorage.getItem(TOKEN)).toBe('undefined');
-        done();
-      });
-
-      const req = httpMock.expectOne(`${API_URL}/auth`);
-      req.flush(mockResponse, {
-        status: 200,
-        statusText: 'OK'
-      });
-    });
-
-    it('should handle Authorization header without Bearer prefix', (done) => {
-      const credentials: LoginUsuario = new LoginUsuario('test@test.com', 'password123');
-      const mockResponse = { id: 1, username: 'test@test.com' };
-
-      service.login(credentials).subscribe((response) => {
-        expect(response).toEqual(mockResponse);
-        expect(localStorage.getItem(TOKEN)).toBe('token-without-bearer');
-        done();
-      });
-
-      const req = httpMock.expectOne(`${API_URL}/auth`);
-      req.flush(mockResponse, {
-        status: 200,
-        statusText: 'OK',
-        headers: { 'Authorization': 'token-without-bearer' }
-      });
+      req.flush({ id: 1, username: 'test@test.com' });
     });
   });
 

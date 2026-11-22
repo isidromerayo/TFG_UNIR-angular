@@ -4,13 +4,8 @@ import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Usuario } from 'src/app/model/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { ApiError, formatError } from 'src/app/utils/api-error';
 import Swal from 'sweetalert2';
-
-/** Error devuelto por la API (GlobalExceptionHandler). */
-export interface ApiError {
-  message?: string;
-  errors?: Record<string, string>;
-}
 
 @Component({
     selector: 'app-registro',
@@ -40,16 +35,9 @@ export class RegistroComponent {
     formulario.form.reset();
   }
 
-  /** Mensaje legible a partir del error de la API. */
+  /** Mensaje legible a partir del error de la API (mapeo compartido en utils/api-error). */
   formatError(err?: ApiError): string {
-    const validationErrors = err?.errors;
-    if (validationErrors) {
-      const messages = Object.values(validationErrors);
-      if (messages.length > 0) {
-        return messages.join('. ');
-      }
-    }
-    return err?.message ?? 'Error desconocido';
+    return formatError(err);
   }
 
   crearUsuario(formulario: any) {

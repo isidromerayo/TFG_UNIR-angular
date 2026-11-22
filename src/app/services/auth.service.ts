@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { LoginUsuario } from '../model/login-usuario';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { UsuarioAuth } from '../model/usuario-auth';
 import { API_URL, TOKEN, USER } from '../utils/constants';
-
-type Nullable<T> = T | undefined | null;
 
 @Injectable({
   providedIn: 'root'
@@ -14,20 +12,17 @@ export class AuthService {
 
   constructor(private readonly http: HttpClient) { }
 
-  login(creds: LoginUsuario):Observable<any> {
-    return this.http.post<LoginUsuario>(`${API_URL}/auth`,creds, {observe: "response"})
-      .pipe(map((response: HttpResponse<any>) => {
-          const body = response.body
-          const headers = response.headers
-
-          const bearerToken = headers.get('Authorization');
-          const token = bearerToken?.replace('Bearer ','');
-
-          localStorage.setItem(TOKEN, token as string);
-
-          return body;
-      }))
-    
+  login(creds: LoginUsuario): Observable<UsuarioAuth> {
+    return this.http.post<UsuarioAuth>(`${API_URL}/auth`, creds).pipe(
+      map((auth: UsuarioAuth) => {
+        // El backend devuelve el JWT en el cuerpo (AuthResponse.token); la
+        // cabecera Authorization ya no se usa desde LoginController.
+        if (auth?.token) {
+          localStorage.setItem(TOKEN, auth.token);
+        }
+        return auth;
+      })
+    );
   }
 
   getToken():string {

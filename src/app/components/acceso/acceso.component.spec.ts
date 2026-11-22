@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -72,6 +73,29 @@ describe('AccesoComponent', () => {
       expect(authService.login).toHaveBeenCalled();
       expect(swalSpy).toHaveBeenCalledWith('Problemas acceso', 'No se ha podido logear, revise usuario/contraseña', 'error');
       expect(router.navigate).not.toHaveBeenCalled();
+    });
+
+    it('should show a credentials message on 401', () => {
+      const swalSpy = spyOn(Swal, 'fire');
+      authService.login.and.returnValue(throwError(() => new HttpErrorResponse({ status: 401 })));
+
+      component.loginUsuario();
+
+      expect(swalSpy).toHaveBeenCalledWith('Problemas acceso', 'No se ha podido logear, revise usuario/contraseña', 'error');
+    });
+
+    it('should show the Retry-After wait on 429', () => {
+      const swalSpy = spyOn(Swal, 'fire');
+      const err = new HttpErrorResponse({ status: 429, headers: new HttpHeaders({ 'Retry-After': '30' }) });
+      authService.login.and.returnValue(throwError(() => err));
+
+      component.loginUsuario();
+
+      expect(swalSpy).toHaveBeenCalledWith(
+        'Problemas acceso',
+        'Demasiados intentos seguidos, vuelva a intentarlo en 30 segundos',
+        'error'
+      );
     });
   });
 });
