@@ -146,10 +146,17 @@ commit**. It enforces Conventional Commits and adds the required trailer
 
 - **NEVER commit or push directly to `main` or `master`.** Everything goes through a branch + PR
   (squash merge). Prefixes: `feature/`, `fix/`, `docs/`, `ci/`, `chore/`, `security/`, `release/`.
-- **NEVER merge a PR with pending or failing checks.** Wait until every check is green (build,
-  lint, unit/E2E, Codacy, CodeQL, SonarCloud, security). The repository ruleset only blocks
-  deletions and force-pushes, so GitHub does not enforce this gate: the responsibility is on the
-  person or agent merging.
+- **NEVER approve or merge a PR if ANY check is failing or pending — including checks GitHub
+  marks as non-required** ("Some non-required checks are failing" is a NO-GO). Wait until every
+  check is green (build, lint, unit/E2E, Codacy, CodeQL, SonarCloud, security). The repository
+  ruleset only blocks deletions and force-pushes, so GitHub does not enforce this gate: the
+  responsibility is on the person or agent merging.
+- **Codacy PR gate:** the org's "Default coding standard" runs the legacy ESLint8 tool, which
+  cannot parse this repo's flat `eslint.config.js` and floods `error typed` noise. It is resolved
+  per-repo by enabling **ESLint9 with "use configuration file"** (`codacy tool eslint9 --enable
+  --configuration-file true`); local type-aware `pnpm run lint` remains the source of truth and
+  Codacy adds only its own patterns (plan 2026-11-20, P2 decision 2026-11-22). If a PR shows a
+  new wave of `ESLint8_*` annotations, re-apply the tool swap and reanalyze the PR.
 - **After merging, pull `main` and confirm the merge commit's CI is green.**
 - **NEVER force-push to `main` or `master`.** Releases use a `release/X.Y.Z` branch, merged via PR,
   then the tag is created from the updated `main`.
