@@ -23,10 +23,10 @@ export const sesionInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((err: HttpErrorResponse) => {
       if (!esLogin && err.status === 401) {
         auth.logout();
-        Swal.fire('Sesión caducada', 'Su sesión ha expirado, vuelva a acceder', 'warning');
+        void Swal.fire('Sesión caducada', 'Su sesión ha expirado, vuelva a acceder', 'warning');
         void router.navigate(['/acceso']);
       } else if (!esLogin && err.status === 403) {
-        Swal.fire('Sin permisos', 'No tiene permiso para ver estos datos', 'error');
+        void Swal.fire('Sin permisos', 'No tiene permiso para ver estos datos', 'error');
       }
       return throwError(() => err);
     })
