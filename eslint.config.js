@@ -61,6 +61,7 @@ export default tseslint.config(
       // no se convierte en bloque de una iteración; warn para no romper el gate.
       '@angular-eslint/prefer-inject': 'warn',
       '@typescript-eslint/no-inferrable-types': 'warn',
+      '@typescript-eslint/non-nullable-type-assertion-style': 'warn',
       // Paridad con Codacy (type-aware): el ruido de `any` de los servicios
       // heredados (get<any>) baja a warn; se endurecerá al tipar los DTOs.
       '@typescript-eslint/no-unsafe-assignment': 'warn',
