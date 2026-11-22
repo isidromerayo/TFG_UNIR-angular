@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { API_URL } from '../utils/constants';
 
 /** Raíces de ruta del catálogo (solo lectura) que el backend sirve sin token. */
-const CATALOGO_PUBLICO = ['categorias', 'cursos', 'valoraciones'];
+const CATALOGO_PUBLICO = new Set(['categorias', 'cursos', 'valoraciones']);
 
 /** Primera sección del path relativo a API_URL; null si la URL no es de la API. */
 function raizRelativa(url: string): string | null {
@@ -27,7 +27,7 @@ export function esRutaPublica(req: Pick<HttpRequest<unknown>, 'url' | 'method'>)
   if (req.method === 'POST' && (req.url === `${API_URL}/auth` || req.url === `${API_URL}/usuarios`)) {
     return true;
   }
-  return req.method === 'GET' && CATALOGO_PUBLICO.includes(raizRelativa(req.url) ?? '');
+  return req.method === 'GET' && CATALOGO_PUBLICO.has(raizRelativa(req.url) ?? '');
 }
 
 /** Añade `Authorization: Bearer <token>` a las rutas protegidas cuando hay sesión. */
