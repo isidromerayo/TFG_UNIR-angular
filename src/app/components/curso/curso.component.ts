@@ -39,7 +39,7 @@ export class CursoComponent implements OnInit {
 
   addCarritoCurso(curso:any) {
     this.carrito.addCurso(curso)
-    Swal.fire('Carrito','Curso añadido correctamente');
+    void Swal.fire('Carrito','Curso añadido correctamente');
   }
   
 }

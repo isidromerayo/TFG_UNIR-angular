@@ -23,7 +23,7 @@ export class AuthService {
           const bearerToken = headers.get('Authorization');
           const token = bearerToken?.replace('Bearer ','');
 
-          localStorage.setItem(TOKEN, token as string);
+          localStorage.setItem(TOKEN, token!);
 
           return body;
       }))
@@ -31,7 +31,7 @@ export class AuthService {
   }
 
   getToken():string {
-    return localStorage.getItem(TOKEN) as string;
+    return localStorage.getItem(TOKEN)!;
   }
 
   getUser():any {

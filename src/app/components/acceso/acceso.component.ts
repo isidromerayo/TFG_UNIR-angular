@@ -32,12 +32,12 @@ export class AccesoComponent {
         this.usuario_auth = respuesta;
         this.servicioLogin.register(respuesta)
         // mensaje de OK y redireccionar a parte privada
-        Swal.fire('Acceso','Logeado correctamente');
-        this.router.navigate(["/mis-cursos"])
+        void Swal.fire('Acceso','Logeado correctamente');
+        void this.router.navigate(["/mis-cursos"])
       },
       error: (err) => {
         // mensaje de ERROR
-        Swal.fire('Problemas acceso','No se ha podido logear, revise usuario/contraseña','error');
+        void Swal.fire('Problemas acceso','No se ha podido logear, revise usuario/contraseña','error');
       }
     })
     

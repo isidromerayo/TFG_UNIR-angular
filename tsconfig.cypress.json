@@ -1,4 +1,7 @@
-/* TypeScript configuration for Cypress component testing */
+/* TypeScript configuration for Cypress specs, typechecked in `pnpm run verify`.
+   Component testing is disabled on Angular 22 (@cypress/webpack-dev-server
+   incompatibility), so cypress/component and cypress/support/component.ts are
+   excluded: @cypress/angular is not installed and would break this check. */
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
@@ -6,6 +9,7 @@
     "rootDir": "./",
     "types": [
       "cypress",
+      "jasmine",
       "node"
     ],
     "lib": [
@@ -15,7 +19,13 @@
   },
   "include": [
     "src/**/*.ts",
-    "cypress/component/**/*.cy.ts",
-    "cypress/support/**/*.ts"
+    "cypress/e2e/**/*.cy.ts",
+    "cypress/support/e2e.ts",
+    "cypress/support/commands.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/**/*.spec.ts"
   ]
 }

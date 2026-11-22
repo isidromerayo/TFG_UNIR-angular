@@ -18,6 +18,6 @@ export class SliderComponent {
   }
 
   goSearch(){
-    this._router.navigate(['/buscar/',this.query_string])
+    void this._router.navigate(['/buscar/',this.query_string])
   }
 }

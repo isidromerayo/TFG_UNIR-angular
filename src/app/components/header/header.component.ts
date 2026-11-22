@@ -33,7 +33,7 @@ export class HeaderComponent {
   }
   logout() {
     this.servicioLogin.logout()
-    Swal.fire('Acceso','Cierre de sesion correcta');
-    this.router.navigate(["/home"])
+    void Swal.fire('Acceso','Cierre de sesion correcta');
+    void this.router.navigate(["/home"])
   }
 }

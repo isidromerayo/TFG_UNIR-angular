@@ -68,7 +68,7 @@ describe('AutenticacionGuard', () => {
     const route = {} as ActivatedRouteSnapshot;
     const state = { url: '/admin' } as RouterStateSnapshot;
 
-    TestBed.runInInjectionContext(() => AutenticacionGuard(route, state));
+    void TestBed.runInInjectionContext(() => AutenticacionGuard(route, state));
 
     expect(router.navigate).toHaveBeenCalledWith(['/acceso']);
   });

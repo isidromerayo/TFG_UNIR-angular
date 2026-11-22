@@ -6,6 +6,6 @@ export const AutenticacionGuard: CanActivateFn = (_route, _state) => {
   if (localStorage.getItem('token')!=null) {
     return true;
   } 
-  router.navigate(["/acceso"])
+  void router.navigate(["/acceso"])
   return false;
 };

@@ -20,9 +20,9 @@
     "security:audit": "pnpm audit",
     "security:outdated": "pnpm outdated",
     "a11y": "pa11y-ci",
-    "verify": "pnpm run test-headless && pnpm run build && pnpm audit --prod",
+    "verify": "pnpm run test-headless && pnpm run build && tsc -p tsconfig.cypress.json --noEmit && pnpm audit --prod",
     "precommit": "pnpm run verify",
-    "lint": "eslint src/**/*.ts src/**/*.html",
+    "lint": "eslint .",
     "lint:fix": "eslint src/**/*.ts src/**/*.html --fix"
   },
   "private": true,
