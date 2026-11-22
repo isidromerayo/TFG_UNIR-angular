@@ -47,8 +47,8 @@ export class CarritoComponent {
             this.carrito.myCart$.subscribe(cursos => {
               this.carrito.comprarCursos(cursos).subscribe(() => {
                 this.carrito.clean();
-                this.router.navigate(["/mis-cursos"]);
-                Swal.fire('Compra','Procesada la compra correctamente');
+                void this.router.navigate(["/mis-cursos"]);
+                void Swal.fire('Compra','Procesada la compra correctamente');
               });
             });
           }
@@ -56,12 +56,12 @@ export class CarritoComponent {
           // Error handling - silently fail
         });
       } else {
-        Swal.fire('Compra','El carrito está vacío');
+        void Swal.fire('Compra','El carrito está vacío');
       }
     } 
     else {
-      Swal.fire('Compra','Debe estar logeado para realizar la compra');
-      this.router.navigate(["/acceso"])
+      void Swal.fire('Compra','Debe estar logeado para realizar la compra');
+      void this.router.navigate(["/acceso"])
     }
   }
 }

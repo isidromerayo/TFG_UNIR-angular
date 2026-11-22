@@ -61,11 +61,11 @@ export class RegistroComponent {
 
     this.servicio.crear(this.usuario).subscribe({
       next: (respuesta: any): void => {
-        Swal.fire('Alta', 'Se ha registrado su usuario correctamente, recibirá un correo para confirmar el alta');                      
+        void Swal.fire('Alta', 'Se ha registrado su usuario correctamente, recibirá un correo para confirmar el alta');                      
         formulario.form.reset();
-        this.router.navigate(["/acceso"])
+        void this.router.navigate(["/acceso"])
       }, error: (err: ApiError) => {
-        Swal.fire(
+        void Swal.fire(
           'Alta de usuario',
           'Ha habido problemas con su registro: ' + this.formatError(err),
           'error'

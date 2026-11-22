@@ -8,7 +8,11 @@ This is one of several implementations of the same TFG app. Siblings live in the
 
 - Angular **22.2.4** + TypeScript 6.0.3; Karma/Jasmine (181 unit tests) + Cypress 16.2.1 for E2E.
 - **pnpm only, never npm.** CI runs pnpm 10 / Node 24.x.
-- ESLint 9 flat config (`eslint.config.js`, angular-eslint 22). No Prettier is installed.
+- ESLint 9 flat config (`eslint.config.js`, angular-eslint 22), **type-aware** since 2026-11-22
+  (`recommendedTypeChecked` + `projectService`): `pnpm run lint` runs `eslint .` over the whole
+  repo — including `cypress/**` and templates — so type-level findings match Codacy without
+  pushing. Unsafe-* / `any` / modernization rules (`prefer-inject`, `prefer-control-flow`) are
+  `warn` in app code (legacy policy above) and off in specs/cypress. No Prettier is installed.
 - SonarCloud gate: coverage ≥ 80%, branches ≥ 80%. Current: 96.98% lines / 100% branches
   (181 tests, measured 2026-09-12).
 
@@ -22,8 +26,8 @@ pnpm test                  # Karma in watch mode
 pnpm run test-headless     # run once in ChromeHeadless
 pnpm run test-headless-cc  # + coverage -> coverage/frontend-angular/
 pnpm run test-headless --include="**/auth.service.spec.ts"   # single spec file
-pnpm run lint              # src/**/*.ts + src/**/*.html only (warnings allowed)
-pnpm run verify            # test-headless && build && audit  (same as ./verify.sh)
+pnpm run lint              # eslint . — type-aware, whole repo incl. cypress (warnings allowed)
+pnpm run verify            # test-headless && build && tsc -p tsconfig.cypress.json --noEmit && audit --prod
 pnpm security              # multi-tool audit: scripts/security-check.sh
 pnpm run cypress:run       # E2E — requires `pnpm start` already serving :4200
 pnpm run cypress:run:coverage # E2E with coverage
