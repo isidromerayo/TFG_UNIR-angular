@@ -4,8 +4,19 @@ import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { API_URL } from '../utils/constants';
 
-/** Rutas de catálogo (solo lectura) que el backend sirve sin token. */
-const CATALOGO_PUBLICO = new RegExp(`^${API_URL.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/(categorias|cursos|valoraciones)([/?]|$)`);
+/** Raíces de ruta del catálogo (solo lectura) que el backend sirve sin token. */
+const CATALOGO_PUBLICO = ['categorias', 'cursos', 'valoraciones'];
+
+/** Primera sección del path relativo a API_URL; null si la URL no es de la API. */
+function raizRelativa(url: string): string | null {
+  if (url === API_URL) {
+    return '';
+  }
+  if (!url.startsWith(`${API_URL}/`)) {
+    return null;
+  }
+  return url.slice(API_URL.length + 1).split(/[/?#]/)[0];
+}
 
 /**
  * Rutas a las que NO se añade la cabecera Authorization: login y alta de usuario
@@ -16,7 +27,7 @@ export function esRutaPublica(req: Pick<HttpRequest<unknown>, 'url' | 'method'>)
   if (req.method === 'POST' && (req.url === `${API_URL}/auth` || req.url === `${API_URL}/usuarios`)) {
     return true;
   }
-  return req.method === 'GET' && CATALOGO_PUBLICO.test(req.url);
+  return req.method === 'GET' && CATALOGO_PUBLICO.includes(raizRelativa(req.url) ?? '');
 }
 
 /** Añade `Authorization: Bearer <token>` a las rutas protegidas cuando hay sesión. */
